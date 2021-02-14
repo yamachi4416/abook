@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~/*": [
+        "./*"
+      ],
+      "@/*": [
+        "./*"
+      ],
+      "~~/*": [
+        "./*"
+      ],
+      "@@/*": [
+        "./*"
+      ]
+    },
+    "experimentalDecorators": true
+  },
+  "allowJs": true,
+  "checkJs": true,
+  "exclude": [
+    "node_modules",
+    ".nuxt",
+    "dist"
+  ]
+}

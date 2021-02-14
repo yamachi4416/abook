@@ -1,0 +1,44 @@
+$max-layout-width: 850px;
+$header-height: 50px;
+$footer-height: 60px;
+
+$timeline--area-width: 30px;
+$timeline--line-width: 1px;
+$timeline--circle-size: 20px;
+
+@mixin __media_phone {
+  @media screen and (max-width: 480px) {
+    @content;
+  }
+}
+
+@mixin __media_tablet {
+  @media screen and (min-width: 480px) and (max-width: 600px) {
+    @content;
+  }
+}
+
+@mixin __media_tablet_phone {
+  @media screen and (max-width: 600px) {
+    @content;
+  }
+}
+
+@mixin __media_tablet_pc {
+  @media screen and (min-width: 480px) {
+    @content;
+  }
+}
+
+@mixin __media_pc {
+  @media screen and (min-width: 600px) {
+    @content;
+  }
+}
+
+$idxed-colors: (
+  1: #99d,
+  2: #d88,
+  3: #9d9,
+  4: #69d
+);

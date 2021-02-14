@@ -1,0 +1,8 @@
+# macOS
+.DS_Store
+
+# Vim swap files
+*.swp
+
+# dotenv environment variables file
+*.env

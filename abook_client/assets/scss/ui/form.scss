@@ -1,0 +1,18 @@
+@import "./inputs.scss";
+
+@mixin __form {
+  padding: 15px 10px 25px 10px;
+  margin: 0 5px;
+  background: var(--them-foregraund);
+  border-radius: 30px;
+  border: 1px solid var(--them-color-border);
+  color: var(--font-color);
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}

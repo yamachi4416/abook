@@ -1,0 +1,6 @@
+{
+  "shadowCopy": false,
+  "parallelizeAssembly": true,
+  "parallelizeTestCollections": false,
+  "diagnosticMessages": true
+}

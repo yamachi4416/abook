@@ -1,0 +1,71 @@
+@mixin __table {
+  position: relative;
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+
+  tr, .row {
+    display: table-row;
+
+    td, th, [class^="col-"] {
+      vertical-align: middle;
+      display: table-cell;
+      padding: 15px 8px;
+
+      .fill {
+        margin-top: -30px;
+        margin-bottom: -30px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+      }
+    }
+  }
+
+  thead, &-header {
+    display: table-header-group;
+    white-space: nowrap;
+    color: var(--them-color-font);
+
+    tr, .row {
+      td, th, [class^="col-"] {
+        padding: 0 8px 10px 8px;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: var(--them-color-background);
+      }
+
+      th {
+        &::after {
+          content: "";
+          height: 100%;
+          width: 100%;
+          display: block;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          border-bottom: 1px solid var(--them-color-border-sub);
+          pointer-events: none;
+        }
+
+        &:first-child {
+          z-index: 55;
+        }
+      }
+    }
+  }
+
+  tbody, &-body {
+    display: table-row-group;
+
+    tr, .row {
+      border-bottom: 1px solid var(--them-color-border-sub);
+      background: var(--them-foregraund);
+
+      &:last-child {
+        border-bottom: none;
+        background: var(--them-foregraund);
+      }
+    }
+  }
+}

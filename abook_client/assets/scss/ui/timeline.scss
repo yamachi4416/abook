@@ -1,0 +1,66 @@
+@import '../vars.scss';
+
+@mixin __timeline {
+  display: block;
+  position: relative;
+  padding: 0 8px 15px 0;
+
+  &:empty {
+    display: none;
+  }
+
+  &::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    box-sizing: border-box;
+    width: 1px;
+    height: 100%;
+    background: var(--them-color-border);
+    bottom: 0;
+    top: 0;
+    left: $timeline--area-width / 2 - $timeline--line-width;
+    z-index: 1;
+  }
+
+  &-item {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    padding-left: $timeline--area-width;
+    page-break-inside: avoid;
+
+    &-title {
+      position: sticky;
+      top: 0;
+      margin: 0;
+      padding: 5px 10px;
+      text-align: center;
+      background: transparent;
+      z-index: 2;
+
+      &-content {
+        display: inline-block;
+        padding: 5px 10px;
+      }
+
+      &::before {
+        content: " ";
+        position: absolute;
+        display: inline-block;
+        box-sizing: border-box;
+        border: 1px solid var(--them-color-border);
+        border-radius: 50%;
+        height: $timeline--circle-size;
+        width: $timeline--circle-size;
+        left: ($timeline--circle-size + $timeline--area-width + 1px) / 2 * -1;
+        top: calc(50% - (#{$timeline--circle-size} / 2));
+        background: var(--them-foregraund);
+      }
+    }
+
+    &-detail {
+      padding: 5px 10px;
+    }
+  }
+}

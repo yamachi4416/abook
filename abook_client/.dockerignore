@@ -1,0 +1,9 @@
+.git
+.nuxt
+.vscode
+node_modules
+npm-debug.log
+tmp
+dist
+Dockerfile
+.dockerignore

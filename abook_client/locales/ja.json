@@ -1,0 +1,252 @@
+{
+    "head": {
+        "description": "家計簿"
+    },
+    "confirm": {
+        "remove": {
+            "message": "本当に削除しますか？"
+        }
+    },
+    "actions": {
+        "prev_month": "先月",
+        "next_month": "翌月",
+        "prev_day": "前日",
+        "next_day": "翌日",
+        "add": "追加",
+        "filter": "絞込む" ,
+        "summary": "集計" ,
+        "done": "完了",
+        "condition_period": "期間設定",
+        "sort": "並替え",
+        "save": "保存",
+        "remove": "削除",
+        "copy": "コピー",
+        "search": "検索",
+        "yes": "はい",
+        "no": "いいえ"
+    },
+    "calc": {
+        "roundUp": "切上",
+        "roundDown": "切捨",
+        "round": "四捨五入"
+    },
+    "form": {
+        "accrualDate": "日付",
+        "journalDiv": "区分",
+        "amount": "金額",
+        "memo": "メモ",
+        "account": "科目名",
+        "periodType": "日付（指定）",
+        "accrualDateStart": "日付（から）",
+        "accrualDateEnd": "日付（まで）",
+        "debitAccount_": "項目1",
+        "debitAccount_1": "受取方法",
+        "debitAccount_2": "支出名",
+        "debitAccount_3": "振替先",
+        "creditAccount_": "項目2",
+        "creditAccount_1": "収入名",
+        "creditAccount_2": "支払方法",
+        "creditAccount_3": "振替元",
+        "amount_3f": "金額（振替元）",
+        "code": "コード",
+        "financeName": "区分",
+        "name": "名称",
+        "avaliable": "有効",
+        "useFee": "手数料で利用",
+        "total": "合計",
+        "color": "カラー",
+        "usuallyUsedForPayment": "いつも支払で使う",
+        "usuallyUsedForReceipt": "いつも受取で使う",
+        "fee": {
+            "account": "手数料",
+            "amount": "手数料金額",
+            "feeAmount": "金額（振替先）"
+        },
+        "aggMonthType": "（期間）",
+        "aggMonthFrom": "（から）",
+        "aggMonthTo": "（まで）",
+        "startOfMonthIsPrev": "月の開始（基準）",
+        "startOfMonthDate": "月の開始（日付）",
+        "locale": "言語",
+        "displayName": "表示名",
+        "email": "メールアドレス",
+        "tax1": "税率1（%）",
+        "tax2": "税率2（%）"
+    },
+    "pages": {
+        "menu": {
+            "title1": "{abook} {dev}",
+            "title2": "家計簿 {dev}",
+            "items": {
+                "settings": {
+                    "title": "各種設定",
+                    "items": {
+                        "accounts": "科目の管理",
+                        "abooks": "家計簿の設定",
+                        "users": "あなたの設定"
+                    }
+                },
+                "journals_daily": {
+                    "title": "家計の記録",
+                    "items": {
+                        "timeline": "タイムライン",
+                        "calendar": "カレンダー",
+                        "new": "登録する"
+                    }
+                },
+                "journals_analytics": {
+                    "title": "家計の観察",
+                    "items": {
+                        "search": "検索する",
+                        "piechart": "収支チャート",
+                        "balance": "収支表"
+                    }
+                },
+                "others": {
+                    "title": "その他",
+                    "items": {
+                        "logout": "ログアウト"
+                    }
+                }
+            }
+        },
+        "accounts": {
+            "index": {
+                "title": "科目の管理"
+            },
+            "new": {
+                "title": "科目の登録"
+            },
+            "edit": {
+                "title": "科目の編集"
+            }
+        },
+        "journals": {
+            "new": {
+                "title": "家計簿の登録"
+            },
+            "edit": {
+                "title": "家計簿の編集"
+            },
+            "timeline": {
+                "title": "{year}/{month}"
+            },
+            "piechart": {
+                "title1": "{year}/{month}",
+                "title2": "{year1}/{month1} ~ {year2}/{month2}"
+            },
+            "balance": {
+                "title": "収支表"
+            },
+            "calendar": {
+                "title": "{year}/{month}"
+            },
+            "search": {
+                "input": {
+                    "title": "家計簿の検索"
+                },
+                "index": {
+                    "title": {
+                        "normal": "家計簿の検索結果",
+                        "monthly": "{0} {1}",
+                        "period": "{0} ~ {1} {2}"
+                    }
+                }
+            }
+        },
+        "abooks": {
+            "current": {
+                "title": "家計簿の設定"
+            }
+        },
+        "settings": {
+            "users": {
+                "title": "あなたの設定",
+                "section-users": "基本情報",
+                "section-terminal": "端末設定"
+            }
+        },
+        "others": {
+            "login": {
+                "title": "ログイン"
+            }
+        }
+    },
+    "errors": {
+        "statusCode": {
+            "default": {
+                "title": "エラーです({statusCode})",
+                "message": "エラーです({statusCode})"
+            },
+            "401": {
+                "title": "ログインしてください",
+                "message": "セッションの有効期限が切れています\nもう一度ログインしてください"
+            },
+            "403": {
+                "title": "権限がありません",
+                "message": "リクエストされたページを閲覧する権限がありません"
+            },
+            "404": {
+                "title": "ページが見つかりません",
+                "message": "お探しのページは見つかりませんでした"
+            },
+            "405": {
+                "title": "ページが見つかりません",
+                "message": "お探しのページは見つかりませんでした"
+            },
+            "502": {
+                "title": "メンテナンス中です",
+                "message": "ただいまメンテナンス中です\nしばらくしてからアクセスください"
+            },
+            "offline": {
+                "title": "オフラインです",
+                "message": "インターネットに接続できません。\nネットワークの状態を確認してください。"
+            }
+        }
+    },
+    "label": {
+        "none": "なし",
+        "dev": "（開発版）",
+        "startOfMonthDate": "{0}日から",
+        "startOfMonthDateLast": "末日から",
+        "balance": "収支"
+    },
+    "select": {
+        "orders": [
+            { "value": 0, "label": "昇順" },
+            { "value": 1, "label": "降順" }
+        ],
+        "financeDiv": [
+            { "value": null, "label": "" },
+            { "value": 1, "label": "収入" },
+            { "value": 2, "label": "支出" },
+            { "value": 3, "label": "資産" },
+            { "value": 4, "label": "負債" }
+        ],
+        "financeInOutDiv": [
+            { "value": 1, "label": "収入" },
+            { "value": 2, "label": "支出" }
+        ],
+        "journalDiv": [
+            { "value": null, "label": "" },
+            { "value": 1, "label": "収入" },
+            { "value": 2, "label": "支出" },
+            { "value": 3, "label": "振替" }
+        ],
+        "periodTypes": [
+            { "value": null, "label": "" },
+            { "value": "thisWeek", "label": "今週" },
+            { "value": "thisMonth", "label": "今月" }
+        ],
+        "aggMonthTypes": [
+            { "value": 1, "label": "1ヵ月" },
+            { "value": 3, "label": "3ヵ月" },
+            { "value": 6, "label": "6ヵ月" },
+            { "value": 12, "label": "12ヵ月" }
+        ],
+        "startOfMonthIs": [
+            { "value": 1, "label": "前の月の" },
+            { "value": 0, "label": "その月の" }
+        ]
+    }
+}

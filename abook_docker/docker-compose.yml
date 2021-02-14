@@ -1,0 +1,30 @@
+version: '3.4'
+services:
+  api:
+    env_file: .api.env
+    image: $API_IMAGE
+    build:
+      context: ../abook_server
+      dockerfile: Dockerfile
+    networks:
+      - default
+      - postgres-network
+    restart: always
+    ports:
+      - "127.0.0.1:3002:80"
+
+  app:
+    env_file: .app.env
+    image: $APP_IMAGE
+    build:
+      context: ../abook_client
+      dockerfile: Dockerfile
+      args:
+        APP_CONTEXT_ROOT: $APP_CONTEXT_ROOT
+    restart: always
+    ports:
+      - "127.0.0.1:3000:3000"
+
+networks:
+  postgres-network:
+    external: true
