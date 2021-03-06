@@ -177,30 +177,30 @@ export default {
   methods: {
     getDebitAccounts () {
       if (this.journal.journalDiv === 1) {
-        return this.accounts.filter(a => a.financeDiv === 3)
+        return this.accounts.filter(a => [3, 4].includes(a.financeDiv))
       }
 
       if (this.journal.journalDiv === 2) {
-        return this.accounts.filter(a => a.financeDiv === 2)
+        return this.accounts.filter(a => [2].includes(a.financeDiv))
       }
 
       if (this.journal.journalDiv === 3) {
         const credit = this.journal.creditAccount
         if (credit) {
           return this.accounts.filter(
-            a => a.financeDiv === credit.financeDiv && a !== credit
+            a => [3, 4].includes(a.financeDiv) && a !== credit
           )
         }
 
-        return this.accounts.filter(a => [3].includes(a.financeDiv))
+        return this.accounts.filter(a => [3, 4].includes(a.financeDiv))
       }
 
-      return this.accounts.filter(a => a.financeDiv === 2 || a.financeDiv === 3)
+      return this.accounts.filter(a => [2, 3, 4].includes(a.financeDiv))
     },
 
     getCreditAccounts () {
       if (this.journal.journalDiv === 1) {
-        return this.accounts.filter(a => a.financeDiv === 1)
+        return this.accounts.filter(a => [1].includes(a.financeDiv))
       }
 
       if (this.journal.journalDiv === 2) {
@@ -211,13 +211,13 @@ export default {
         const debit = this.journal.debitAccount
         if (debit) {
           return this.accounts.filter(
-            a => a.financeDiv === debit.financeDiv && a !== debit
+            a => [3, 4].includes(a.financeDiv) && a !== debit
           )
         }
-        return this.accounts.filter(a => [3].includes(a.financeDiv))
+        return this.accounts.filter(a => [3, 4].includes(a.financeDiv))
       }
 
-      return this.accounts.filter(a => a.financeDiv === 1 || a.financeDiv === 3)
+      return this.accounts.filter(a => [1, 3, 4].includes(a.financeDiv))
     },
 
     changeDebitAccount () {
@@ -227,6 +227,14 @@ export default {
           this.journal.journalDiv = 2
           if (!this.journal.creditAccount) {
             this.journal.creditAccount = this.usuallyUsedForPayment
+          }
+        } else if (this.journal.creditAccount) {
+          if (!this.journal.journalDiv) {
+            if (this.journal.creditAccount.financeDiv === 1) {
+              this.journal.journalDiv = 1
+            } else {
+              this.journal.journalDiv = 3
+            }
           }
         }
       }
@@ -240,13 +248,21 @@ export default {
           if (!this.journal.debitAccount) {
             this.journal.debitAccount = this.usuallyUsedForReceipt
           }
+        } else if (this.journal.debitAccount) {
+          if (!this.journal.journalDiv) {
+            if (this.journal.debitAccount.financeDiv === 2) {
+              this.journal.journalDiv = 2
+            } else {
+              this.journal.journalDiv = 3
+            }
+          }
         }
       }
     },
 
     changeJournalDiv () {
       if (this.journal.debitAccount) {
-        if (!this.getDebitAccounts().find(a => this.journal.debitAccount.id)) {
+        if (!this.getDebitAccounts().find(a => a.id === this.journal.debitAccount.id)) {
           this.journal.debitAccount = null
         }
       }
