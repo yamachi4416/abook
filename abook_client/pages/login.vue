@@ -33,7 +33,7 @@ export default {
   .button {
     cursor: pointer;
     background-color: var(--them-background);
-    background-image: url("~static/icon.png");
+    background-image: url("~static/login.png");
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
