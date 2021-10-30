@@ -5,8 +5,6 @@ export default ({ app, store }) => {
     $store: store,
     ...mapMutations({
       setTransition: 'ui/setTransition',
-      destroyModals: 'ui/destroyModals',
-      removeModal: 'ui/removeModal',
       _stopLoading: 'ui/stopLoading'
     }),
 
@@ -20,7 +18,12 @@ export default ({ app, store }) => {
   }
 
   app.router.beforeEach((to, from, next) => {
-    ui.destroyModals()
+    const modal = ui.currentModal()
+
+    if (modal) {
+      modal.close()
+      return next(false)
+    }
 
     if (from.path === '/' || to.path.startsWith('/login')) {
       ui.setTransition('fade')

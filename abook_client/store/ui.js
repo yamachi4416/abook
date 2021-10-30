@@ -49,7 +49,8 @@ export const mutations = {
   addModal(state, el) {
     state.modalStack.push({
       uid: el._uid,
-      handler: () => el.$destroy()
+      handler: () => el.$destroy(),
+      close: () => el.close()
     })
   },
 
