@@ -4,10 +4,13 @@
   width: 100%;
   border-collapse: collapse;
 
-  tr, .row {
+  tr,
+  .row {
     display: table-row;
 
-    td, th, [class^="col-"] {
+    td,
+    th,
+    [class^="col-"] {
       vertical-align: middle;
       display: table-cell;
       padding: 15px 8px;
@@ -21,13 +24,17 @@
     }
   }
 
-  thead, &-header {
+  thead,
+  &-header {
     display: table-header-group;
     white-space: nowrap;
     color: var(--them-color-font);
 
-    tr, .row {
-      td, th, [class^="col-"] {
+    tr,
+    .row {
+      td,
+      th,
+      [class^="col-"] {
         padding: 0 8px 10px 8px;
         position: sticky;
         top: 0;
@@ -55,10 +62,12 @@
     }
   }
 
-  tbody, &-body {
+  tbody,
+  &-body {
     display: table-row-group;
 
-    tr, .row {
+    tr,
+    .row {
       border-bottom: 1px solid var(--them-color-border-sub);
       background: var(--them-foregraund);
 

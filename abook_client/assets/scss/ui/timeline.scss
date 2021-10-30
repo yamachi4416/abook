@@ -1,3 +1,4 @@
+@use "sass:math";
 @import '../vars.scss';
 
 @mixin __timeline {
@@ -19,7 +20,7 @@
     background: var(--them-color-border);
     bottom: 0;
     top: 0;
-    left: $timeline--area-width / 2 - $timeline--line-width;
+    left: math.div($timeline--area-width, 2) - $timeline--line-width;
     z-index: 1;
   }
 
@@ -53,7 +54,7 @@
         border-radius: 50%;
         height: $timeline--circle-size;
         width: $timeline--circle-size;
-        left: ($timeline--circle-size + $timeline--area-width + 1px) / 2 * -1;
+        left: math.div($timeline--circle-size + $timeline--area-width + 1px, 2) * -1;
         top: calc(50% - (#{$timeline--circle-size} / 2));
         background: var(--them-foregraund);
       }

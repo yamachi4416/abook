@@ -1,4 +1,5 @@
-@import './vars.scss';
+@use "sass:math";
+@import "./vars.scss";
 
 body {
   --them-background: transparent;
@@ -27,15 +28,15 @@ body {
   padding: 0;
   background-clip: padding-box;
   font-size: inherit;
-  font-family: 'M PLUS 1p', sans-serif;
+  font-family: "M PLUS 1p", sans-serif;
 }
 
 html,
 body {
   -webkit-touch-callout: none;
-  -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
-  
+
+  user-select: none;
   overflow: hidden;
   scroll-behavior: none;
 
@@ -81,38 +82,38 @@ body {
 
   @for $i from 1 to 13 {
     & > .col-#{$i} {
-      width: 100% / 12 * $i;
+      width: math.div(100%, 12) * $i;
     }
 
     & > .col-#{$i}-5 {
-      width: 100% / 12 * $i + 100% / 24;
+      width: math.div(100%, 12) * $i + math.div(100%, 24);
     }
 
     @include __media_phone {
       & > .col-sm-#{$i},
       & > .col-sm-#{$i}[class^="col-"] {
-        width: 100% / 12 * $i;
-        max-width: 100% / 12 * $i;
+        width: math.div(100%, 12) * $i;
+        max-width: math.div(100%, 12) * $i;
       }
 
       & > .col-sm-#{$i}-5,
       & > .col-sm-#{$i}-5[class^="col-"] {
-        width: 100% / 12 * $i + 100% / 24;
-        max-width: 100% / 12 * $i + 100% / 24;
+        width: math.div(100%, 12) * $i + math.div(100%, 24);
+        max-width: math.div(100%, 12) * $i + math.div(100%, 24);
       }
     }
 
     @include __media_tablet {
       & > .col-md-#{$i},
       & > .col-md-#{$i}[class^="col-"] {
-        width: 100% / 12 * $i;
-        max-width: 100% / 12 * $i;
+        width: math.div(100%, 12) * $i;
+        max-width: math.div(100%, 12) * $i;
       }
 
       & > .col-md-#{$i}-5,
       & > .col-md-#{$i}-5[class^="col-"] {
-        width: 100% / 12 * $i + 100% / 24;
-        max-width: 100% / 12 * $i + 100% / 24;
+        width: math.div(100%, 12) * $i + math.div(100%, 24);
+        max-width: math.div(100%, 12) * $i + math.div(100%, 24);
       }
     }
   }

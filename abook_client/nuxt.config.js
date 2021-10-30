@@ -1,5 +1,4 @@
 export default {
-
   ssr: false,
 
   target: 'server',
@@ -26,22 +25,32 @@ export default {
     title: 'αBooK',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover' },
+      {
+        name: 'viewport',
+        content:
+          'width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover'
+      },
       { name: 'theme-color', content: '#fff' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons+Outlined' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@400&display=swap' }
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/icon?family=Material+Icons+Outlined'
+      },
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@400&display=swap'
+      }
     ],
     script: [
-      { src: '//polyfill.io/v3/polyfill.min.js?features=default%2Ces2017%2Cfetch%2Csmoothscroll' }
+      {
+        src: '//polyfill.io/v3/polyfill.min.js?features=default%2Ces2017%2Cfetch%2Csmoothscroll'
+      }
     ]
   },
 
-  css: [
-    '~assets/scss/main.scss'
-  ],
+  css: ['~assets/scss/main.scss'],
 
   router: {
     base: process.env.APP_CONTEXT_ROOT,
@@ -66,17 +75,20 @@ export default {
     '~plugins/filter'
   ],
 
-  components: true,
-
-  buildModules: [
-    '@nuxtjs/eslint-module'
+  components: [
+    {
+      path: '@/components/',
+      pathPrefix: false
+    }
   ],
+
+  buildModules: ['@nuxtjs/eslint-module'],
 
   modules: [
     '@nuxtjs/pwa',
     '@nuxtjs/axios',
     [
-      'nuxt-i18n',
+      '@nuxtjs/i18n',
       {
         seo: false,
         strategy: 'no_prefix',
