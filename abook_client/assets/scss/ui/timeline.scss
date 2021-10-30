@@ -56,7 +56,7 @@
         width: $timeline--circle-size;
         left: math.div($timeline--circle-size + $timeline--area-width + 1px, 2) * -1;
         top: calc(50% - (#{$timeline--circle-size} / 2));
-        background: var(--them-foregraund);
+        background: var(--them-foreground);
       }
     }
 

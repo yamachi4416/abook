@@ -308,7 +308,7 @@ export default {
     flex-direction: column;
     position: sticky;
     top: 0;
-    background: var(--them-foregraund);
+    background: var(--them-foreground);
     border-bottom: 1px solid var(--them-color-border-sub);
     z-index: 10;
 
@@ -328,7 +328,7 @@ export default {
     display: flex;
     flex-direction: column;
     position: relative;
-    background: var(--them-foregraund);
+    background: var(--them-foreground);
 
     &-row {
       display: flex;

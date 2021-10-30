@@ -34,7 +34,7 @@ export default Vue.extend({
     width: 100%;
     max-width: calc(#{$max-layout-width} * 0.85);
     max-height: 100%;
-    background: var(--them-foregraund);
+    background: var(--them-foreground);
     overflow-y: auto;
     padding: 10px;
     border-radius: 10px;

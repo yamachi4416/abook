@@ -98,7 +98,7 @@ export default {
 
   .items {
     border: 1px solid var(--them-color-border);
-    background: var(--them-foregraund);
+    background: var(--them-foreground);
     padding: 10px 5px;
     border-radius: 20px;
   }

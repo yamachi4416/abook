@@ -71,7 +71,7 @@ export default Vue.extend({
     width: 100%;
     max-width: calc(#{$max-layout-width} * 0.6);
     max-height: 100%;
-    background: var(--them-foregraund);
+    background: var(--them-foreground);
     padding: 10px;
     border-radius: 10px;
 

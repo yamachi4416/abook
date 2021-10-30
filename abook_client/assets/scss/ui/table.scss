@@ -69,11 +69,11 @@
     tr,
     .row {
       border-bottom: 1px solid var(--them-color-border-sub);
-      background: var(--them-foregraund);
+      background: var(--them-foreground);
 
       &:last-child {
         border-bottom: none;
-        background: var(--them-foregraund);
+        background: var(--them-foreground);
       }
     }
   }

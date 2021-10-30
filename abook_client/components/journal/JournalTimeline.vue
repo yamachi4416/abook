@@ -57,7 +57,7 @@ export default {
         padding: 3px 20px;
         font-size: 0.9em;
         color: var(--font-color);
-        background: var(--them-foregraund);
+        background: var(--them-foreground);
         opacity: 0.8;
         border-radius: 20px;
       }
@@ -65,7 +65,7 @@ export default {
 
     &-detail {
       border: 1px solid var(--them-color-border);
-      background: var(--them-foregraund);
+      background: var(--them-foreground);
       padding: 10px 5px;
       border-radius: 20px;
     }
