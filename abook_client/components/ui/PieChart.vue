@@ -442,12 +442,16 @@ export default {
     overflow-y: auto;
     display: flex;
 
+    @include __media_tablet_phone {
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.8);
+    }
+
     .table {
       @include __table;
 
       .row {
         cursor: pointer;
-        background: rgba(255, 255, 255, 0.8);
 
         .color {
           height: 1em;
