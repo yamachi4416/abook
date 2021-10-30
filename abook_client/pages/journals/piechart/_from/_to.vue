@@ -6,7 +6,7 @@
         v-model.number="financeDiv"
         :empty="null"
         :options="$t('select.financeInOutDiv')"
-        :mapper="(o) => [o.label, o.value]"
+        :mapper="o => [o.label, o.value]"
         :inline="true"
       />
     </template>
@@ -58,7 +58,7 @@ import { OptionMixin } from '@/modules/ui/mixins'
 
 export default {
   mixins: [OptionMixin({ disabledItems: 'journal.piechat.disabledItems' })],
-  async asyncData ({ store, params, query }) {
+  async asyncData({ store, params, query }) {
     const period = {
       from: params.from,
       to: params.to || params.from
@@ -78,7 +78,7 @@ export default {
     }
   },
 
-  data () {
+  data() {
     return {
       filter: false,
       show: true
@@ -86,11 +86,11 @@ export default {
   },
 
   computed: {
-    summary () {
+    summary() {
       return JournalModel.summaryOfFinance(this.journals)
     },
 
-    dataset () {
+    dataset() {
       if (!this.summary[this.financeDiv]) {
         return []
       }
@@ -100,11 +100,12 @@ export default {
         .map(x => Object.assign(x, { disabled: this.disabledItems[x.id] }))
     },
 
-    title () {
+    title() {
       const { from, to } = this.period
       if (from === to) {
         return this.$t('pages.journals.piechart.title1', {
-          year: from.substr(0, 4), month: from.substr(4, 2)
+          year: from.substr(0, 4),
+          month: from.substr(4, 2)
         })
       } else {
         return this.$t('pages.journals.piechart.title2', {
@@ -118,7 +119,7 @@ export default {
   },
 
   methods: {
-    prev () {
+    prev() {
       const from = datetime(this.period.from, 'YYYYMM')
         .subtract(1, 'month')
         .format('YYYYMM')
@@ -133,7 +134,7 @@ export default {
       })
     },
 
-    next () {
+    next() {
       const from = datetime(this.period.from, 'YYYYMM')
         .add(1, 'month')
         .format('YYYYMM')
@@ -148,11 +149,11 @@ export default {
       })
     },
 
-    toggleFilter () {
+    toggleFilter() {
       this.filter = !this.filter
     },
 
-    change (chart) {
+    change(chart) {
       if (chart == null) {
         this.filter = false
       } else if (!chart.disabled) {
@@ -164,7 +165,7 @@ export default {
       }
     },
 
-    clickItem (c) {
+    clickItem(c) {
       const filters = [j => j.journalDiv === this.financeDiv]
       const filterItem = j => filters.every(f => f(j))
 
@@ -172,18 +173,22 @@ export default {
         filters.push(j => j.isUseAccountId(c.id))
       } else {
         const disabledAccIds = Object.keys(this.disabledItems)
-        filters.push(j => !disabledAccIds.some(accId => j.isUseAccountId(accId)))
+        filters.push(
+          j => !disabledAccIds.some(accId => j.isUseAccountId(accId))
+        )
       }
 
       const m = new JournalTimelineModal({
         parent: this.$parent,
         propsData: {
-          items: this.journals.map((d) => {
-            return {
-              date: d.date,
-              items: d.items.filter(filterItem)
-            }
-          }).filter(d => d.items.length)
+          items: this.journals
+            .map(d => {
+              return {
+                date: d.date,
+                items: d.items.filter(filterItem)
+              }
+            })
+            .filter(d => d.items.length)
         }
       })
 
@@ -192,7 +197,7 @@ export default {
       m.$mount(div)
     },
 
-    condition () {
+    condition() {
       const m = new PeriodFormModal({
         parent: this.$parent,
         propsData: {

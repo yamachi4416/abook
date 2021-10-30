@@ -1,11 +1,11 @@
 export default {
   methods: {
-    keyRingInto () {
+    keyRingInto() {
       const first = this.$refs.first.$el || this.$refs.first
       first.focus()
     },
 
-    keyRing (event) {
+    keyRing(event) {
       const code = event.keyCode
 
       if (code === 9) {

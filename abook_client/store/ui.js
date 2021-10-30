@@ -6,60 +6,59 @@ export const state = () => ({
 })
 
 export const getters = {
-  vh (state) {
+  vh(state) {
     return state.vh
   },
 
-  loading (state) {
+  loading(state) {
     return state.loading
   },
 
-  transition (state) {
+  transition(state) {
     return state.transition
   },
 
-  currentModal (state) {
+  currentModal(state) {
     const l = state.modalStack.length
     return l === 0 ? null : state.modalStack[l - 1]
   }
 }
 
 export const mutations = {
-  setVH (state, vh) {
+  setVH(state, vh) {
     state.pvh = state.vh
     state.vh = vh
   },
 
-  startLoading (state, status = 1) {
+  startLoading(state, status = 1) {
     if (state.loading < status) {
       state.loading = status
     }
   },
 
-  stopLoading (state, status = 1) {
+  stopLoading(state, status = 1) {
     if (state.loading <= status) {
       state.loading = 0
     }
   },
 
-  setTransition (state, transition) {
+  setTransition(state, transition) {
     state.transition = transition
   },
 
-  addModal (state, el) {
+  addModal(state, el) {
     state.modalStack.push({
       uid: el._uid,
       handler: () => el.$destroy()
     })
   },
 
-  removeModal (state, el) {
+  removeModal(state, el) {
     const id = el.uid || el._uid
-    state.modalStack = state.modalStack
-      .filter(({ uid }) => uid !== id)
+    state.modalStack = state.modalStack.filter(({ uid }) => uid !== id)
   },
 
-  destroyModals (state) {
+  destroyModals(state) {
     state.modalStack.forEach(({ handler }) => handler())
     state.modalStack = []
   }

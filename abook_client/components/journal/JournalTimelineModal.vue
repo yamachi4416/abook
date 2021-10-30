@@ -27,7 +27,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/scss/vars.scss";
+@import '~assets/scss/vars.scss';
 
 .journal-timeline-modal {
   .content {

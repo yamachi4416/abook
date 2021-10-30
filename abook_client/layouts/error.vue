@@ -14,11 +14,11 @@
 
     <template #footer>
       <span>
-        <button data-icon="home" @click="home" />
+        <button data-icon="home" @click="home"></button>
       </span>
-      <span />
-      <span />
-      <span />
+      <span></span>
+      <span></span>
+      <span></span>
     </template>
   </DefaultLayout>
 </template>
@@ -35,20 +35,21 @@ export default {
   },
 
   computed: {
-
-    code () {
+    code() {
       const e = this.error
       const message = e.message || ''
 
-      if ((/network error/i).test(message) ||
-          (/Loading chunk.*?failed\./i).test(message)) {
+      if (
+        /network error/i.test(message) ||
+        /Loading chunk.*?failed\./i.test(message)
+      ) {
         return 'offline'
       }
 
       return this.error.statusCode
     },
 
-    title () {
+    title() {
       const code = this.code
       const key = `errors.statusCode.${code}.title`
       return this.$te(key)
@@ -56,7 +57,7 @@ export default {
         : this.$t('errors.statusCode.default.title', this.error)
     },
 
-    message () {
+    message() {
       const code = this.code
       const key = `errors.statusCode.${code}.message`
       return this.$te(key)
@@ -65,13 +66,13 @@ export default {
     }
   },
 
-  beforeMount () {
+  beforeMount() {
     window.console.log(this.error)
     this.$store.commit('ui/stopLoading', 9)
   },
 
   methods: {
-    home () {
+    home() {
       if (this.$route.path === '/') {
         this.$router.go({ path: '/', force: true })
       } else {
@@ -83,7 +84,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/scss/vars.scss";
+@import '~assets/scss/vars.scss';
 
 #message_body {
   display: table;

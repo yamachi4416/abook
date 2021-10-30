@@ -8,7 +8,7 @@ import isBetween from 'dayjs/plugin/isBetween'
 dayjs.extend(weekday)
 dayjs.extend(isBetween)
 
-export default function datetime (...args) {
+export default function datetime(...args) {
   return dayjs.apply(dayjs, args)
 }
 

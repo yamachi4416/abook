@@ -10,40 +10,44 @@ const operators = Object.freeze({
 
 const filters = Object.freeze({
   round: a => Math.round(a),
-  ceil: a => a < 0 ? Math.floor(a) : Math.ceil(a),
-  floor: a => a < 0 ? Math.ceil(a) : Math.floor(a)
+  ceil: a => (a < 0 ? Math.floor(a) : Math.ceil(a)),
+  floor: a => (a < 0 ? Math.ceil(a) : Math.floor(a))
 })
 
-const calculate = (data) => {
-  return data.reduce((f, v) => {
-    if (v instanceof Calculator) {
-      return _ => f(v.fracVal)
-    } else if (operators[v]) {
-      return operators[v](f())
-    } else {
-      return _ => f(v)
-    }
-  }, a => a)() || Fraction.empty
+const calculate = data => {
+  return (
+    data.reduce(
+      (f, v) => {
+        if (v instanceof Calculator) {
+          return _ => f(v.fracVal)
+        } else if (operators[v]) {
+          return operators[v](f())
+        } else {
+          return _ => f(v)
+        }
+      },
+      a => a
+    )() || Fraction.empty
+  )
 }
 
 export class Calculator {
-  constructor (maxlength = 21) {
+  constructor(maxlength = 21) {
     this.maxlength = maxlength
     this.history = []
     this.data = []
     this.filter = null
   }
 
-  setFilter (val) {
+  setFilter(val) {
     this.filter = filters[val]
   }
 
-  get val () {
-    return (this.filter || (a => a))(
-      calculate(this.data).toNumber())
+  get val() {
+    return (this.filter || (a => a))(calculate(this.data).toNumber())
   }
 
-  get fracVal () {
+  get fracVal() {
     const f = calculate(this.data)
     if (this.filter) {
       return Fraction.from(String(this.filter(f.toNumber())))
@@ -52,30 +56,27 @@ export class Calculator {
     }
   }
 
-  get last () {
-    return this.isEmpty()
-      ? null : this.data[this.data.length - 1]
+  get last() {
+    return this.isEmpty() ? null : this.data[this.data.length - 1]
   }
 
-  get isEqualed () {
-    return !this.isEmpty() &&
-      this.last === '='
+  get isEqualed() {
+    return !this.isEmpty() && this.last === '='
   }
 
-  get isOperator () {
-    return !this.isEmpty() &&
-      this._isOperator(this.last)
+  get isOperator() {
+    return !this.isEmpty() && this._isOperator(this.last)
   }
 
-  _isOperator (n) {
+  _isOperator(n) {
     return !!operators[n]
   }
 
-  isEmpty () {
+  isEmpty() {
     return this.data.length === 0
   }
 
-  clear () {
+  clear() {
     if (!this.isEmpty()) {
       this.history.push([this.data, this.val])
     }
@@ -84,7 +85,7 @@ export class Calculator {
     return this
   }
 
-  delIndex (n) {
+  delIndex(n) {
     if (n < this.data.length) {
       if (!this._isOperator(this.data[n])) {
         const tmp = this.data.splice(n + 1)
@@ -97,7 +98,7 @@ export class Calculator {
     }
   }
 
-  del () {
+  del() {
     if (this.isEmpty()) {
       return this
     } else if (this.isOperator) {
@@ -116,7 +117,7 @@ export class Calculator {
     return this
   }
 
-  delCe () {
+  delCe() {
     if (this.isEmpty()) {
       return this
     }
@@ -124,7 +125,7 @@ export class Calculator {
     this.data.pop()
   }
 
-  inN (n) {
+  inN(n) {
     if (this._isOperator(n)) {
       if (this.isEmpty()) {
         if (n === '-') {
@@ -192,11 +193,13 @@ export class Calculator {
     return this
   }
 
-  inP (o, p, n) {
+  inP(o, p, n) {
     if (this.data.length >= 2) {
-      if (this.last instanceof Fraction &&
+      if (
+        this.last instanceof Fraction &&
         this.last.source === n &&
-        this.data[this.data.length - 2] === p) {
+        this.data[this.data.length - 2] === p
+      ) {
         this.data.pop()
         this.data.pop()
         return this
@@ -216,7 +219,7 @@ export class Calculator {
     return this
   }
 
-  toString () {
+  toString() {
     return `(${this.data.join(' ')})`
   }
 }

@@ -1,7 +1,7 @@
 import datetime from '@/modules/utils/datetime'
 
 export class AbookModel {
-  constructor (entity) {
+  constructor(entity) {
     this.abookId = null
     this.name = null
     this.memo = null
@@ -13,42 +13,54 @@ export class AbookModel {
     }
   }
 
-  isRegisted () {
+  isRegisted() {
     return !!this.abookId
   }
 
-  clone () {
+  clone() {
     const entity = { ...this }
     return new AbookModel(entity)
   }
 
-  dayStartOfMonth (day, format = 'YYYYMMDD') {
+  dayStartOfMonth(day, format = 'YYYYMMDD') {
     const today = (day ? datetime(day) : datetime()).startOf('day')
-    const start = datetime(this.startOfMonth(today.format('YYYYMM')), 'YYYYMMDD')
+    const start = datetime(
+      this.startOfMonth(today.format('YYYYMM')),
+      'YYYYMMDD'
+    )
     const end = datetime(this.endOfMonth(today.format('YYYYMM')), 'YYYYMMDD')
     if (today.isBetween(start, end, 'day', '[]')) {
       return start.format(format)
     } else if (today.isBefore(start)) {
-      return this.startOfMonth(today.subtract(1, 'month').format('YYYYMM'), format)
+      return this.startOfMonth(
+        today.subtract(1, 'month').format('YYYYMM'),
+        format
+      )
     } else {
       return this.startOfMonth(today.add(1, 'month').format('YYYYMM'), format)
     }
   }
 
-  dayEndOfMonth (day, format = 'YYYYMMDD') {
+  dayEndOfMonth(day, format = 'YYYYMMDD') {
     const today = (day ? datetime(day) : datetime()).startOf('day')
-    const start = datetime(this.startOfMonth(today.format('YYYYMM')), 'YYYYMMDD')
+    const start = datetime(
+      this.startOfMonth(today.format('YYYYMM')),
+      'YYYYMMDD'
+    )
     const end = datetime(this.endOfMonth(today.format('YYYYMM')), 'YYYYMMDD')
     if (today.isBetween(start, end, 'day', '[]')) {
       return end.format(format)
     } else if (today.isBefore(start)) {
-      return this.endOfMonth(today.subtract(1, 'month').format('YYYYMM'), format)
+      return this.endOfMonth(
+        today.subtract(1, 'month').format('YYYYMM'),
+        format
+      )
     } else {
       return this.endOfMonth(today.add(1, 'month').format('YYYYMM'), format)
     }
   }
 
-  startOfMonth (ym, format = 'YYYYMMDD') {
+  startOfMonth(ym, format = 'YYYYMMDD') {
     let m = datetime(ym, 'YYYYMM').startOf('month')
     if (this.startOfMonthIsPrev) {
       m = m.subtract(1, 'month')
@@ -61,14 +73,15 @@ export class AbookModel {
     return format ? m.format(format) : m
   }
 
-  endOfMonth (ym, format = 'YYYYMMDD') {
+  endOfMonth(ym, format = 'YYYYMMDD') {
     const m = datetime(this.startOfMonth(ym), 'YYYYMMDD')
       .startOf('day')
-      .add(1, 'month').subtract(1, 'day')
+      .add(1, 'month')
+      .subtract(1, 'day')
     return format ? m.format(format) : m
   }
 
-  toMonth (date) {
+  toMonth(date) {
     const m = datetime(date).startOf('day')
 
     const start = this.startOfMonth(m.format('YYYYMMDD'), null)
@@ -84,7 +97,7 @@ export class AbookModel {
     return m.format('YYYYMM')
   }
 
-  static wrap (entity) {
+  static wrap(entity) {
     if (entity) {
       return new AbookModel(entity)
     }

@@ -1,9 +1,5 @@
 <template>
-  <Modal
-    class="select-modal"
-    @close="close()"
-    @keydown="moveOnKey"
-  >
+  <Modal class="select-modal" @close="close()" @keydown="moveOnKey">
     <div class="modal-options">
       <ul>
         <li v-for="(o, i) in options" :key="i">
@@ -13,8 +9,8 @@
             @click="change(o[1])"
           >
             <div>
-              <span class="name" v-text="o[0]" />
-              <input type="radio" :name="_uid" :checked="matcher(o[1], val)">
+              <span class="name" v-text="o[0]"></span>
+              <input type="radio" :name="_uid" :checked="matcher(o[1], val)" />
             </div>
           </label>
         </li>
@@ -46,13 +42,13 @@ export default Vue.extend({
     }
   },
 
-  data () {
+  data() {
     return {
       val: this.value
     }
   },
 
-  mounted () {
+  mounted() {
     this.$nextTick(() => {
       const idx = this.options.findIndex(p => this.matcher(p[1], this.val))
       if (idx >= 0 && idx < this.options.length) {
@@ -65,7 +61,7 @@ export default Vue.extend({
   },
 
   methods: {
-    async change (val) {
+    async change(val) {
       this.val = val
       if (!this.matcher(this.value, this.val)) {
         this.$emit('change', this.val)
@@ -73,7 +69,7 @@ export default Vue.extend({
       await this.close()
     },
 
-    moveOnKey (event) {
+    moveOnKey(event) {
       const keyCode = event.keyCode
       if (keyCode === 9 || keyCode === 38 || keyCode === 40) {
         event.preventDefault()
@@ -103,7 +99,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/scss/vars.scss";
+@import '~assets/scss/vars.scss';
 
 .select-modal {
   .modal-content {
@@ -165,7 +161,7 @@ export default Vue.extend({
                 border-color: var(--enable-border-color);
 
                 &::after {
-                  content: "";
+                  content: '';
                   display: inline-block;
                   position: absolute;
                   top: 15%;

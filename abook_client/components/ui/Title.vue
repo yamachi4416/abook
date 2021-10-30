@@ -5,12 +5,12 @@
         v-if="!['/', '/menu', '/login'].includes($route.path)"
         data-icon="arrow_back"
         @click.once="back()"
-      />
+      ></button>
     </div>
     <h1 class="content">
-      <slot name="default" />
+      <slot name="default"></slot>
     </h1>
-    <div class="btn" />
+    <div class="btn"></div>
   </div>
 </template>
 
@@ -35,7 +35,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/scss/vars.scss";
+@import '~assets/scss/vars.scss';
 
 .title {
   display: flex;

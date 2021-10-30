@@ -2,7 +2,7 @@
   <div class="journal-edit">
     <div class="journal-edit--accrualDate">
       <FormGroup object="journal" field="accrualDate" :errors="errors">
-        <input v-model="journal.accrualDate" type="date">
+        <input v-model="journal.accrualDate" type="date" />
       </FormGroup>
     </div>
 
@@ -12,7 +12,7 @@
           v-model="journal.journalDiv"
           :empty="null"
           :options="$t('select.journalDiv')"
-          :mapper="(o) => [o.label, o.value]"
+          :mapper="o => [o.label, o.value]"
           @change="changeJournalDiv()"
         />
       </FormGroup>
@@ -28,7 +28,7 @@
         <Selects
           v-model="journal.debitAccount"
           :options="debitAccounts"
-          :mapper="(o) => [o.name, o]"
+          :mapper="o => [o.name, o]"
           :matcher="(a, b) => a.id === b.id"
           @change="changeDebitAccount()"
         />
@@ -45,26 +45,32 @@
         <Selects
           v-model="journal.creditAccount"
           :options="creditAccounts"
-          :mapper="(o) => [o.name, o]"
+          :mapper="o => [o.name, o]"
           :matcher="(a, b) => a.id === b.id"
           @change="changeCreditAccount()"
         />
       </FormGroup>
     </div>
 
-    <div v-if="journal.fee && feeAccounts.length > 0" class="journal-edit--fee-accountId">
+    <div
+      v-if="journal.fee && feeAccounts.length > 0"
+      class="journal-edit--fee-accountId"
+    >
       <FormGroup object="journal" field="fee.account" :errors="errors">
         <Selects
           v-model="journal.fee.account"
           :options="feeAccounts"
-          :mapper="(o) => [o.name, o]"
+          :mapper="o => [o.name, o]"
           :matcher="(a, b) => a.id === b.id"
           @change="changeFeeAccount()"
         />
       </FormGroup>
     </div>
 
-    <div v-if="journal.fee && journal.fee.account" class="journal-edit--feeAmount">
+    <div
+      v-if="journal.fee && journal.fee.account"
+      class="journal-edit--feeAmount"
+    >
       <FormGroup object="journal" field="fee.feeAmount" :errors="errors">
         <CalcNumber
           ref="feeAmount"
@@ -74,7 +80,10 @@
       </FormGroup>
     </div>
 
-    <div class="journal-edit--amount" :class="{ 'use-fee': journal.fee && journal.fee.account }">
+    <div
+      class="journal-edit--amount"
+      :class="{ 'use-fee': journal.fee && journal.fee.account }"
+    >
       <FormGroup
         object="journal"
         field="amount"
@@ -91,18 +100,18 @@
       </FormGroup>
     </div>
 
-    <div v-if="journal.fee && journal.fee.account" class="journal-edit--fee-amount">
+    <div
+      v-if="journal.fee && journal.fee.account"
+      class="journal-edit--fee-amount"
+    >
       <FormGroup object="journal" field="fee.amount" :errors="errors">
-        <CalcNumber
-          v-model="journal.fee.amount"
-          @change="changeFee()"
-        />
+        <CalcNumber v-model="journal.fee.amount" @change="changeFee()" />
       </FormGroup>
     </div>
 
     <div class="journal-edit--memo">
       <FormGroup object="journal" field="memo" :errors="errors">
-        <textarea v-model="journal.memo" />
+        <textarea v-model="journal.memo"></textarea>
       </FormGroup>
     </div>
   </div>
@@ -130,11 +139,11 @@ export default {
   },
 
   computed: {
-    journal () {
+    journal() {
       return this.editmodel
     },
 
-    debitAccounts () {
+    debitAccounts() {
       const a1 = this.original.debitAccount
       const a2 = this.journal.debitAccount
       return this.getDebitAccounts().filter(
@@ -142,7 +151,7 @@ export default {
       )
     },
 
-    creditAccounts () {
+    creditAccounts() {
       const a1 = this.original.creditAccount
       const a2 = this.journal.creditAccount
       return this.getCreditAccounts().filter(
@@ -150,23 +159,23 @@ export default {
       )
     },
 
-    feeAccounts () {
+    feeAccounts() {
       const a1 = this.original.fee && this.original.fee.account
       return this.accounts
         .filter(a => a.financeDiv === 2)
         .filter(a => (a.avaliable && a.useFee) || (a1 && a.id === a1.id))
     },
 
-    usuallyUsedForPayment () {
+    usuallyUsedForPayment() {
       return this.creditAccounts.find(a => a.usuallyUsedForPayment)
     },
 
-    usuallyUsedForReceipt () {
+    usuallyUsedForReceipt() {
       return this.debitAccounts.find(a => a.usuallyUsedForReceipt)
     }
   },
 
-  mounted () {
+  mounted() {
     if (this.journal && !this.journal.isRegisted()) {
       if (this.journal.journalDiv) {
         this.changeJournalDiv()
@@ -175,7 +184,7 @@ export default {
   },
 
   methods: {
-    getDebitAccounts () {
+    getDebitAccounts() {
       if (this.journal.journalDiv === 1) {
         return this.accounts.filter(a => [3, 4].includes(a.financeDiv))
       }
@@ -198,7 +207,7 @@ export default {
       return this.accounts.filter(a => [2, 3, 4].includes(a.financeDiv))
     },
 
-    getCreditAccounts () {
+    getCreditAccounts() {
       if (this.journal.journalDiv === 1) {
         return this.accounts.filter(a => [1].includes(a.financeDiv))
       }
@@ -220,7 +229,7 @@ export default {
       return this.accounts.filter(a => [1, 3, 4].includes(a.financeDiv))
     },
 
-    changeDebitAccount () {
+    changeDebitAccount() {
       if (this.journal.debitAccount) {
         const financeDiv = this.journal.debitAccount.financeDiv
         if (financeDiv === 2) {
@@ -240,7 +249,7 @@ export default {
       }
     },
 
-    changeCreditAccount () {
+    changeCreditAccount() {
       if (this.journal.creditAccount) {
         const financeDiv = this.journal.creditAccount.financeDiv
         if (financeDiv === 1) {
@@ -260,15 +269,23 @@ export default {
       }
     },
 
-    changeJournalDiv () {
+    changeJournalDiv() {
       if (this.journal.debitAccount) {
-        if (!this.getDebitAccounts().find(a => a.id === this.journal.debitAccount.id)) {
+        if (
+          !this.getDebitAccounts().find(
+            a => a.id === this.journal.debitAccount.id
+          )
+        ) {
           this.journal.debitAccount = null
         }
       }
 
       if (this.journal.creditAccount) {
-        if (!this.getCreditAccounts().find(a => a.id === this.journal.creditAccount.id)) {
+        if (
+          !this.getCreditAccounts().find(
+            a => a.id === this.journal.creditAccount.id
+          )
+        ) {
           this.journal.creditAccount = null
         }
       }
@@ -292,7 +309,7 @@ export default {
       }
     },
 
-    changeFeeAccount () {
+    changeFeeAccount() {
       if (this.journal.fee.account) {
         this.journal.fee.feeAmount = this.journal.amount
       } else {
@@ -300,7 +317,7 @@ export default {
       }
     },
 
-    changeFeeAmount () {
+    changeFeeAmount() {
       const journal = this.journal
 
       if (!(journal.fee && journal.fee.account)) {
@@ -327,7 +344,7 @@ export default {
       }
     },
 
-    changeAmount () {
+    changeAmount() {
       const journal = this.journal
 
       if (!(journal.fee && journal.fee.account)) {
@@ -357,7 +374,7 @@ export default {
       }
     },
 
-    changeFee () {
+    changeFee() {
       const journal = this.journal
 
       if (!(journal.fee && journal.fee.account)) {
@@ -384,7 +401,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/scss/vars.scss";
+@import '~assets/scss/vars.scss';
 
 .journal-edit {
   display: grid;
@@ -436,27 +453,26 @@ export default {
     grid-template-columns: 1fr;
     grid-template-rows: auto;
     grid-template-areas:
-      "accrualDate"
-      "journalDiv"
-      "debitAccount"
-      "creditAccountId"
-      "fee-accountId"
-      "feeAmount"
-      "amount"
-      "fee-amount"
-      "memo";
+      'accrualDate'
+      'journalDiv'
+      'debitAccount'
+      'creditAccountId'
+      'fee-accountId'
+      'feeAmount'
+      'amount'
+      'fee-amount'
+      'memo';
   }
 
   @include __media_tablet_pc {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: auto;
     grid-template-areas:
-      "accrualDate  none            none"
-      "journalDiv   none            none"
-      "debitAccount creditAccountId fee-accountId"
-      "feeAmount    amount          fee-amount"
-      "memo         memo            memo";
+      'accrualDate  none            none'
+      'journalDiv   none            none'
+      'debitAccount creditAccountId fee-accountId'
+      'feeAmount    amount          fee-amount'
+      'memo         memo            memo';
   }
 }
-
 </style>

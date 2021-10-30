@@ -26,9 +26,15 @@
                     @click.prevent.once="go(link)"
                     @keypress.enter.prevent.once="go(link)"
                   >
-                    <span :data-icon="link.icon" class="menu-item-icon" />
+                    <span :data-icon="link.icon" class="menu-item-icon"></span>
                     <span class="menu-item-name">
-                      {{ $t(`pages.menu.items.${link.category || category}.items.${link.name}`) }}
+                      {{
+                        $t(
+                          `pages.menu.items.${
+                            link.category || category
+                          }.items.${link.name}`
+                        )
+                      }}
                     </span>
                   </li>
                 </template>
@@ -47,9 +53,10 @@ import { mapGetters } from 'vuex'
 export default {
   scrollToTop: true,
 
-  async asyncData ({ store }) {
-    const abook = store.getters['abooks/current'] ||
-       await store.dispatch('abooks/fetchCurrent')
+  async asyncData({ store }) {
+    const abook =
+      store.getters['abooks/current'] ||
+      (await store.dispatch('abooks/fetchCurrent'))
 
     const yyyymm = abook.toMonth()
 
@@ -133,7 +140,7 @@ export default {
       abook: 'abooks/current'
     }),
 
-    title () {
+    title() {
       return this.$t(`pages.menu.title${this.abook.name ? '1' : '2'}`, {
         abook: this.abook.name,
         dev: process.env.dev ? this.$t('label.dev') : ''
@@ -141,12 +148,12 @@ export default {
     }
   },
 
-  mounted () {
+  mounted() {
     this.$savedpos.clear()
   },
 
   methods: {
-    go (link) {
+    go(link) {
       this.$router.push(link.to)
     }
   }
@@ -154,7 +161,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/scss/ui/cards.scss";
+@import '~assets/scss/ui/cards.scss';
 
 .cards {
   @include __cards;

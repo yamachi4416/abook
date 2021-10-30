@@ -23,7 +23,7 @@
           {{ $t('actions.prev_day') }}
         </button>
       </span>
-      <span />
+      <span></span>
       <span>
         <button data-icon="add" @click.once="edit()">
           {{ $t('actions.add') }}
@@ -42,13 +42,14 @@
 import datetime from '@/modules/utils/datetime'
 import { BackableMixin, SavePosMixin } from '@/modules/ui/mixins'
 export default {
-  mixins: [
-    BackableMixin, SavePosMixin
-  ],
+  mixins: [BackableMixin, SavePosMixin],
 
-  async asyncData ({ store, params, query }) {
+  async asyncData({ store, params, query }) {
     const date = datetime(params.date, 'YYYYMMDD').format('YYYY-MM-DD')
-    const journals = await store.dispatch('journals/searchByDate', { date, query })
+    const journals = await store.dispatch('journals/searchByDate', {
+      date,
+      query
+    })
     return {
       journals,
       date,
@@ -57,19 +58,23 @@ export default {
   },
 
   methods: {
-    prev () {
+    prev() {
       this.$flashattrs.setAttr('transType', 'prev')
-      const date = datetime(`${this.date}`, 'YYYYMMDD').subtract(1, 'days').format('YYYYMMDD')
+      const date = datetime(`${this.date}`, 'YYYYMMDD')
+        .subtract(1, 'days')
+        .format('YYYYMMDD')
       this.$router.replace({ params: { date }, query: this.query })
     },
 
-    next () {
+    next() {
       this.$flashattrs.setAttr('transType', 'next')
-      const date = datetime(`${this.date}`, 'YYYYMMDD').add(1, 'days').format('YYYYMMDD')
+      const date = datetime(`${this.date}`, 'YYYYMMDD')
+        .add(1, 'days')
+        .format('YYYYMMDD')
       this.$router.replace({ params: { date }, query: this.query })
     },
 
-    async edit (item) {
+    async edit(item) {
       if (item) {
         await this.$router.push(`/journals/${item.id}`)
       } else {

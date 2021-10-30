@@ -6,7 +6,7 @@
         'hide-footer': hideFooter,
         [transition]: true
       }"
-      :style="{ height: `${vh}px`}"
+      :style="{ height: `${vh}px` }"
     >
       <div
         class="header"
@@ -15,11 +15,11 @@
         }"
       >
         <Title>
-          <slot name="title" />
+          <slot name="title"></slot>
         </Title>
       </div>
       <div class="main" :class="{ smooth: smoothScroll }">
-        <slot name="default" />
+        <slot name="default"></slot>
       </div>
       <div
         class="footer"
@@ -28,7 +28,7 @@
         }"
       >
         <div>
-          <slot name="footer" />
+          <slot name="footer"></slot>
         </div>
       </div>
     </div>
@@ -72,7 +72,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/scss/vars.scss";
+@import '~assets/scss/vars.scss';
 
 .default {
   position: relative;
@@ -152,7 +152,7 @@ export default {
           &::before {
             width: 100%;
           }
-          font-size: .9em;
+          font-size: 0.9em;
         }
       }
     }
@@ -220,13 +220,13 @@ export default {
 
 .page-leave-active {
   .main {
-    transition: all .2s ease-out;
+    transition: all 0.2s ease-out;
   }
 }
 
 .page-enter-active {
   .main {
-    transition: all .2s ease-in;
+    transition: all 0.2s ease-in;
   }
 }
 </style>

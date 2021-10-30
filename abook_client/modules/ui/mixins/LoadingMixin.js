@@ -1,14 +1,14 @@
 export default {
   methods: {
-    startLoading () {
+    startLoading() {
       this.$store.commit('ui/startLoading', 2)
     },
 
-    stopLoading () {
+    stopLoading() {
       this.$store.commit('ui/stopLoading', 2)
     },
 
-    async useLoading (delegate, stop = true) {
+    async useLoading(delegate, stop = true) {
       const active = document.activeElement
       if (active) {
         active.blur()

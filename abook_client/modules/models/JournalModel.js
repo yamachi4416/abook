@@ -1,7 +1,7 @@
 import datetime from '@/modules/utils/datetime'
 
 export class JournalModel {
-  constructor (entity) {
+  constructor(entity) {
     this.id = null
     this.accrualDate = datetime().format('YYYY-MM-DD')
     this.journalDiv = null
@@ -21,17 +21,19 @@ export class JournalModel {
     }
   }
 
-  isRegisted () {
+  isRegisted() {
     return (this.id || '').length > 0
   }
 
-  isUseAccountId (accId) {
-    return this.creditAccount.id === accId ||
+  isUseAccountId(accId) {
+    return (
+      this.creditAccount.id === accId ||
       this.debitAccount.id === accId ||
       (this.fee && this.fee.account.id === accId)
+    )
   }
 
-  clone () {
+  clone() {
     const entity = { ...this }
     if (this.creditAccount) {
       entity.creditAccount = { ...this.creditAccount }
@@ -47,31 +49,30 @@ export class JournalModel {
     return new JournalModel(entity)
   }
 
-  static wrap (entity) {
+  static wrap(entity) {
     if (entity) {
       return new JournalModel(entity)
     }
     return null
   }
 
-  static wraps (entities) {
+  static wraps(entities) {
     return (entities || []).map(this.wrap)
   }
 
-  static groupByAccrualDate (journals) {
+  static groupByAccrualDate(journals) {
     const groups = journals.reduce((p, j) => {
       const key = j.accrualDate
       p[key] = [...(p[key] || []), j]
       return p
     }, {})
 
-    return Object.entries(groups)
-      .map(d => ({ date: d[0], items: d[1] }))
+    return Object.entries(groups).map(d => ({ date: d[0], items: d[1] }))
   }
 
-  static summaryOfFinance (journals, accounts) {
-    return Object.values(this.summaryOfAccount(journals, accounts))
-      .reduce((p, a) => {
+  static summaryOfFinance(journals, accounts) {
+    return Object.values(this.summaryOfAccount(journals, accounts)).reduce(
+      (p, a) => {
         if (!p[a.financeDiv]) {
           p[a.financeDiv] = {
             financeDiv: a.financeDiv,
@@ -89,10 +90,12 @@ export class JournalModel {
         d.amount += a.amount
 
         return p
-      }, {})
+      },
+      {}
+    )
   }
 
-  static summaryOfAccount (journals, accounts) {
+  static summaryOfAccount(journals, accounts) {
     const mapAccount = a => ({
       id: a.id,
       name: a.name,
@@ -114,8 +117,8 @@ export class JournalModel {
       return p
     }, {})
 
-    journals.forEach((m) => {
-      m.items.forEach((j) => {
+    journals.forEach(m => {
+      m.items.forEach(j => {
         putAccount(accMap, j.creditAccount).items.push(j)
         putAccount(accMap, j.debitAccount).items.push(j)
         if (j.fee) {
@@ -124,37 +127,40 @@ export class JournalModel {
       })
     })
 
-    return Object.values(accMap).sort((a, b) => {
-      if (a.financeDiv === b.financeDiv) {
-        return a.dispOrder - b.dispOrder
-      } else {
-        return a.financeDiv - b.financeDiv
-      }
-    }).reduce((ret, a) => {
-      const debit = a.items.reduce((p, j) => {
-        if (j.debitAccount.id === a.id) {
-          return p + j.amount - (j.fee ? j.fee.amount : 0)
-        } else if (j.fee && j.fee.account.id === a.id) {
-          return p + j.fee.amount
+    return Object.values(accMap)
+      .sort((a, b) => {
+        if (a.financeDiv === b.financeDiv) {
+          return a.dispOrder - b.dispOrder
+        } else {
+          return a.financeDiv - b.financeDiv
         }
-        return p
-      }, 0)
+      })
+      .reduce((ret, a) => {
+        const debit = a.items.reduce((p, j) => {
+          if (j.debitAccount.id === a.id) {
+            return p + j.amount - (j.fee ? j.fee.amount : 0)
+          } else if (j.fee && j.fee.account.id === a.id) {
+            return p + j.fee.amount
+          }
+          return p
+        }, 0)
 
-      const credit = a.items.reduce((p, j) => {
-        if (j.creditAccount.id === a.id) {
-          return p + j.amount
-        }
-        return p
-      }, 0)
+        const credit = a.items.reduce((p, j) => {
+          if (j.creditAccount.id === a.id) {
+            return p + j.amount
+          }
+          return p
+        }, 0)
 
-      a.debit = debit
-      a.credit = credit
-      a.amount = [1, 4].includes(a.financeDiv)
-        ? credit - debit : debit - credit
+        a.debit = debit
+        a.credit = credit
+        a.amount = [1, 4].includes(a.financeDiv)
+          ? credit - debit
+          : debit - credit
 
-      ret[a.id] = a
+        ret[a.id] = a
 
-      return ret
-    }, {})
+        return ret
+      }, {})
   }
 }

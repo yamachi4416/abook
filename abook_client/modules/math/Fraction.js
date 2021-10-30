@@ -1,6 +1,6 @@
 const gcm = (a, b) => {
   if (a < b) {
-    [a, b] = [b, a]
+    ;[a, b] = [b, a]
   }
 
   if (b === 0) {
@@ -9,14 +9,14 @@ const gcm = (a, b) => {
 
   let r = a % b
   while (r !== 0) {
-    [a, b] = [b, r]
+    ;[a, b] = [b, r]
     r = a % b
   }
 
   return b
 }
 
-const toNumStr = (n) => {
+const toNumStr = n => {
   const s = String(n)
   if (s.includes('e')) {
     const xs = s.split('e')
@@ -39,7 +39,7 @@ const toNumStr = (n) => {
 }
 
 export class Fraction {
-  static from (input) {
+  static from(input) {
     const source = toNumStr(input)
     const xs = source.split('.')
     const n1 = new Fraction(Number(xs[0] || 0), 1, source)
@@ -53,58 +53,50 @@ export class Fraction {
     }
   }
 
-  static get empty () {
-    return { toNumber () { return 0 } }
+  static get empty() {
+    return {
+      toNumber() {
+        return 0
+      }
+    }
   }
 
-  constructor (numerator = 0, denomitor = 1, source = '') {
+  constructor(numerator = 0, denomitor = 1, source = '') {
     const g = gcm(numerator, denomitor)
     this._n = numerator / g
     this._d = denomitor / g
     this.source = source || toNumStr(this.toNumber())
   }
 
-  get n () {
+  get n() {
     return this._n
   }
 
-  get d () {
+  get d() {
     return this._d
   }
 
-  add (o) {
-    return new Fraction(
-      this.n * o.d + o.n * this.d,
-      this.d * o.d
-    )
+  add(o) {
+    return new Fraction(this.n * o.d + o.n * this.d, this.d * o.d)
   }
 
-  sub (o) {
-    return new Fraction(
-      this.n * o.d - o.n * this.d,
-      this.d * o.d
-    )
+  sub(o) {
+    return new Fraction(this.n * o.d - o.n * this.d, this.d * o.d)
   }
 
-  mul (o) {
-    return new Fraction(
-      this.n * o.n,
-      this.d * o.d
-    )
+  mul(o) {
+    return new Fraction(this.n * o.n, this.d * o.d)
   }
 
-  div (o) {
-    return new Fraction(
-      this.n * o.d,
-      this.d * o.n
-    )
+  div(o) {
+    return new Fraction(this.n * o.d, this.d * o.n)
   }
 
-  toNumber () {
+  toNumber() {
     return this.n / this.d
   }
 
-  toString () {
+  toString() {
     if (this.source) {
       if (this.source.includes('.')) {
         return this.source.replace(/^0+/, '0')

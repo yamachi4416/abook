@@ -1,7 +1,7 @@
 import { mapMutations, mapActions } from 'vuex'
 
 class Navi {
-  constructor ({ route, store, redirect, app }) {
+  constructor({ route, store, redirect, app }) {
     Object.assign(this, {
       ...mapMutations({
         _startLoading: 'ui/startLoading',
@@ -22,33 +22,30 @@ class Navi {
     })
   }
 
-  startLoading () {
+  startLoading() {
     this._startLoading(3)
   }
 
-  stopLoading () {
+  stopLoading() {
     this._stopLoading(3)
   }
 
-  redirectToLogin () {
+  redirectToLogin() {
     if (this.route.path !== '/login') {
       this.redirect('/login')
     }
     this.stopLoading()
   }
 
-  redirectToMenu () {
+  redirectToMenu() {
     if (this.route.path !== '/menu') {
       this.redirect('/menu')
     }
     this.stopLoading()
   }
 
-  async redirectToMenuSync () {
-    await Promise.all([
-      this.syncUser(),
-      this.fetchAbook()
-    ])
+  async redirectToMenuSync() {
+    await Promise.all([this.syncUser(), this.fetchAbook()])
     this.redirectToMenu()
   }
 }
@@ -58,8 +55,9 @@ export default async ({ route, store, $flashattrs, redirect, error, app }) => {
 
   if (route.path === '/') {
     navi.startLoading()
-    navi.getUser()
-      .then(async (user) => {
+    navi
+      .getUser()
+      .then(async user => {
         const isLogin = $flashattrs.getAttr('login')
         if (user) {
           await navi.redirectToMenuSync()
@@ -85,12 +83,14 @@ export default async ({ route, store, $flashattrs, redirect, error, app }) => {
     }
   }
 
-  navi.watchUser({ name: 'router' })
-    .then((user) => {
+  navi
+    .watchUser({ name: 'router' })
+    .then(user => {
       if (!user) {
         navi.redirectToLogin()
       } else if (route.path === '/login') {
         navi.redirectToMenu()
       }
-    }).catch(() => {})
+    })
+    .catch(() => {})
 }

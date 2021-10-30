@@ -1,5 +1,5 @@
 export default ({ $axios, store, app }) => {
-  $axios.interceptors.request.use(async (config) => {
+  $axios.interceptors.request.use(async config => {
     const token = await store.dispatch('users/getToken')
     if (token) {
       config.headers.authorization = `Bearer ${token}`

@@ -7,10 +7,10 @@
   >
     <div ref="container" class="form">
       <header>
-        <h1 class="title" v-text="title" />
+        <h1 class="title" v-text="title"></h1>
       </header>
       <main>
-        <p class="message" v-text="message" />
+        <p class="message" v-text="message"></p>
       </main>
       <div class="btns">
         <button ref="first" class="btn btn--cancel" @click.once="cancel">
@@ -43,12 +43,12 @@ export default Vue.extend({
   },
 
   methods: {
-    async ok () {
+    async ok() {
       this.$emit('ok')
       await this.close()
     },
 
-    async cancel () {
+    async cancel() {
       this.$emit('cancel')
       await this.close()
     }
@@ -57,9 +57,9 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/scss/vars.scss";
-@import "~assets/scss/ui/form.scss";
-@import "~assets/scss/ui/inputs.scss";
+@import '~assets/scss/vars.scss';
+@import '~assets/scss/ui/form.scss';
+@import '~assets/scss/ui/inputs.scss';
 
 .confirm-modal {
   .form {

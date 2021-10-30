@@ -1,6 +1,6 @@
 <template>
   <compnent :is="tagName" v-bind="$attrs">
-    <slot name="default" />
+    <slot name="default"></slot>
   </compnent>
 </template>
 
@@ -37,26 +37,26 @@ export default {
   },
   watch: {
     disabled: {
-      handler (val, oldVal) {
+      handler(val, oldVal) {
         this.start()
       }
     }
   },
-  mounted () {
+  mounted() {
     this.start()
   },
-  beforeDestroy () {
+  beforeDestroy() {
     this.end()
   },
   methods: {
-    start () {
+    start() {
       if (this.disabled) {
         this.end()
         return
       }
       this.end()
 
-      function index (el) {
+      function index(el) {
         if (!el || !el.parentElement) {
           return -1
         }
@@ -71,12 +71,12 @@ export default {
         forceFallback: true,
         dragClass: 'drag-class',
 
-        setData: (dataTransfer) => {
+        setData: dataTransfer => {
           dataTransfer.setData('text', '')
           dataTransfer.setDragImage(document.createElement('p'), 0, 0)
         },
 
-        onStart: async (evt) => {
+        onStart: async evt => {
           this.$emit('dragstart', evt)
           await this.$nextTick()
         },
@@ -96,14 +96,14 @@ export default {
           }
         },
 
-        onUpdate: async (evt) => {
+        onUpdate: async evt => {
           this.$emit('dragend', evt)
           await this.$nextTick()
         }
       })
     },
 
-    end () {
+    end() {
       if (this._sortable) {
         this._sortable.destroy()
         this._sortable = null

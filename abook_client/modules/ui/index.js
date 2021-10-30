@@ -9,10 +9,12 @@ export const showConfirm = ({ parent, title, message }) => {
     }
   })
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     let result = false
 
-    m.$on('ok', () => { result = true })
+    m.$on('ok', () => {
+      result = true
+    })
     m.$on('close', () => resolve(result))
 
     const div = document.createElement('div')

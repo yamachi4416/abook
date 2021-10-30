@@ -1,8 +1,5 @@
 <template>
-  <Modal
-    class="account-summary-modal"
-    @close="close()"
-  >
+  <Modal class="account-summary-modal" @close="close()">
     <div class="content">
       <div v-for="(f, fd) in summary" :key="`fd-${fd}`">
         <div
@@ -56,7 +53,7 @@ export default Vue.extend({
   },
 
   computed: {
-    summary () {
+    summary() {
       return JournalModel.summaryOfFinance(this.journals)
     }
   }
@@ -64,7 +61,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/scss/vars.scss";
+@import '~assets/scss/vars.scss';
 
 .account-summary-modal {
   .content {
@@ -99,22 +96,22 @@ export default Vue.extend({
         border-bottom: 1px solid var(--them-color-border-sub);
       }
 
-      &[finance="1"] > * {
+      &[finance='1'] > * {
         color: #fff;
         background-color: #99d;
       }
 
-      &[finance="2"] > * {
+      &[finance='2'] > * {
         color: #fff;
         background-color: #d88;
       }
 
-      &[finance="3"] > * {
+      &[finance='3'] > * {
         color: #fff;
         background-color: #9d9;
       }
 
-      &[finance="4"] > * {
+      &[finance='4'] > * {
         color: #fff;
         background-color: #69d;
       }

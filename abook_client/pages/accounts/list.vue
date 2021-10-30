@@ -8,8 +8,8 @@
       <table class="account-table">
         <thead>
           <tr>
-            <th v-text="$t('form.financeName')" />
-            <th v-text="$t('form.name')" />
+            <th v-text="$t('form.financeName')"></th>
+            <th v-text="$t('form.name')"></th>
           </tr>
         </thead>
         <Sortable
@@ -17,15 +17,11 @@
           tag-name="tbody"
           :items="accounts"
           :disabled="sortDisabled"
-          :class="{ 'clickable': sortDisabled }"
+          :class="{ clickable: sortDisabled }"
           :group-keys="['financeDiv']"
           @dragend="sortEnd"
         >
-          <tr
-            v-for="a in accounts"
-            :key="a.id"
-            @click="edit(a.id)"
-          >
+          <tr v-for="a in accounts" :key="a.id" @click="edit(a.id)">
             <td>
               <span class="badge" :badge="a.financeDiv">
                 {{ $t(`select.financeDiv.${a.financeDiv}.label`) }}
@@ -34,14 +30,17 @@
             <td>
               <span class="account-name">
                 <span class="account-name--ball">
-                  <span class="color-ball" :style="{ background: a.color }" />
+                  <span
+                    class="color-ball"
+                    :style="{ background: a.color }"
+                  ></span>
                 </span>
                 <span class="account-name--name">{{ a.name }}</span>
                 <span
                   v-if="!sortDisabled"
                   class="account-name--handle fill"
                   data-icon="drag_handle"
-                />
+                ></span>
               </span>
             </td>
           </tr>
@@ -56,15 +55,12 @@
         </button>
       </span>
       <span>
-        <button
-          :data-icon="sortDisabled ? 'sort' : 'done'"
-          @click="sortToggle"
-        >
+        <button :data-icon="sortDisabled ? 'sort' : 'done'" @click="sortToggle">
           {{ $t(`actions.${sortDisabled ? 'sort' : 'done'}`) }}
         </button>
       </span>
-      <span />
-      <span />
+      <span></span>
+      <span></span>
     </template>
   </DefaultLayout>
 </template>
@@ -76,7 +72,7 @@ import { SavePosMixin, LoadingMixin } from '@/modules/ui/mixins'
 export default {
   mixins: [SavePosMixin, LoadingMixin],
 
-  async asyncData ({ store }) {
+  async asyncData({ store }) {
     return {
       accounts: await store.dispatch('accounts/getAll'),
       sortDisabled: true
@@ -89,17 +85,17 @@ export default {
       updateDispOrders: 'accounts/updateDispOrders'
     }),
 
-    edit (id) {
+    edit(id) {
       if (this.sortDisabled) {
         this.$router.push(`/accounts/${id}`)
       }
     },
 
-    add () {
+    add() {
       this.$router.push('/accounts/0')
     },
 
-    async sortToggle () {
+    async sortToggle() {
       if (this.sortDisabled) {
         this.sortDisabled = false
       } else {
@@ -111,7 +107,7 @@ export default {
       }
     },
 
-    sortEnd (evt) {
+    sortEnd(evt) {
       const { oldIndex, newIndex } = evt
       this.accounts.splice(newIndex, 0, this.accounts.splice(oldIndex, 1)[0])
     }
@@ -120,17 +116,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/scss/ui/table.scss";
-@import "~assets/scss/ui/inputs.scss";
+@import '~assets/scss/ui/table.scss';
+@import '~assets/scss/ui/inputs.scss';
 
 .account-table {
   @include __table;
 
   max-width: 100%;
 
-  thead, tbody {
+  thead,
+  tbody {
     tr {
-      th, td {
+      th,
+      td {
         text-align: left;
         &:first-child {
           width: 1%;

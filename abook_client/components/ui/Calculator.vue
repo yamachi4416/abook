@@ -27,7 +27,7 @@
               @click="toggleFilter('ceil')"
               @touchend.prevent="$event.target.click()"
               v-text="$t('calc.roundUp')"
-            />
+            ></button>
           </td>
           <td>
             <button
@@ -35,7 +35,7 @@
               @click="toggleFilter('floor')"
               @touchend.prevent="$event.target.click()"
               v-text="$t('calc.roundDown')"
-            />
+            ></button>
           </td>
           <td>
             <button
@@ -43,7 +43,7 @@
               @click="toggleFilter('round')"
               @touchend.prevent="$event.target.click()"
               v-text="$t('calc.round')"
-            />
+            ></button>
           </td>
           <td>
             <button
@@ -51,7 +51,7 @@
               @click="ok()"
               @touchend.prevent="$event.target.click()"
               v-text="'OK'"
-            />
+            ></button>
           </td>
         </tr>
 
@@ -61,28 +61,28 @@
               @click="inP('÷', '×', tax1)"
               @touchend.prevent="$event.target.click()"
               v-text="`-${labelTax1}%`"
-            />
+            ></button>
           </td>
           <td>
             <button
               @click="inP('×', '÷', tax1)"
               @touchend.prevent="$event.target.click()"
               v-text="`+${labelTax1}%`"
-            />
+            ></button>
           </td>
           <td>
             <button
               @click="inP('÷', '×', tax2)"
               @touchend.prevent="$event.target.click()"
               v-text="`-${labelTax2}%`"
-            />
+            ></button>
           </td>
           <td>
             <button
               @click="inP('×', '÷', tax2)"
               @touchend.prevent="$event.target.click()"
               v-text="`+${labelTax2}%`"
-            />
+            ></button>
           </td>
         </tr>
 
@@ -93,7 +93,7 @@
               @click="delCe()"
               @touchend.prevent="$event.target.click()"
               v-text="'CE'"
-            />
+            ></button>
           </td>
           <td>
             <button
@@ -101,7 +101,7 @@
               @click="clear()"
               @touchend.prevent="$event.target.click()"
               v-text="'CA'"
-            />
+            ></button>
           </td>
           <td>
             <button
@@ -109,7 +109,7 @@
               @click="del()"
               @touchend.prevent="$event.target.click()"
               v-text="'DEL'"
-            />
+            ></button>
           </td>
           <td>
             <button
@@ -117,7 +117,7 @@
               @click="inN('÷')"
               @touchend.prevent="$event.target.click()"
               v-text="'÷'"
-            />
+            ></button>
           </td>
         </tr>
 
@@ -128,7 +128,7 @@
               @click="inN('7')"
               @touchend.prevent="$event.target.click()"
               v-text="'7'"
-            />
+            ></button>
           </td>
           <td>
             <button
@@ -136,7 +136,7 @@
               @click="inN('8')"
               @touchend.prevent="$event.target.click()"
               v-text="'8'"
-            />
+            ></button>
           </td>
           <td>
             <button
@@ -144,7 +144,7 @@
               @click="inN('9')"
               @touchend.prevent="$event.target.click()"
               v-text="'9'"
-            />
+            ></button>
           </td>
           <td>
             <button
@@ -152,7 +152,7 @@
               @click="inN('×')"
               @touchend.prevent="$event.target.click()"
               v-text="'×'"
-            />
+            ></button>
           </td>
         </tr>
 
@@ -163,7 +163,7 @@
               @click="inN('4')"
               @touchend.prevent="$event.target.click()"
               v-text="'4'"
-            />
+            ></button>
           </td>
           <td>
             <button
@@ -171,7 +171,7 @@
               @click="inN('5')"
               @touchend.prevent="$event.target.click()"
               v-text="5"
-            />
+            ></button>
           </td>
           <td>
             <button
@@ -179,7 +179,7 @@
               @click="inN('6')"
               @touchend.prevent="$event.target.click()"
               v-text="'6'"
-            />
+            ></button>
           </td>
           <td>
             <button
@@ -187,7 +187,7 @@
               @click="inN('-')"
               @touchend.prevent="$event.target.click()"
               v-text="'-'"
-            />
+            ></button>
           </td>
         </tr>
 
@@ -198,7 +198,7 @@
               @click="inN('1')"
               @touchend.prevent="$event.target.click()"
               v-text="'1'"
-            />
+            ></button>
           </td>
           <td>
             <button
@@ -206,7 +206,7 @@
               @click="inN('2')"
               @touchend.prevent="$event.target.click()"
               v-text="'2'"
-            />
+            ></button>
           </td>
           <td>
             <button
@@ -214,7 +214,7 @@
               @click="inN('3')"
               @touchend.prevent="$event.target.click()"
               v-text="'3'"
-            />
+            ></button>
           </td>
           <td>
             <button
@@ -222,7 +222,7 @@
               @click="inN('+')"
               @touchend.prevent="$event.target.click()"
               v-text="'+'"
-            />
+            ></button>
           </td>
         </tr>
 
@@ -233,7 +233,7 @@
               @click="inN('0')"
               @touchend.prevent="$event.target.click()"
               v-text="'0'"
-            />
+            ></button>
           </td>
           <td>
             <button
@@ -241,7 +241,7 @@
               @click="inN('00')"
               @touchend.prevent="$event.target.click()"
               v-text="'00'"
-            />
+            ></button>
           </td>
           <td>
             <button
@@ -249,7 +249,7 @@
               @click="inN('.')"
               @touchend.prevent="$event.target.click()"
               v-text="'.'"
-            />
+            ></button>
           </td>
           <td>
             <button
@@ -257,7 +257,7 @@
               @click="inN('=')"
               @touchend.prevent="$event.target.click()"
               v-text="'='"
-            />
+            ></button>
           </td>
         </tr>
       </table>
@@ -286,7 +286,7 @@ export default Vue.extend({
     }
   },
 
-  data () {
+  data() {
     const calc = new Calculator(this.maxlength)
     if (this.value != null) {
       calc.inN(String(this.value))
@@ -319,37 +319,37 @@ export default Vue.extend({
   },
 
   computed: {
-    progress () {
+    progress() {
       return this.calc.data
     },
 
-    val () {
+    val() {
       return this.calc.val
     }
   },
 
   methods: {
-    clear () {
+    clear() {
       this.calc.clear()
     },
 
-    delCe () {
+    delCe() {
       this.calc.delCe()
     },
 
-    del () {
+    del() {
       this.calc.del()
     },
 
-    inN (n) {
+    inN(n) {
       Array.from(n).forEach(s => this.calc.inN(s))
     },
 
-    inP (o, p, d) {
+    inP(o, p, d) {
       this.calc.inP(o, p, d)
     },
 
-    async ok () {
+    async ok() {
       let val = this.calc.val
       if (Math.abs(val) === Infinity || isNaN(val)) {
         val = null
@@ -358,12 +358,12 @@ export default Vue.extend({
       this.close()
     },
 
-    toggleFilter (filter) {
+    toggleFilter(filter) {
       this.filter = this.filter === filter ? null : filter
       this.calc.setFilter(this.filter)
     },
 
-    keyEvent (e) {
+    keyEvent(e) {
       const c = e.keyCode
       const cc = c + (e.shiftKey ? 1000 : 0) + (e.ctrlKey ? 10000 : 0)
       const keys = {
@@ -500,7 +500,7 @@ export default Vue.extend({
             }
 
             .small {
-              font-size: .7em;
+              font-size: 0.7em;
             }
           }
         }

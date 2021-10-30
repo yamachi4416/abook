@@ -7,26 +7,29 @@
 
 <script>
 export default {
-
-  head () {
+  head() {
     return {
       meta: [
-        { hid: 'description', name: 'description', content: this.$t('head.description') }
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.$t('head.description')
+        }
       ]
     }
   },
 
-  beforeMount () {
+  beforeMount() {
     this.setVH()
     window.addEventListener('resize', this.setVH)
   },
 
-  beforeDestroy () {
+  beforeDestroy() {
     window.removeEventListener('resize', this.setVH)
   },
 
   methods: {
-    setVH () {
+    setVH() {
       const vh = window.innerHeight
       this.$store.commit('ui/setVH', vh)
     }

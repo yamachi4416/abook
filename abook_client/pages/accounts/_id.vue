@@ -14,7 +14,7 @@
                 v-model="account.avaliable"
                 type="checkbox"
                 class="toggle"
-              >
+              />
             </FormGroup>
           </div>
         </div>
@@ -30,7 +30,7 @@
                 v-model.number="account.financeDiv"
                 :empty="null"
                 :options="$t('select.financeDiv')"
-                :mapper="(o) => [o.label, o.value]"
+                :mapper="o => [o.label, o.value]"
                 :disabled="account.isRegisted()"
               />
             </FormGroup>
@@ -39,45 +39,52 @@
         <div class="row">
           <div class="col-3 col-md-5 col-sm-5">
             <FormGroup object="account" field="color" :errors="errors">
-              <input v-model="account.color" type="color">
+              <input v-model="account.color" type="color" />
             </FormGroup>
           </div>
         </div>
         <div class="row">
           <div class="col-12">
             <FormGroup object="account" field="name" :errors="errors">
-              <input v-model="account.name" type="text">
+              <input v-model="account.name" type="text" />
             </FormGroup>
           </div>
         </div>
         <div v-if="account.financeDiv === 2" class="row">
           <div class="col-12">
             <FormGroup object="account" field="useFee" :errors="errors">
-              <input
-                v-model="account.useFee"
-                type="checkbox"
-                class="toggle"
-              >
+              <input v-model="account.useFee" type="checkbox" class="toggle" />
             </FormGroup>
           </div>
         </div>
-        <div v-if="account.financeDiv === 3 || account.financeDiv === 4" class="row">
+        <div
+          v-if="account.financeDiv === 3 || account.financeDiv === 4"
+          class="row"
+        >
           <div class="col-12">
-            <FormGroup object="account" field="usuallyUsedForPayment" :errors="errors">
+            <FormGroup
+              object="account"
+              field="usuallyUsedForPayment"
+              :errors="errors"
+            >
               <input
                 v-model="account.usuallyUsedForPayment"
                 type="checkbox"
                 class="toggle"
-              >
+              />
             </FormGroup>
           </div>
           <div class="col-12">
-            <FormGroup object="account" field="usuallyUsedForReceipt" :errors="errors">
+            <FormGroup
+              object="account"
+              field="usuallyUsedForReceipt"
+              :errors="errors"
+            >
               <input
                 v-model="account.usuallyUsedForReceipt"
                 type="checkbox"
                 class="toggle"
-              >
+              />
             </FormGroup>
           </div>
         </div>
@@ -99,8 +106,8 @@
           {{ $t('actions.remove') }}
         </button>
       </span>
-      <span />
-      <span />
+      <span></span>
+      <span></span>
     </template>
   </DefaultLayout>
 </template>
@@ -112,7 +119,7 @@ import { EditableMixin, BackableMixin } from '@/modules/ui/mixins'
 export default {
   mixins: [EditableMixin, BackableMixin],
   scrollToTop: true,
-  async asyncData ({ store, params, app }) {
+  async asyncData({ store, params, app }) {
     return {
       account: await store.dispatch('accounts/get', params.id)
     }
@@ -125,7 +132,7 @@ export default {
       delete: 'accounts/delete'
     }),
 
-    async save () {
+    async save() {
       await this.useLoading(async () => {
         try {
           if (this.account.isRegisted()) {
@@ -140,7 +147,7 @@ export default {
       }, false)
     },
 
-    async remove () {
+    async remove() {
       const ok = await this.confirmRemove()
       if (!ok) {
         return

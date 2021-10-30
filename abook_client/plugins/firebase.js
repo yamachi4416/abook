@@ -7,11 +7,11 @@ export default ({ $config }, inject) => {
   const auth = getAuth(app)
 
   class Auth {
-    constructor () {
+    constructor() {
       this.handlers = {}
     }
 
-    watch (name, handler) {
+    watch(name, handler) {
       if (this.handlers[name]) {
         this.handlers[name].reject()
       }
@@ -19,38 +19,39 @@ export default ({ $config }, inject) => {
       this.handlers[name] = handler
 
       if (!this.watcher) {
-        this.watcher = auth.onAuthStateChanged((user) => {
-          Object.keys(this.handlers)
-            .forEach(k => this.handlers[k].resolve(user))
+        this.watcher = auth.onAuthStateChanged(user => {
+          Object.keys(this.handlers).forEach(k =>
+            this.handlers[k].resolve(user)
+          )
           this.handlers = {}
         })
       }
     }
 
-    watchOnce (f) {
-      const unSubscribe = auth.onAuthStateChanged((user) => {
+    watchOnce(f) {
+      const unSubscribe = auth.onAuthStateChanged(user => {
         unSubscribe()
         f(user)
       })
     }
 
-    async signInWithRedirect () {
+    async signInWithRedirect() {
       return await signInWithRedirect(auth, new GoogleAuthProvider())
     }
 
-    async signOut () {
+    async signOut() {
       return await auth.signOut()
     }
 
-    get currentUser () {
+    get currentUser() {
       return auth.currentUser
     }
 
-    get languageCode () {
+    get languageCode() {
       return auth.languageCode
     }
 
-    set languageCode (val) {
+    set languageCode(val) {
       auth.languageCode = val
     }
   }

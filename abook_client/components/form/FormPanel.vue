@@ -7,7 +7,7 @@
       v-bind="$attrs"
       @click.self="blur"
     >
-      <slot />
+      <slot></slot>
     </component>
   </div>
 </template>
@@ -21,7 +21,7 @@ export default {
     }
   },
   methods: {
-    blur () {
+    blur() {
       const active = document.activeElement
       if (active) {
         active.blur()
@@ -32,7 +32,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/scss/ui/form.scss";
+@import '~assets/scss/ui/form.scss';
 .contents {
   padding: 15px 5px 10px;
   .form {

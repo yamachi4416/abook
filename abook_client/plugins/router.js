@@ -14,7 +14,7 @@ export default ({ app, store }) => {
       currentModal: 'ui/currentModal'
     }),
 
-    stopLoading () {
+    stopLoading() {
       this._stopLoading(2)
     }
   }

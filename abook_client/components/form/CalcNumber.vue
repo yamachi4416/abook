@@ -28,7 +28,7 @@ export default {
   },
 
   methods: {
-    open () {
+    open() {
       const m = new Calculator({
         parent: this.$parent,
         propsData: {
@@ -37,7 +37,7 @@ export default {
         }
       })
 
-      m.$on('input', (val) => {
+      m.$on('input', val => {
         const v = Math.trunc(val) || 0
         this.$emit('input', v)
         if (this.value !== v) {
@@ -50,7 +50,7 @@ export default {
       m.$mount(div)
     },
 
-    async keydown (event) {
+    async keydown(event) {
       const c = event.keyCode
       const cc = c + (event.shiftKey ? 1000 : 0) + (event.ctrlKey ? 10000 : 0)
 
@@ -94,7 +94,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/scss/ui/inputs.scss";
+@import '~assets/scss/ui/inputs.scss';
 
 .input {
   @include __input();

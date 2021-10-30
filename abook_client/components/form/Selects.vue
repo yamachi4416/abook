@@ -10,7 +10,7 @@
     @keydown.down.prevent="step(1)"
     @keydown.delete.prevent="clear()"
     v-text="disp"
-  />
+  ></span>
 </template>
 
 <script>
@@ -47,7 +47,7 @@ export default {
   },
 
   computed: {
-    opts () {
+    opts() {
       const r = this.options.map(this.mapper)
       if (this.empty) {
         return [this.empty, ...r]
@@ -56,45 +56,44 @@ export default {
       return r
     },
 
-    disp () {
+    disp() {
       const x = this.find(this.options, this.value)
       return x ? x[0] : this.emptyLabel
     },
 
-    emptyLabel () {
+    emptyLabel() {
       return this.empty ? this.empty[0] : this.empty
     },
 
-    emptyValue () {
+    emptyValue() {
       return this.empty ? this.empty[1] : this.empty
     }
   },
 
   watch: {
-    options (newVal) {
+    options(newVal) {
       if (!this.find(newVal, this.value)) {
         this.$emit('input', this.emptyValue)
       }
     },
 
-    value (newVal) {
+    value(newVal) {
       if (!this.find(this.options, newVal)) {
         this.$emit('input', this.emptyValue)
       }
     }
   },
 
-  mounted () {
+  mounted() {
     this._modal = null
   },
 
   methods: {
-    find (opts, val) {
-      return (opts || []).map(this.mapper)
-        .find(p => this.isMatch(p[1], val))
+    find(opts, val) {
+      return (opts || []).map(this.mapper).find(p => this.isMatch(p[1], val))
     },
 
-    async open () {
+    async open() {
       if (this.$attrs.disabled || this.$attrs.readonly) {
         this.$el.blur()
         return
@@ -117,7 +116,7 @@ export default {
         this._modal = null
       })
 
-      m.$on('change', async (val) => {
+      m.$on('change', async val => {
         this.$emit('input', val)
         this.$emit('change', val)
         await this.$nextTick()
@@ -130,7 +129,7 @@ export default {
       this._modal = m
     },
 
-    isMatch (a, b) {
+    isMatch(a, b) {
       if (a === b) {
         return true
       }
@@ -142,7 +141,7 @@ export default {
       return false
     },
 
-    async step (i) {
+    async step(i) {
       let idx = this.opts.findIndex(p => this.isMatch(p[1], this.value))
       if (idx !== -1) {
         idx += i
@@ -155,22 +154,22 @@ export default {
       }
     },
 
-    async clear () {
+    async clear() {
       const val = this.emptyValue
       this.$emit('input', val)
       this.$emit('change', val)
       await this.$nextTick()
     },
 
-    focus () {
+    focus() {
       this.$refs.select.focus()
     },
 
-    blur () {
+    blur() {
       this.$refs.select.blur()
     },
 
-    async click () {
+    async click() {
       if (this._modal) {
         await this._modal.close()
       } else {
@@ -182,7 +181,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/scss/ui/inputs.scss";
+@import '~assets/scss/ui/inputs.scss';
 
 .select {
   @include __input();
@@ -203,7 +202,7 @@ export default {
 
   &:empty {
     &::before {
-      content: "";
+      content: '';
       display: inline-block;
       height: 1em;
       width: 1em;

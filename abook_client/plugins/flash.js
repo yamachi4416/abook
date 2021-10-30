@@ -1,19 +1,19 @@
 class FlashAttribute {
-  constructor () {
+  constructor() {
     this._attrs = {}
   }
 
-  getAttr (key) {
+  getAttr(key) {
     const a = this._attrs[key]
     delete this._attrs[key]
     return a
   }
 
-  setAttr (key, value) {
+  setAttr(key, value) {
     this._attrs[key] = value
   }
 
-  clear () {
+  clear() {
     this._attrs = {}
   }
 }

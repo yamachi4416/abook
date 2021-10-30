@@ -2,13 +2,12 @@ const isString = s => typeof s === typeof ''
 const isElement = s => s instanceof Element
 
 class SavedPos {
-  constructor () {
+  constructor() {
     this._pos = {}
   }
 
-  save (key, selector) {
-    const el = isElement(selector)
-      ? selector : document.querySelector(selector)
+  save(key, selector) {
+    const el = isElement(selector) ? selector : document.querySelector(selector)
 
     if (el) {
       this._pos[key] = {
@@ -18,13 +17,13 @@ class SavedPos {
     }
   }
 
-  getPos (key) {
+  getPos(key) {
     const p = this._pos[key] || { top: 0, left: 0 }
     delete this._pos[key]
     return p
   }
 
-  setPos (key, pos) {
+  setPos(key, pos) {
     if (isString(pos) || isElement(pos)) {
       this.save(key, pos)
     } else {
@@ -32,16 +31,15 @@ class SavedPos {
     }
   }
 
-  scroll (key, selector) {
-    const el = isElement(selector)
-      ? selector : document.querySelector(selector)
+  scroll(key, selector) {
+    const el = isElement(selector) ? selector : document.querySelector(selector)
 
     if (el) {
       el.scrollTo(this.getPos(key))
     }
   }
 
-  clear () {
+  clear() {
     this._pos = {}
   }
 }

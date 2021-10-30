@@ -6,7 +6,7 @@
         class="select-orders"
         :empty="null"
         :options="$t('select.orders')"
-        :mapper="(o) => [o.label, o.value]"
+        :mapper="o => [o.label, o.value]"
         :inline="true"
       />
       {{ title }}
@@ -14,11 +14,7 @@
 
     <template #default>
       <div>
-        <JournalTimeline
-          :items="items"
-          @edit="edit"
-          @daily="daily"
-        />
+        <JournalTimeline :items="items" @edit="edit" @daily="daily" />
       </div>
     </template>
 
@@ -34,7 +30,11 @@
         </button>
       </span>
       <span>
-        <button v-if="journals && journals.length" data-icon="assignment" @click="showAccountSummary()">
+        <button
+          v-if="journals && journals.length"
+          data-icon="assignment"
+          @click="showAccountSummary()"
+        >
           {{ $t('actions.summary') }}
         </button>
       </span>
@@ -53,10 +53,9 @@ import { OptionMixin, SavePosMixin } from '@/modules/ui/mixins'
 import AccountSummary from '@/components/journal/AccountSummary'
 
 export default {
-
   mixins: [SavePosMixin, OptionMixin({ order: 'journal.timeline.order' })],
 
-  async asyncData ({ store, params, query, app }) {
+  async asyncData({ store, params, query, app }) {
     const abook = await store.dispatch('abooks/fetchCurrent')
 
     const search = {
@@ -73,14 +72,14 @@ export default {
   },
 
   computed: {
-    items () {
+    items() {
       const [t1, t2] = this.order === 0 ? [1, -1] : [-1, 1]
       return (this.journals || []).sort((a, b) =>
         a.date === b.date ? 0 : a.date > b.date ? t1 : t2
       )
     },
 
-    title () {
+    title() {
       return this.$t('pages.journals.timeline.title', {
         year: this.from.substr(0, 4),
         month: this.from.substr(4, 2)
@@ -89,31 +88,35 @@ export default {
   },
 
   methods: {
-    async edit (id) {
+    async edit(id) {
       await this.$router.push(`/journals/${id}`)
     },
 
-    add () {
+    add() {
       this.$router.push('/journals')
     },
 
-    prev () {
-      const from = datetime(this.from, 'YYYYMM').subtract(1, 'month').format('YYYYMM')
+    prev() {
+      const from = datetime(this.from, 'YYYYMM')
+        .subtract(1, 'month')
+        .format('YYYYMM')
       this.$flashattrs.setAttr('transType', 'prev')
       this.$router.replace({ params: { from } })
     },
 
-    next () {
-      const from = datetime(this.from, 'YYYYMM').add(1, 'month').format('YYYYMM')
+    next() {
+      const from = datetime(this.from, 'YYYYMM')
+        .add(1, 'month')
+        .format('YYYYMM')
       this.$flashattrs.setAttr('transType', 'next')
       this.$router.replace({ params: { from } })
     },
 
-    daily (date) {
+    daily(date) {
       this.$router.push(`/journals/daily/${date.replace(/-/g, '')}`)
     },
 
-    showAccountSummary () {
+    showAccountSummary() {
       const m = new AccountSummary({
         parent: this.$parent,
         propsData: {

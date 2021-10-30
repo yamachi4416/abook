@@ -1,10 +1,10 @@
 export default {
-  beforeRouteLeave (to, from, next) {
+  beforeRouteLeave(to, from, next) {
     this.$savedpos.setPos(this.$route.fullPath, '.main')
     next()
   },
 
-  mounted () {
+  mounted() {
     this.$savedpos.scroll(this.$route.fullPath, '.main')
   }
 }

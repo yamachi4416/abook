@@ -22,11 +22,11 @@ export default {
   },
 
   computed: {
-    hasError () {
+    hasError() {
       return this.errors.hasError(this.name)
     },
 
-    items () {
+    items() {
       return this.errors.getErrors(this.name)
     }
   }

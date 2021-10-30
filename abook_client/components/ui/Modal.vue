@@ -8,12 +8,8 @@
       v-bind="$attrs"
     >
       <div class="modal-overlay" @click.self="dismiss()">
-        <div
-          class="modal-content"
-          :style="styles"
-          @click.self="dismiss()"
-        >
-          <slot />
+        <div class="modal-content" :style="styles" @click.self="dismiss()">
+          <slot></slot>
         </div>
       </div>
     </div>
@@ -36,7 +32,7 @@ export default {
     }
   },
 
-  data () {
+  data() {
     return {
       show: false
     }
@@ -47,26 +43,26 @@ export default {
       currentModal: 'ui/currentModal'
     }),
 
-    isCurrentModal () {
+    isCurrentModal() {
       const c = this.currentModal
       return c && c.uid === this._uid
     }
   },
 
-  beforeMount () {
+  beforeMount() {
     this.prevActive = document.activeElement
     if (this.prevActive) {
       this.prevActive.blur()
     }
   },
 
-  mounted () {
+  mounted() {
     window.addEventListener('keydown', this.keydown)
     this.addModal(this)
     this.show = true
     const tabstop = document.createElement('span')
     tabstop.setAttribute('tabindex', '0')
-    tabstop.addEventListener('focus', (event) => {
+    tabstop.addEventListener('focus', event => {
       if (this.isCurrentModal) {
         event.preventDefault()
         this.$emit('focus-into')
@@ -76,13 +72,13 @@ export default {
     this.tabstop = tabstop
   },
 
-  beforeDestroy () {
+  beforeDestroy() {
     this.show = false
     window.removeEventListener('keydown', this.keydown)
     document.body.removeChild(this.tabstop)
   },
 
-  destroyed () {
+  destroyed() {
     if (this.$el && this.$el.parentNode) {
       this.$el.parentNode.removeChild(this.$el)
     }
@@ -99,19 +95,19 @@ export default {
       removeModal: 'ui/removeModal'
     }),
 
-    async close () {
+    async close() {
       this.show = false
       await this.$nextTick()
       this.$destroy()
     },
 
-    async dismiss () {
+    async dismiss() {
       if (this.dismissable) {
         await this.close()
       }
     },
 
-    async keydown (event) {
+    async keydown(event) {
       if (!this.isCurrentModal) {
         return
       }
@@ -128,14 +124,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/scss/vars.scss";
+@import '~assets/scss/vars.scss';
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity .3s;
+  transition: opacity 0.3s;
 
   .modal-content {
-    transition: transform .2s;
+    transition: transform 0.2s;
   }
 }
 .fade-enter,
@@ -158,12 +154,12 @@ export default {
 
   &.current &-overlay {
     background: rgba(0, 0, 0, 0.6);
-    transition: background .3s;
+    transition: background 0.3s;
   }
 
   &:not(.current) &-overlay {
     background: rgba(0, 0, 0, 0);
-    transition: background .3s;
+    transition: background 0.3s;
   }
 
   &-overlay {

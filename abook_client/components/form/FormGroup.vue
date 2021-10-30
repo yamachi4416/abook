@@ -1,7 +1,7 @@
 <template>
   <div class="form-group" :invalid="hasError">
-    <label v-text="label" />
-    <slot />
+    <label v-text="label"></label>
+    <slot></slot>
     <ErrorMessages v-if="errors" :name="errorName" :errors="errors" />
   </div>
 </template>
@@ -31,7 +31,7 @@ export default {
     }
   },
   computed: {
-    label () {
+    label() {
       const field = this.labelField || this.field
       if (this.$te(`${this.object}.${field}`)) {
         return this.$t(`${this.object}.${field}`)
@@ -39,14 +39,14 @@ export default {
         return this.$t(`form.${field}`)
       }
     },
-    errorName () {
+    errorName() {
       if (this.pattern) {
         return new RegExp(`^${this.object}\\.${this.pattern}`)
       }
 
       return `${this.object}.${this.field}`
     },
-    hasError () {
+    hasError() {
       if (!this.errors) {
         return false
       }
@@ -63,7 +63,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/scss/ui/inputs.scss";
+@import '~assets/scss/ui/inputs.scss';
 
 .form-group {
   width: 100%;

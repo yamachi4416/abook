@@ -11,11 +11,17 @@
     </span>
     <span class="item-dname">{{ item.debitAccount.name }}</span>
     <span class="item-cname">{{ item.creditAccount.name }}</span>
-    <span class="item-amount">{{ (item.amount - (item.fee ? item.fee.amount : 0) ) | comma }}</span>
-    <span v-if="item.memo" class="item-memo" v-text="item.memo" />
+    <span class="item-amount">
+      {{ (item.amount - (item.fee ? item.fee.amount : 0)) | comma }}
+    </span>
+    <span v-if="item.memo" class="item-memo" v-text="item.memo"></span>
     <span v-if="item.fee" class="item-fdname">{{ item.fee.account.name }}</span>
-    <span v-if="item.fee" class="item-fcname">{{ item.creditAccount.name }}</span>
-    <span v-if="item.fee" class="item-famount">{{ item.fee.amount | comma }}</span>
+    <span v-if="item.fee" class="item-fcname">
+      {{ item.creditAccount.name }}
+    </span>
+    <span v-if="item.fee" class="item-famount">
+      {{ item.fee.amount | comma }}
+    </span>
   </component>
 </template>
 
@@ -35,7 +41,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/scss/vars.scss";
+@import '~assets/scss/vars.scss';
 .item {
   cursor: pointer;
   padding: 5px 10px;
@@ -53,8 +59,8 @@ export default {
   grid-template-columns: 60px 19% 19% 90px 1fr;
   grid-template-rows: auto;
   grid-template-areas:
-    "badge dname  cname  amount  note"
-    "badge fdname fcname famount note";
+    'badge dname  cname  amount  note'
+    'badge fdname fcname famount note';
 
   & > * {
     display: block;
@@ -105,13 +111,13 @@ export default {
     grid-template-columns: 60px 1fr 1fr 90px;
     grid-template-rows: auto auto auto;
     grid-template-areas:
-      "badge dname  cname  amount"
-      "badge fdname fcname famount"
-      "badge note   note   note";
+      'badge dname  cname  amount'
+      'badge fdname fcname famount'
+      'badge note   note   note';
 
     &-memo {
       padding: 5px;
-      font-size: .9rem;
+      font-size: 0.9rem;
     }
   }
 
@@ -119,10 +125,10 @@ export default {
     grid-template-columns: 60px 1fr 1fr;
     grid-template-rows: auto auto auto auto;
     grid-template-areas:
-      "badge dname  cname"
-      "badge amount amount"
-      "badge fdname famount"
-      "badge note  note";
+      'badge dname  cname'
+      'badge amount amount'
+      'badge fdname famount'
+      'badge note  note';
 
     &-amount {
       padding-top: 10px;
@@ -134,7 +140,7 @@ export default {
 
     &-memo {
       padding: 5px;
-      font-size: .9rem;
+      font-size: 0.9rem;
     }
   }
 }

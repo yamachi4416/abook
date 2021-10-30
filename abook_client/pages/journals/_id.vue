@@ -41,7 +41,7 @@
           {{ $t('actions.remove') }}
         </button>
       </span>
-      <span />
+      <span></span>
     </template>
   </DefaultLayout>
 </template>
@@ -55,7 +55,7 @@ export default {
 
   scrollToTop: true,
 
-  async asyncData ({ store, params, app, query }) {
+  async asyncData({ store, params, app, query }) {
     const copy = app.$flashattrs.getAttr('journals.copy')
     const [accounts, journal] = await Promise.all([
       store.dispatch('accounts/getAll'),
@@ -110,11 +110,11 @@ export default {
       delete: 'journals/delete'
     }),
 
-    async save () {
+    async save() {
       await this.useLoading(this._save, false)
     },
 
-    async _save () {
+    async _save() {
       try {
         if (this.journal.isRegisted()) {
           await this.update(this.journal)
@@ -122,8 +122,10 @@ export default {
           await this.create(this.journal)
         }
 
-        if (!this.original.isRegisted() ||
-            this.original.accrualDate !== this.journal.accrualDate) {
+        if (
+          !this.original.isRegisted() ||
+          this.original.accrualDate !== this.journal.accrualDate
+        ) {
           const abook = this.$store.getters['abooks/current']
           const from = abook.toMonth(this.journal.accrualDate)
           const params = { from }
@@ -147,7 +149,7 @@ export default {
       }
     },
 
-    async remove () {
+    async remove() {
       const ok = await this.confirmRemove()
       if (!ok) {
         return
@@ -159,7 +161,7 @@ export default {
       }, false)
     },
 
-    async copy () {
+    async copy() {
       await this.useLoading(() => {
         this.$flashattrs.setAttr(
           'journals.copy',

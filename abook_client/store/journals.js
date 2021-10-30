@@ -2,14 +2,14 @@ import datetime from '@/modules/utils/datetime'
 import { JournalModel } from '@/modules/models/JournalModel'
 
 export const actions = {
-  async get ({ commit }, id) {
+  async get({ commit }, id) {
     if (!id || id === '0') {
       return JournalModel.wrap({})
     }
     return JournalModel.wrap(await this.$axios.$get(`/journals/${id}`))
   },
 
-  async getBalance ({ commit }, { from, to, periods }) {
+  async getBalance({ commit }, { from, to, periods }) {
     const params = new URLSearchParams()
     periods.forEach(v => params.append('periods', v))
     return await this.$axios.$get(`/journals/balance/${from}/${to}`, {
@@ -17,19 +17,19 @@ export const actions = {
     })
   },
 
-  async create ({ commit }, journal) {
+  async create({ commit }, journal) {
     await this.$axios.$post('/journals', journal)
   },
 
-  async update ({ commit }, journal) {
+  async update({ commit }, journal) {
     await this.$axios.$patch(`/journals/${journal.id}`, journal)
   },
 
-  async delete ({ commit }, id) {
+  async delete({ commit }, id) {
     await this.$axios.$delete(`/journals/${id}`)
   },
 
-  async searchByDate ({ commit }, { date, query }) {
+  async searchByDate({ commit }, { date, query }) {
     const searchDate = datetime(date).format('YYYY-MM-DD')
     const { accountId, financeDiv, journalDiv, memo } = query
     return JournalModel.wraps(
@@ -42,12 +42,21 @@ export const actions = {
           journalDiv,
           memo
         }
-      }))
+      })
+    )
   },
 
-  async search ({ commit }, {
-    accountId, accrualDateStart, accrualDateEnd, memo, financeDiv, journalDiv
-  }) {
+  async search(
+    { commit },
+    {
+      accountId,
+      accrualDateStart,
+      accrualDateEnd,
+      memo,
+      financeDiv,
+      journalDiv
+    }
+  ) {
     return JournalModel.groupByAccrualDate(
       JournalModel.wraps(
         await this.$axios.$get('/journals/search', {
@@ -59,6 +68,8 @@ export const actions = {
             accrualDateEnd,
             memo
           }
-        })))
+        })
+      )
+    )
   }
 }

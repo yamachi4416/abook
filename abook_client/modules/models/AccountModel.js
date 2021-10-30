@@ -1,5 +1,5 @@
 export class AccountModel {
-  constructor (entity) {
+  constructor(entity) {
     this.id = null
     this.financeDiv = null
     this.name = null
@@ -14,16 +14,16 @@ export class AccountModel {
     }
   }
 
-  isRegisted () {
+  isRegisted() {
     return (this.id || '').length > 0
   }
 
-  clone () {
+  clone() {
     const entity = { ...this }
     return new AccountModel(entity)
   }
 
-  static wrap (entity) {
+  static wrap(entity) {
     if (entity) {
       return new AccountModel(entity)
     }

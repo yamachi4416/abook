@@ -1,13 +1,13 @@
 <template>
   <article class="timeline">
     <section v-for="t in items" :key="t.date" class="timeline-item">
-      <h1
-        class="timeline-item-title"
-      >
+      <h1 class="timeline-item-title">
         <span
           class="timeline-item-title-content"
           @click.prevent="$emit('daily', t.date)"
-        >{{ t.date | dateformat('YYYY/MM/DD (ddd)') }}</span>
+        >
+          {{ t.date | dateformat('YYYY/MM/DD (ddd)') }}
+        </span>
       </h1>
       <ul class="timeline-item-detail">
         <JournalListItem
@@ -33,7 +33,7 @@ export default {
   },
 
   methods: {
-    async edit (item) {
+    async edit(item) {
       this.$emit('edit', item.id)
       await this.$nextTick()
     }
@@ -42,8 +42,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/scss/vars.scss";
-@import "~assets/scss/ui/timeline.scss";
+@import '~assets/scss/vars.scss';
+@import '~assets/scss/ui/timeline.scss';
 
 .timeline {
   @include __timeline;

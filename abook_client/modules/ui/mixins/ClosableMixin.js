@@ -1,10 +1,10 @@
 export default {
-  destroyed () {
+  destroyed() {
     this.$emit('close')
   },
 
   methods: {
-    async close () {
+    async close() {
       if (this.$children && this.$children[0] && this.$children[0].close) {
         await this.$children[0].close()
       }

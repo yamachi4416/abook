@@ -1,7 +1,5 @@
 <template>
-  <DefaultLayout
-    :hide-footer="true"
-  >
+  <DefaultLayout :hide-footer="true">
     <template #title>
       {{ $t('pages.settings.users.title') }}
     </template>
@@ -15,23 +13,17 @@
           <dd class="card-content content">
             <div class="user-profile">
               <div class="user-profile-photo">
-                <img class="user-profile-photo-image" :src="user.photoURL">
+                <img class="user-profile-photo-image" :src="user.photoURL" />
               </div>
               <div class="user-profile-info">
                 <div>
                   <div>
-                    <FormGroup
-                      object="users"
-                      field="displayName"
-                    >
+                    <FormGroup object="users" field="displayName">
                       <span>{{ user.displayName }}</span>
                     </FormGroup>
                   </div>
                   <div>
-                    <FormGroup
-                      object="users"
-                      field="email"
-                    >
+                    <FormGroup object="users" field="email">
                       <span>{{ user.email }}</span>
                     </FormGroup>
                   </div>
@@ -48,43 +40,32 @@
           <dd class="card-content content">
             <div class="terminal">
               <div class="terminal-locale">
-                <FormGroup
-                  object="users"
-                  field="locale"
-                >
+                <FormGroup object="users" field="locale">
                   <Selects
                     v-model="locale"
                     :empty="null"
                     :options="$i18n.locales"
-                    :mapper="(o) => [o.name, o.code]"
+                    :mapper="o => [o.name, o.code]"
                   />
                 </FormGroup>
               </div>
               <div class="terminal-tax1">
-                <FormGroup
-                  object="calc"
-                  field="tax1"
-                  :errors="errors"
-                >
+                <FormGroup object="calc" field="tax1" :errors="errors">
                   <Selects
                     v-model="tax1"
                     :empty="null"
                     :options="percents"
-                    :mapper="(o) => [`${o} %`, o]"
+                    :mapper="o => [`${o} %`, o]"
                   />
                 </FormGroup>
               </div>
               <div class="terminal-tax2">
-                <FormGroup
-                  object="calc"
-                  field="tax2"
-                  :errors="errors"
-                >
+                <FormGroup object="calc" field="tax2" :errors="errors">
                   <Selects
                     v-model="tax2"
                     :empty="null"
                     :options="percents"
-                    :mapper="(o) => [`${o} %`, o]"
+                    :mapper="o => [`${o} %`, o]"
                   />
                 </FormGroup>
               </div>
@@ -100,10 +81,13 @@
 import { BackableMixin, EditableMixin, OptionMixin } from '@/modules/ui/mixins'
 
 export default {
-  mixins: [EditableMixin, BackableMixin,
-    OptionMixin({ tax1: 'calc.tax1', tax2: 'calc.tax2' })],
+  mixins: [
+    EditableMixin,
+    BackableMixin,
+    OptionMixin({ tax1: 'calc.tax1', tax2: 'calc.tax2' })
+  ],
 
-  async asyncData ({ store }) {
+  async asyncData({ store }) {
     const user = await store.dispatch('users/getUser').then(u => u.toJSON())
     return {
       user: {
@@ -116,17 +100,17 @@ export default {
 
   computed: {
     locale: {
-      get () {
+      get() {
         return this.$i18n.locale
       },
 
-      set (val) {
+      set(val) {
         this.$i18n.setLocale(val)
         this.$i18n.setLocaleCookie(val)
       }
     },
 
-    percents () {
+    percents() {
       return Array.from({ length: 50 }, (v, k) => String(k + 1))
     }
   }
@@ -134,7 +118,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/scss/ui/cards.scss";
+@import '~assets/scss/ui/cards.scss';
 
 .cards {
   @include __cards;
@@ -174,8 +158,8 @@ export default {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto;
   grid-template-areas:
-    "locale locale"
-    "tax1   tax2";
+    'locale locale'
+    'tax1   tax2';
   padding: 10px;
   width: 100%;
 

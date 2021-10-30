@@ -11,7 +11,7 @@
         <circle v-for="c in 4" :key="c" :cx="c * 20" cy="50" r="6">
           <animate
             attributeName="r"
-            :begin="`${0 - (0.125 * (4 - c))}s`"
+            :begin="`${0 - 0.125 * (4 - c)}s`"
             values="0;6;0"
             keyTimes="0;0.5;1"
             dur="1s"

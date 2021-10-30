@@ -1,6 +1,6 @@
 export default {
   methods: {
-    back (n = -1) {
+    back(n = -1) {
       if (history.length > 2) {
         this.$router.go(n)
       } else if (this.$route.fullPath === '/') {

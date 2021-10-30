@@ -7,54 +7,37 @@
   >
     <div ref="container" class="form">
       <header>
-        <h1 />
+        <h1></h1>
       </header>
       <main>
         <div class="row">
           <div class="col-4 col-sm-12">
-            <FormGroup
-              object="period"
-              field="aggMonthType"
-            >
+            <FormGroup object="period" field="aggMonthType">
               <Selects
                 ref="first"
                 v-model.number="aggType"
                 :empty="null"
                 :options="$t('select.aggMonthTypes')"
-                :mapper="(o) => [o.label, o.value]"
+                :mapper="o => [o.label, o.value]"
               />
             </FormGroup>
           </div>
         </div>
         <div class="row">
           <div class="col-6 col-sm-12">
-            <FormGroup
-              object="period"
-              field="aggMonthFrom"
-            >
-              <input
-                v-model="from"
-                type="month"
-              >
+            <FormGroup object="period" field="aggMonthFrom">
+              <input v-model="from" type="month" />
             </FormGroup>
           </div>
           <div class="col-6 col-sm-12">
-            <FormGroup
-              object="period"
-              field="aggMonthTo"
-            >
-              <input
-                v-model="to"
-                type="month"
-              >
+            <FormGroup object="period" field="aggMonthTo">
+              <input v-model="to" type="month" />
             </FormGroup>
           </div>
         </div>
         <div class="row">
           <div class="col-12 btns">
-            <button ref="last" class="btn btn--ok" @click.once="ok">
-              OK
-            </button>
+            <button ref="last" class="btn btn--ok" @click.once="ok">OK</button>
           </div>
         </div>
       </main>
@@ -77,7 +60,7 @@ export default Vue.extend({
     }
   },
 
-  data () {
+  data() {
     let from, to
     const iPeriod = {}
 
@@ -104,58 +87,70 @@ export default Vue.extend({
 
   computed: {
     aggType: {
-      get () {
+      get() {
         return this.iPeriod.aggType
       },
-      set (val) {
+      set(val) {
         this.iPeriod.aggType = val
         if (this.iPeriod.from) {
           const m = datetime(this.iPeriod.from, 'YYYY-MM')
-          const n = m.startOf('month').add(val - 1, 'month').format('YYYY-MM')
+          const n = m
+            .startOf('month')
+            .add(val - 1, 'month')
+            .format('YYYY-MM')
           this.iPeriod.to = n
         } else if (this.iPeriod.to) {
           const m = datetime(this.iPeriod.to, 'YYYY-MM')
-          const n = m.startOf('month').subtract(val - 1, 'month').format('YYYY-MM')
+          const n = m
+            .startOf('month')
+            .subtract(val - 1, 'month')
+            .format('YYYY-MM')
           this.iPeriod.from = n
         }
       }
     },
 
     from: {
-      get () {
+      get() {
         return this.iPeriod.from
       },
-      set (val) {
+      set(val) {
         this.iPeriod.from = val
         const a = this.iPeriod.aggType
         const m = datetime(val, 'YYYY-MM')
-        const n = m.startOf('month').add(a - 1, 'month').format('YYYY-MM')
+        const n = m
+          .startOf('month')
+          .add(a - 1, 'month')
+          .format('YYYY-MM')
         this.iPeriod.to = n
       }
     },
 
     to: {
-      get () {
+      get() {
         return this.iPeriod.to
       },
-      set (val) {
+      set(val) {
         this.iPeriod.to = val
         const a = this.iPeriod.aggType
         const m = datetime(val, 'YYYY-MM')
-        const n = m.startOf('month').subtract(a - 1, 'month').format('YYYY-MM')
+        const n = m
+          .startOf('month')
+          .subtract(a - 1, 'month')
+          .format('YYYY-MM')
         this.iPeriod.from = n
       }
     }
   },
 
-  mounted () {
+  mounted() {
     this.$nextTick(() => {
       this.$refs.first.focus()
     })
   },
 
   methods: {
-    async ok () {
+    async ok() {
       const period = {}
 
       if (this.iPeriod.from) {
@@ -174,9 +169,9 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/scss/vars.scss";
-@import "~assets/scss/ui/form.scss";
-@import "~assets/scss/ui/inputs.scss";
+@import '~assets/scss/vars.scss';
+@import '~assets/scss/ui/form.scss';
+@import '~assets/scss/ui/inputs.scss';
 
 .period-modal {
   align-items: unset;

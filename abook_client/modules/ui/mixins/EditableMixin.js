@@ -5,14 +5,14 @@ import LoadingMixin from './LoadingMixin'
 export default {
   mixins: [LoadingMixin],
 
-  data () {
+  data() {
     return {
       errors: new Errors()
     }
   },
 
   methods: {
-    setErrors (e) {
+    setErrors(e) {
       const { status, data } = e.response
       if (status === 400) {
         this.errors.setErrors(data)
@@ -22,7 +22,7 @@ export default {
       }
     },
 
-    async confirmRemove () {
+    async confirmRemove() {
       return await showConfirm({
         parent: this.$parent,
         title: this.$t('confirm.remove.message')

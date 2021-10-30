@@ -5,7 +5,7 @@
     </template>
 
     <div class="login">
-      <button class="button" @click.once="login()" />
+      <button class="button" @click.once="login()"></button>
     </div>
   </DefaultLayout>
 </template>
@@ -13,7 +13,7 @@
 <script>
 export default {
   methods: {
-    login () {
+    login() {
       this.$flashattrs.setAttr('login', true)
       this.$router.replace('/')
     }
@@ -33,7 +33,7 @@ export default {
   .button {
     cursor: pointer;
     background-color: var(--them-background);
-    background-image: url("~static/login.png");
+    background-image: url('~static/login.png');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;

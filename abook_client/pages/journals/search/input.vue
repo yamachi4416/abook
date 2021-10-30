@@ -9,16 +9,12 @@
         <ErrorMessages name="search.*" :errors="errors" />
         <div class="row">
           <div class="col-4 col-sm-8">
-            <FormGroup
-              object="search"
-              field="periodType"
-              :errors="errors"
-            >
+            <FormGroup object="search" field="periodType" :errors="errors">
               <Selects
                 v-model.number="periodType"
                 :empty="null"
                 :options="$t('select.periodTypes')"
-                :mapper="(o) => [o.label, o.value]"
+                :mapper="o => [o.label, o.value]"
               />
             </FormGroup>
           </div>
@@ -34,7 +30,7 @@
                 v-model="search.accrualDateStart"
                 type="date"
                 :disabled="periodType != null"
-              >
+              />
             </FormGroup>
           </div>
           <div class="col-4 col-sm-8">
@@ -48,7 +44,7 @@
                 v-model="search.accrualDateEnd"
                 type="date"
                 :disabled="periodType != null"
-              >
+              />
             </FormGroup>
           </div>
         </div>
@@ -64,7 +60,7 @@
                 v-model.number="search.journalDiv"
                 :empty="null"
                 :options="$t('select.journalDiv')"
-                :mapper="(o) => [o.label, o.value]"
+                :mapper="o => [o.label, o.value]"
               />
             </FormGroup>
           </div>
@@ -78,13 +74,13 @@
               <Selects
                 v-model="account"
                 :options="sAccounts"
-                :mapper="(o) => [o.name, o]"
+                :mapper="o => [o.name, o]"
               />
             </FormGroup>
           </div>
           <div class="col-12 col-sm-12">
             <FormGroup object="search" field="memo" :errors="errors">
-              <input v-model="search.memo">
+              <input v-model="search.memo" />
             </FormGroup>
           </div>
         </div>
@@ -97,9 +93,9 @@
           {{ $t('actions.search') }}
         </button>
       </span>
-      <span />
-      <span />
-      <span />
+      <span></span>
+      <span></span>
+      <span></span>
     </template>
   </DefaultLayout>
 </template>
@@ -111,15 +107,20 @@ import { EditableMixin } from '@/modules/ui/mixins'
 export default {
   mixins: [EditableMixin],
   scrollToTop: true,
-  async asyncData ({ store, params, app, query }) {
+  async asyncData({ store, params, app, query }) {
     const [accounts, abook] = await Promise.all([
       store.dispatch('accounts/getAll'),
       store.dispatch('abooks/fetchCurrent')
     ])
 
-    const accrualDateStart = query.accrualDateStart ||
-      abook.dayStartOfMonth(datetime().startOf('month').subtract(6, 'month'), 'YYYY-MM-DD')
-    const accrualDateEnd = query.accrualDateEnd || abook.dayEndOfMonth(null, 'YYYY-MM-DD')
+    const accrualDateStart =
+      query.accrualDateStart ||
+      abook.dayStartOfMonth(
+        datetime().startOf('month').subtract(6, 'month'),
+        'YYYY-MM-DD'
+      )
+    const accrualDateEnd =
+      query.accrualDateEnd || abook.dayEndOfMonth(null, 'YYYY-MM-DD')
 
     const search = {
       periodType: query.periodType,
@@ -140,10 +141,10 @@ export default {
 
   computed: {
     account: {
-      get () {
+      get() {
         return this.sAccounts.find(a => a.id === this.search.accountId)
       },
-      set (val) {
+      set(val) {
         if (val) {
           this.search.accountId = val.id
         } else {
@@ -153,10 +154,10 @@ export default {
     },
 
     journalDiv: {
-      get () {
+      get() {
         return this.search.journalDiv
       },
-      set (val) {
+      set(val) {
         this.search.journalDiv = val
         if (this.search.accountId) {
           const a = this.sAccounts.find(a => a.id === this.search.accountId)
@@ -168,24 +169,29 @@ export default {
     },
 
     periodType: {
-      get () {
+      get() {
         return this.search.periodType
       },
-      set (val) {
+      set(val) {
         this.search.periodType = val
         if (val === 'thisWeek') {
           const today = datetime()
-          this.search.accrualDateStart = today.startOf('week').format('YYYY-MM-DD')
+          this.search.accrualDateStart = today
+            .startOf('week')
+            .format('YYYY-MM-DD')
           this.search.accrualDateEnd = today.endOf('week').format('YYYY-MM-DD')
         } else if (val === 'thisMonth') {
           const abook = this.$store.getters['abooks/current']
-          this.search.accrualDateStart = abook.dayStartOfMonth(null, 'YYYY-MM-DD')
+          this.search.accrualDateStart = abook.dayStartOfMonth(
+            null,
+            'YYYY-MM-DD'
+          )
           this.search.accrualDateEnd = abook.dayEndOfMonth(null, 'YYYY-MM-DD')
         }
       }
     },
 
-    sAccounts () {
+    sAccounts() {
       if (this.search.journalDiv === 1) {
         return this.accounts.filter(a => a.financeDiv !== 2)
       }
@@ -199,7 +205,7 @@ export default {
   },
 
   methods: {
-    async doSearch () {
+    async doSearch() {
       await this.useLoading(async () => {
         try {
           const query = this.search
