@@ -85,31 +85,26 @@ export default {
 
   buildModules: ['@nuxtjs/eslint-module'],
 
-  modules: [
-    '@nuxtjs/pwa',
-    '@nuxtjs/axios',
-    [
-      '@nuxtjs/i18n',
-      {
-        seo: false,
-        strategy: 'no_prefix',
-        locales: [
-          { code: 'en', name: 'English', iso: 'en-US', file: 'en.json' },
-          { code: 'ja', name: '日本語', iso: 'ja_JP', file: 'ja.json' },
-          { code: 'zh', name: '中文', iso: 'zh-TW', file: 'zh.json' }
-        ],
-        defaultLocale: 'en',
-        langDir: 'locales/',
-        lazy: true,
-        detectBrowserLanguage: {
-          useCookie: true,
-          fallbackLocale: 'en'
-        }
-      }
-    ]
-  ],
+  modules: ['@nuxtjs/pwa', '@nuxtjs/axios', '@nuxtjs/i18n'],
 
   loading: false,
+
+  i18n: {
+    seo: false,
+    strategy: 'no_prefix',
+    locales: [
+      { code: 'en', name: 'English', iso: 'en-US', file: 'en.json' },
+      { code: 'ja', name: '日本語', iso: 'ja_JP', file: 'ja.json' },
+      { code: 'zh', name: '中文', iso: 'zh-TW', file: 'zh.json' }
+    ],
+    defaultLocale: 'en',
+    langDir: 'locales/',
+    lazy: true,
+    detectBrowserLanguage: {
+      useCookie: true,
+      fallbackLocale: 'en'
+    }
+  },
 
   pwa: {
     manifest: {
