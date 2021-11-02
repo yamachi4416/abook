@@ -30,7 +30,8 @@ export default {
         content:
           'width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover'
       },
-      { name: 'theme-color', content: '#fff' }
+      { name: 'theme-color', content: '#fff' },
+      { name: 'google', content: 'notranslate' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
