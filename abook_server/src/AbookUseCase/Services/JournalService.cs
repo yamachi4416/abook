@@ -16,7 +16,7 @@ namespace AbookUseCase.Services
         {
         }
 
-        public async Task<(JournalViewModel, ServiceModelState)> GetById(string id)
+        public virtual async Task<(JournalViewModel, ServiceModelState)> GetById(string id)
         {
             var user = context.GetCurrentUser();
             var journal = await context.Journals.AsNoTracking()
@@ -53,7 +53,7 @@ namespace AbookUseCase.Services
             }
         }
 
-        public async Task<(string, ServiceModelState)> Create(
+        public virtual async Task<(string, ServiceModelState)> Create(
             JournalCreateModel model)
         {
             var journal = new Journal
@@ -76,7 +76,7 @@ namespace AbookUseCase.Services
             return (journal.Id, null);
         }
 
-        public async Task<(JournalViewModel, ServiceModelState)> Update(
+        public virtual async Task<(JournalViewModel, ServiceModelState)> Update(
             string id,
             JournalUpdateModel model)
         {
@@ -118,7 +118,8 @@ namespace AbookUseCase.Services
             return (true, null);
         }
 
-        public async Task<(IEnumerable<JournalViewModel>, ServiceModelState)> Search(JournalSearchModel search)
+        public virtual async Task<(IEnumerable<JournalViewModel>, ServiceModelState)> Search(
+            JournalSearchModel search)
         {
             var query = context.Journals
                 .IncludeAccounts();
@@ -164,7 +165,7 @@ namespace AbookUseCase.Services
             return (journlas, null);
         }
 
-        public async Task<(IEnumerable<JournalBalanceModel>, ServiceModelState)> Balance(
+        public virtual async Task<(IEnumerable<JournalBalanceModel>, ServiceModelState)> Balance(
             DateTime start, DateTime end, IEnumerable<DateTime> period)
         {
             var pxs = period

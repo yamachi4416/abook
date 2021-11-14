@@ -11,7 +11,7 @@ namespace AbookUseCase.Services
         {
         }
 
-        public async Task Upsert()
+        public virtual async Task Upsert()
         {
             var currentUser = context.GetCurrentUser();
             var user = await context.MUsers
