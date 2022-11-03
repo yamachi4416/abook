@@ -206,16 +206,16 @@ export default {
       })
 
       m.$on('ok', async ({ from, to }) => {
+        await m.close()
         if (this.period.from === from && this.period.to === to) {
-          await m.close()
-        } else {
-          this.show = false
-          await this.$nextTick()
-          this.$router.replace({
-            params: { from, to: from === to ? null : to },
-            query: { financeDiv: this.financeDiv }
-          })
+          return
         }
+        this.show = false
+        await this.$nextTick()
+        this.$router.replace({
+          params: { from, to: from === to ? null : to },
+          query: { financeDiv: this.financeDiv }
+        })
       })
 
       const div = document.createElement('div')
