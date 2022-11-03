@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Sortable from 'sortablejs'
+import * as Sortable from 'sortablejs'
 
 export default {
   inheritAttrs: true,
