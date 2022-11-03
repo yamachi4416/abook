@@ -1,4 +1,4 @@
-FROM node:lts-alpine as builder
+FROM node:gallium-alpine as builder
 
 WORKDIR /app
 
@@ -15,7 +15,7 @@ RUN npm run build && \
     npm prune --production
 
 
-FROM node:lts-alpine
+FROM node:gallium-alpine
 
 USER node
 WORKDIR /home/node/app
