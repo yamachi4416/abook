@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import * as Sortable from 'sortablejs'
+import { Sortable } from 'sortablejs/modular/sortable.esm'
 
 export default {
   inheritAttrs: true,
@@ -64,7 +64,7 @@ export default {
         return [...el.parentElement.children].indexOf(el)
       }
 
-      this._sortable = new Sortable(this.$el, {
+      this._sortable = Sortable.create(this.$el, {
         delay: 0,
         animation: 150,
         handle: this.handle,
