@@ -1,0 +1,252 @@
+{
+    "head": {
+        "description": "Household account book"
+    },
+    "confirm": {
+        "remove": {
+            "message": "Do you really want to delete this?"
+        }
+    },
+    "actions": {
+        "prev_month": "Prev",
+        "next_month": "Next",
+        "prev_day": "Prev",
+        "next_day": "Next",
+        "add": "Add",
+        "filter": "Narrow down",
+        "summary": "Summary",
+        "done": "Done",
+        "condition_period": "Period",
+        "sort": "Sort",
+        "save": "Save",
+        "remove": "Delete",
+        "copy": "Copy",
+        "search": "Search",
+        "yes": "Yes",
+        "no": "No"
+    },
+    "calc": {
+        "roundUp": "round\nup",
+        "roundDown": "round\ndown",
+        "round": "round\noff"
+    },
+    "form": {
+        "accrualDate": "Date",
+        "journalDiv": "Class.",
+        "amount": "Amount",
+        "memo": "Note",
+        "account": "Account",
+        "periodType": "Date (specified)",
+        "accrualDateStart": "Date (from)",
+        "accrualDateEnd": "Date (to)",
+        "debitAccount_": "Item.1",
+        "debitAccount_1": "Receipt method",
+        "debitAccount_2": "Expense name",
+        "debitAccount_3": "Transfer dest.",
+        "creditAccount_": "Item.2",
+        "creditAccount_1": "Income name",
+        "creditAccount_2": "Expense method",
+        "creditAccount_3": "Transfer source",
+        "amount_3f": "Amount(Transfer source)",
+        "code": "Code",
+        "financeName": "Class.",
+        "name": "Name",
+        "avaliable": "Avaliable",
+        "useFee": "Use for a fee",
+        "total": "Total",
+        "color": "Color",
+        "usuallyUsedForPayment": "Usually used payment method",
+        "usuallyUsedForReceipt": "Usually used receipt method",
+        "fee": {
+            "account": "Fee",
+            "amount": "Amount (fee)",
+            "feeAmount": "Amount (transfer)"
+        },
+        "aggMonthType": "(Period)",
+        "aggMonthFrom": "(From)",
+        "aggMonthTo": "(To)",
+        "startOfMonthIsPrev": "Start of mon (ref.)",
+        "startOfMonthDate": "Start of mon (date)",
+        "locale": "Language",
+        "displayName": "Display name",
+        "email": "Mail address",
+        "tax1": "Tax rate.1(%)",
+        "tax2": "Tax rate.2(%)"
+    },
+    "pages": {
+        "menu": {
+            "title1": "{abook} {dev}",
+            "title2": "Household {dev}",
+            "items": {
+                "settings": {
+                    "title": "Various settings",
+                    "items": {
+                        "accounts": "Account setting",
+                        "abooks": "Account book setting",
+                        "users": "Your setting"
+                    }
+                },
+                "journals_daily": {
+                    "title": "Record journal",
+                    "items": {
+                        "timeline": "Timeline",
+                        "calendar": "Calendar",
+                        "new": "Register"
+                    }
+                },
+                "journals_analytics": {
+                    "title": "View household",
+                    "items": {
+                        "search": "Search",
+                        "piechart": "Balance chart",
+                        "balance": "Balance table"
+                    }
+                },
+                "others": {
+                    "title": "Other",
+                    "items": {
+                        "logout": "Logout"
+                    }
+                }
+            }
+        },
+        "accounts": {
+            "index": {
+                "title": "Account setting"
+            },
+            "new": {
+                "title": "Account register"
+            },
+            "edit": {
+                "title": "Account edit"
+            }
+        },
+        "journals": {
+            "new": {
+                "title": "Journal registration"
+            },
+            "edit": {
+                "title": "Journal edit"
+            },
+            "timeline": {
+                "title": "{year}/{month}"
+            },
+            "piechart": {
+                "title1": "{year}/{month}",
+                "title2": "{year1}/{month1} ~ {year2}/{month2}"
+            },
+            "balance": {
+                "title": "Balance table"
+            },
+            "calendar": {
+                "title": "{year}/{month}"
+            },
+            "search": {
+                "input": {
+                    "title": "Search for journals"
+                },
+                "index": {
+                    "title": {
+                        "normal": "Journal search results",
+                        "monthly": "{0} {1}",
+                        "period": "{0} ~ {1} {2}"
+                    }
+                }
+            }
+        },
+        "abooks": {
+            "current": {
+                "title": "Account book setting"
+            }
+        },
+        "settings": {
+            "users": {
+                "title": "Your setting",
+                "section-users": "Basic information",
+                "section-terminal": "Terminal settings"
+            }
+        },
+        "others": {
+            "login": {
+                "title": "Login"
+            }
+        }
+    },
+    "errors": {
+        "statusCode": {
+            "default": {
+                "title": "It is an error({statusCode})",
+                "message": "Sorry.\nIt is an error({statusCode})"
+            },
+            "401": {
+                "title": "Please login",
+                "message": "Session has expired.\nPlease log in again."
+            },
+            "403": {
+                "title": "Not authorized",
+                "message": "You do not have permission to view the requested page."
+            },
+            "404": {
+                "title": "The page can not be found",
+                "message": "The page you were looking for was not found."
+            },
+            "405": {
+                "title": "The page can not be found",
+                "message": "The page you were looking for was not found."
+            },
+            "502": {
+                "title": "Under maintenance",
+                "message": "under maintenance now.\nPlease access after a while."
+            },
+            "offline": {
+                "title": "Network error",
+                "message": "The Internet access does not work.\nCheck the network status."
+            }
+        }
+    },
+    "label": {
+        "none": "None",
+        "dev": "(Dev Ver.)",
+        "startOfMonthDate": "From {0} day",
+        "startOfMonthDateLast": "From the last day",
+        "balance": "Balance"
+    },
+    "select": {
+        "orders": [
+            { "value": 0, "label": "Asc" },
+            { "value": 1, "label": "Desc" }
+        ],
+        "financeDiv": [
+            { "value": null, "label": "" },
+            { "value": 1, "label": "Income" },
+            { "value": 2, "label": "Expense" },
+            { "value": 3, "label": "Assets" },
+            { "value": 4, "label": "Liabilities" }
+        ],
+        "financeInOutDiv": [
+            { "value": 1, "label": "Income" },
+            { "value": 2, "label": "Expense" }
+        ],
+        "journalDiv": [
+            { "value": null, "label": "" },
+            { "value": 1, "label": "Income" },
+            { "value": 2, "label": "Expense" },
+            { "value": 3, "label": "Transfer" }
+        ],
+        "periodTypes": [
+            { "value": null, "label": "" },
+            { "value": "thisWeek", "label": "This week" },
+            { "value": "thisMonth", "label": "This month" }
+        ],
+        "aggMonthTypes": [
+            { "value": 1, "label": "1 month" },
+            { "value": 3, "label": "3 months" },
+            { "value": 6, "label": "6 months" },
+            { "value": 12, "label": "12 months" }
+        ],
+        "startOfMonthIs": [
+            { "value": 1, "label": "Of the previous month" },
+            { "value": 0, "label": "Of that month" }
+        ]
+    }
+}

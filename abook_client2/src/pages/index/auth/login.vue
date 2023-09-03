@@ -1,6 +1,6 @@
 <template>
   <div v-if="!isAuthenticated">
-    <h1>Login</h1>
+    <h1>{{ $t('pages.others.login.title') }}</h1>
     <NuxtLink to="/auth/signIn">SignIn</NuxtLink>
   </div>
 </template>

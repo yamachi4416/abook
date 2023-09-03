@@ -4,9 +4,7 @@
     <nav>
       <template v-for="(group, category) in menuItems">
         <dl v-if="!group.hide" :key="category">
-          <dt>
-            <span>{{ category }}</span>
-          </dt>
+          <dt>{{ $t(`pages.menu.items.${category}.title`) }}</dt>
           <dd>
             <ul>
               <template v-for="(link, i) in group.items">
@@ -17,7 +15,16 @@
                   @keypress.enter.prevent.once="go(link)"
                 >
                   <span :data-icon="link.icon"></span>
-                  <span>{{ link.name }} {{ link.to }}</span>
+                  <span>
+                    {{
+                      $t(
+                        `pages.menu.items.${link.category || category}.items.${
+                          link.name
+                        }`,
+                      )
+                    }}
+                    {{ link.to }}
+                  </span>
                 </li>
               </template>
             </ul>
