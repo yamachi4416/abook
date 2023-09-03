@@ -1,12 +1,8 @@
 export default defineNuxtRouteMiddleware(async ({ path }) => {
-  if (process.server) {
-    return
-  }
-
   const isWatched = useState<boolean>(() => false)
   const { isAuthenticated, signIn, signOut } = useAuth()
 
-  if (!isWatched.value) {
+  if (process.client && !isWatched.value) {
     watch(isAuthenticated, (value) => {
       if (value) {
         navigateTo({ path: '/', replace: true })
@@ -17,12 +13,12 @@ export default defineNuxtRouteMiddleware(async ({ path }) => {
   }
 
   if (path === '/auth/login') {
-    return
+    return true
   }
 
   if (path === '/auth/signIn') {
     signIn()
-    return
+    return true
   }
 
   if (path === '/auth/logout') {
@@ -31,7 +27,7 @@ export default defineNuxtRouteMiddleware(async ({ path }) => {
     return navigateTo({ path: '/auth/login', replace: true })
   }
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated.value) {
     abortNavigation()
     return navigateTo({ path: '/auth/login', replace: true })
   }

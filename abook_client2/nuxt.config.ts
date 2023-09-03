@@ -1,4 +1,5 @@
 export default defineNuxtConfig({
+  ssr: true,
   components: true,
   srcDir: 'src',
 
@@ -13,5 +14,13 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['@pinia/nuxt'],
+  modules: ['@pinia/nuxt', '@vueuse/nuxt'],
+
+  imports: {
+    dirs: ['stores'],
+  },
+
+  pinia: {
+    autoImports: ['storeToRefs'],
+  },
 })

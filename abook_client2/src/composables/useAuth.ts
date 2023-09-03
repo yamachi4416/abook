@@ -12,7 +12,7 @@ export function useAuth() {
   const isWatched = useState<boolean>(() => false)
   const isAuthenticated = computed(() => user.value != null)
 
-  if (auth && !isWatched.value) {
+  if (process.client && !isWatched.value) {
     auth.onAuthStateChanged((value) => {
       user.value = value
     })
@@ -27,16 +27,20 @@ export function useAuth() {
   }
 
   async function signIn() {
-    const result = await getRedirectResult(auth)
-    if (result) {
-      user.value = result.user
-    } else {
-      await signInWithRedirect(auth, new GoogleAuthProvider())
+    if (process.client) {
+      const result = await getRedirectResult(auth)
+      if (result) {
+        user.value = result.user
+      } else {
+        await signInWithRedirect(auth, new GoogleAuthProvider())
+      }
     }
   }
 
   async function signOut() {
-    await auth.signOut()
+    if (process.client) {
+      await auth.signOut()
+    }
   }
 
   return {
