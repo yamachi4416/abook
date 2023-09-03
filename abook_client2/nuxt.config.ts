@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-  ssr: true,
+  ssr: false,
   components: true,
   srcDir: 'src',
 
@@ -18,6 +18,13 @@ export default defineNuxtConfig({
 
   imports: {
     dirs: ['stores'],
+    presets: [
+      {
+        from: '~~/types/models',
+        type: true,
+        imports: ['Models']
+      },
+    ],
   },
 
   pinia: {

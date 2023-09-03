@@ -1,13 +1,12 @@
 import { defineStore } from 'pinia'
-import { AbookViewModel } from '~~/types/models'
 
 export const useAbooksStore = defineStore('abooks', () => {
   const api = useApiRequest()
 
-  const current = ref<AbookViewModel | null>(null)
+  const current = ref<Models.AbookViewModel | null>(null)
 
   async function getCurrent() {
-    return await api.$get<AbookViewModel>('/abooks/current')
+    return await api.$get<Models.AbookViewModel>('/abooks/current')
   }
 
   async function fetchCurrent() {

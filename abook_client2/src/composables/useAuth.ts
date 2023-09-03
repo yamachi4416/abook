@@ -1,7 +1,6 @@
 import {
   GoogleAuthProvider,
   getIdToken,
-  getRedirectResult,
   signInWithRedirect,
 } from 'firebase/auth'
 
@@ -10,13 +9,32 @@ export function useAuth() {
 
   const user = useState(() => auth?.currentUser)
   const isWatched = useState<boolean>(() => false)
+  const isReady = useState<boolean>(() => false)
   const isAuthenticated = computed(() => user.value != null)
 
-  if (process.client && !isWatched.value) {
+  if (!isWatched.value) {
     auth.onAuthStateChanged((value) => {
       user.value = value
+      isReady.value = true
     })
     isWatched.value = true
+  }
+
+  async function waitFor() {
+    return await new Promise<void>((resolve) => {
+      const unwatch = auth.onAuthStateChanged((value) => {
+        unwatch()
+        user.value = value
+        isReady.value = true
+        resolve()
+      })
+    })
+  }
+
+  async function waitForReady() {
+    if (!isReady.value) {
+      await waitFor()
+    }
   }
 
   async function getToken() {
@@ -27,25 +45,21 @@ export function useAuth() {
   }
 
   async function signIn() {
-    if (process.client) {
-      const result = await getRedirectResult(auth)
-      if (result) {
-        user.value = result.user
-      } else {
-        await signInWithRedirect(auth, new GoogleAuthProvider())
-      }
+    await waitForReady()
+    if (!isAuthenticated.value) {
+      await signInWithRedirect(auth, new GoogleAuthProvider())
     }
   }
 
   async function signOut() {
-    if (process.client) {
-      await auth.signOut()
-    }
+    await auth.signOut()
   }
 
   return {
     user,
+    isReady: readonly(isReady),
     isAuthenticated,
+    waitForReady,
     getToken,
     signIn,
     signOut,
