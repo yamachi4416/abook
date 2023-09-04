@@ -5,6 +5,14 @@ export const useAbooksStore = defineStore('abooks', () => {
 
   const current = ref<Models.AbookViewModel | null>(null)
 
+  function newAbook(): Models.AbookEditModel {
+    return {
+      name: '',
+      startOfMonthIsPrev: false,
+      startOfMonthDate: 1,
+    }
+  }
+
   async function getCurrent() {
     return await api.$get<Models.AbookViewModel>('/abooks/current')
   }
@@ -16,9 +24,17 @@ export const useAbooksStore = defineStore('abooks', () => {
     return abook
   }
 
+  async function saveAbook(abook: Models.AbookEditModel) {
+    const action = abook.abookId ? api.$patch : api.$post
+    const saved = await action<Models.AbookViewModel>('/abooks', abook)
+    current.value = saved
+    api.currentAbookId.value = saved.abookId
+  }
+
   return {
     current,
-    getCurrent,
+    newAbook,
     fetchCurrent,
+    saveAbook,
   }
 })

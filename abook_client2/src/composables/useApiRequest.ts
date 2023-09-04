@@ -37,19 +37,19 @@ export function useApiRequest() {
     return await fetchApi<R>(path, 'get')
   }
 
-  async function $post<R, P>(path: string, body?: P) {
+  async function $post<R, P = {}>(path: string, body?: P) {
     return await fetchApi<R, P>(path, 'post', body)
   }
 
-  async function $put<R, P>(path: string, body?: P) {
+  async function $put<R, P = {}>(path: string, body?: P) {
     return await fetchApi<R, P>(path, 'put', body)
   }
 
-  async function $patch<R, P>(path: string, body?: P) {
+  async function $patch<R, P = {}>(path: string, body?: P) {
     return await fetchApi<R, P>(path, 'patch', body)
   }
 
-  async function $delete<R, P>(path: string) {
+  async function $delete<R, P = {}>(path: string) {
     return await fetchApi<R, P>(path, 'delete')
   }
 

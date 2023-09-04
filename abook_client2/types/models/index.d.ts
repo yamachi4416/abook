@@ -8,6 +8,7 @@ declare namespace Models {
   }
 
   interface AbookEditModel {
+    abookId?: string
     name: string
     memo?: string
     startOfMonthDate: number
