@@ -35,7 +35,8 @@ declare namespace Models {
   }
 
   interface AccountEditModel {
-    name?: string
+    id?: string
+    name: string
     financeDiv?: FinanceDiv
     useFee: boolean
     avaliable: boolean

@@ -1,0 +1,31 @@
+<template>
+  <LayoutDefault>
+    <template #title>{{ $t('pages.accounts.index.title') }}</template>
+    <table>
+      <thead>
+        <tr>
+          <th>{{ $t('form.financeName') }}</th>
+          <th>{{ $t('form.name') }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="{ id, financeDiv, color, name } in accounts" :key="id">
+          <td>{{ $t(`select.financeDiv.${financeDiv}.label`) }}</td>
+          <td>
+            <span :style="{ color }">●</span>
+            <NuxtLink :to="`/accounts/${id}`">{{ name }}</NuxtLink>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <template #footer>
+      <NuxtLink to="/accounts/new">{{ $t('actions.add') }}</NuxtLink>
+    </template>
+  </LayoutDefault>
+</template>
+
+<script setup lang="ts">
+const { getAllAccounts } = useAccountsStore()
+
+const accounts = shallowRef(await getAllAccounts())
+</script>
