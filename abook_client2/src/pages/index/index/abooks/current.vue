@@ -1,13 +1,13 @@
 <template>
   <LayoutDefault>
     <template #title>{{ $t('pages.abooks.current.title') }}</template>
-    <dl>
-      <dt>{{ $t('form.name') }}</dt>
-      <dd>
+    <ul>
+      <li>
+        <label>{{ $t('form.name') }}</label>
         <input v-model="abook.name" />
-      </dd>
-      <dt>{{ $t('form.startOfMonthIsPrev') }}</dt>
-      <dd>
+      </li>
+      <li>
+        <label>{{ $t('form.startOfMonthIsPrev') }}</label>
         <select v-model="abook.startOfMonthIsPrev">
           <option
             v-for="{ value, label } of $tm('select.startOfMonthIs')"
@@ -16,9 +16,9 @@
             v-text="$rt(label)"
           />
         </select>
-      </dd>
-      <dt>{{ $t('form.startOfMonthDate') }}</dt>
-      <dd>
+      </li>
+      <li>
+        <label>{{ $t('form.startOfMonthDate') }}</label>
         <select v-model="abook.startOfMonthDate">
           <option
             v-for="{ value, label } of startOfMonthDateOptions"
@@ -27,12 +27,12 @@
             v-text="label"
           />
         </select>
-      </dd>
-      <dt>{{ $t('form.memo') }}</dt>
-      <dd>
+      </li>
+      <li>
+        <label>{{ $t('form.memo') }}</label>
         <textarea v-model="abook.memo" />
-      </dd>
-    </dl>
+      </li>
+    </ul>
     <template #footer>
       <button @click="save">{{ $t('actions.save') }}</button>
     </template>
@@ -40,6 +40,8 @@
 </template>
 
 <script setup lang="ts">
+import { Models } from '#imports'
+
 const { fetchCurrent, newAbook, saveAbook } = useAbooksStore()
 
 const original = (await fetchCurrent()) || newAbook()

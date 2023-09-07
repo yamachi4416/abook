@@ -19,16 +19,12 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['stores'],
     presets: [
+      'pinia',
       {
-        from: '~~/types/models',
-        type: true,
+        from: '~~/libs/models',
         imports: ['Models'],
       },
     ],
-  },
-
-  pinia: {
-    autoImports: ['storeToRefs'],
   },
 
   i18n: {

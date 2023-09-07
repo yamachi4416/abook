@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia'
+import { Models } from "#imports"
 
 export const useAccountsStore = defineStore('accounts', () => {
   const api = useApiRequest()
