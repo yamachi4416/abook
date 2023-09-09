@@ -1,10 +1,12 @@
 <template>
   <LayoutDefault>
     <template #title>{{ $t('pages.abooks.current.title') }}</template>
+    <ValidationErrorMessages :errors="errors" name="*" />
     <ul>
       <li>
         <label>{{ $t('form.name') }}</label>
         <input v-model="abook.name" />
+        <ValidationErrorMessages :errors="errors" name="name" />
       </li>
       <li>
         <label>{{ $t('form.startOfMonthIsPrev') }}</label>
@@ -16,21 +18,25 @@
             v-text="$rt(label)"
           />
         </select>
+        <ValidationErrorMessages :errors="errors" name="startOfMonthIsPrev" />
       </li>
       <li>
         <label>{{ $t('form.startOfMonthDate') }}</label>
         <select v-model="abook.startOfMonthDate">
           <option
-            v-for="{ value, label } of startOfMonthDateOptions"
-            :key="value"
-            :value="value"
-            v-text="label"
+            v-for="i of 28"
+            :key="i"
+            :value="i"
+            v-text="$t('label.startOfMonthDate', [i])"
           />
+          <option :value="30">{{ $t('label.startOfMonthDateLast') }}</option>
         </select>
+        <ValidationErrorMessages :errors="errors" name="startOfMonthDate" />
       </li>
       <li>
         <label>{{ $t('form.memo') }}</label>
         <textarea v-model="abook.memo" />
+        <ValidationErrorMessages :errors="errors" name="memo" />
       </li>
     </ul>
     <template #footer>
@@ -40,30 +46,5 @@
 </template>
 
 <script setup lang="ts">
-import { AbookEditModel } from '~~/libs/models'
-
-const { fetchCurrent, newAbook, saveAbook } = useAbooksStore()
-
-const original = (await fetchCurrent()) || newAbook()
-const { cloned: abook } = useCloned<AbookEditModel>(original)
-
-const startOfMonthDateOptions = computed(() => {
-  const { t } = useI18n()
-  return Array.from(Array(28))
-    .map((_, i) => ({
-      label: t('label.startOfMonthDate', [i + 1]),
-      value: i + 1,
-    }))
-    .concat([{ label: t('label.startOfMonthDateLast'), value: 30 }])
-})
-
-async function save() {
-  try {
-    await saveAbook(abook.value)
-    useRouter().back()
-  } catch (e) {
-    // TODO: Error Handling
-    console.log(e)
-  }
-}
+const { abook, save, errors } = await useAbookEdit()
 </script>

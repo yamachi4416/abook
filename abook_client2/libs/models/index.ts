@@ -93,3 +93,10 @@ export interface JournalSearchModel {
   accrualDateStart?: string
   accrualDateEnd?: string
 }
+
+export interface ApiValidationErrors {
+  readonly [key: string]: {
+    readonly key: string
+    readonly error: string
+  }[]
+}

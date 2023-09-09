@@ -1,4 +1,23 @@
+import { FetchError } from 'ofetch'
+import { ApiValidationErrors } from '~~/libs/models'
+
 type FetchOptions = Parameters<typeof $fetch>[1]
+
+export class ApiValidationError extends Error {
+  public readonly errors
+
+  constructor(err: FetchError, errors: ApiValidationErrors) {
+    super(err.message)
+
+    this.name = 'ApiValidationError'
+
+    if (err?.cause && !this.cause) {
+      this.cause = err.cause
+    }
+
+    this.errors = errors
+  }
+}
 
 export function useApiRequest() {
   const currentAbookId = useState<string | null>(() => null)
@@ -30,7 +49,16 @@ export function useApiRequest() {
       body: body ? JSON.stringify(body) : undefined,
     })
 
-    return await fetch<R>(`${apiBaseUrl}${path}`, opts)
+    try {
+      return await fetch<R>(`${apiBaseUrl}${path}`, opts)
+    } catch (e: unknown) {
+      if (e instanceof FetchError) {
+        if (e.statusCode === 400) {
+          throw new ApiValidationError(e, e.data)
+        }
+      }
+      throw e
+    }
   }
 
   async function $get<R>(path: string) {
