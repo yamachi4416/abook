@@ -46,7 +46,7 @@ export function useApiRequest() {
       method,
       headers,
       credentials: 'same-origin',
-      body: body ? JSON.stringify(body) : undefined,
+      body: body ?? undefined,
     })
 
     try {
@@ -61,8 +61,10 @@ export function useApiRequest() {
     }
   }
 
-  async function $get<R>(path: string) {
-    return await fetchApi<R>(path, 'get')
+  async function $get<R>(path: string, query?: any) {
+    return await fetchApi<R>(path, 'get', null, {
+      query,
+    })
   }
 
   async function $post<R, P = {}>(path: string, body?: P) {

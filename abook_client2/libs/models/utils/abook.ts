@@ -1,10 +1,5 @@
 import { AbookViewModel } from '..'
-
-function toDateValue(date: Date) {
-  const year = date.getFullYear()
-  const month = date.getMonth()
-  return { year, month, date: date.getDate() }
-}
+import { toDatePart } from './date'
 
 export function toStartOfMonthDate({
   date,
@@ -13,7 +8,7 @@ export function toStartOfMonthDate({
   date: Date
   abook: Pick<AbookViewModel, 'startOfMonthDate' | 'startOfMonthIsPrev'>
 }) {
-  const { year, month } = toDateValue(date)
+  const { year, month } = toDatePart(date)
   if (startOfMonthIsPrev) {
     if (startOfMonthDate === 30) {
       return new Date(year, month, 0)
@@ -38,7 +33,7 @@ export function toEndOfMonthDate({
     year,
     month,
     date: days,
-  } = toDateValue(toStartOfMonthDate({ date, abook }))
+  } = toDatePart(toStartOfMonthDate({ date, abook }))
   return new Date(year, month + 1, days - 1)
 }
 
@@ -49,7 +44,7 @@ export function toCurrentMonthDate({
   date: Date
   abook: Pick<AbookViewModel, 'startOfMonthDate' | 'startOfMonthIsPrev'>
 }) {
-  const { year, month } = toDateValue(date)
+  const { year, month } = toDatePart(date)
   const startDate = toStartOfMonthDate({ date, abook })
   const endDate = toEndOfMonthDate({ date, abook })
 
