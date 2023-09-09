@@ -1,11 +1,16 @@
-import { Models } from "#imports"
+import { AbookViewModel } from '~~/libs/models'
+import {
+  toCurrentMonthDate,
+  toEndOfMonthDate,
+  toStartOfMonthDate,
+} from '~~/libs/models/utils/abook'
 
 export function useAbookView({
   date,
   abook,
 }: {
   date: MaybeRef<Date>
-  abook: MaybeRef<Models.AbookViewModel | null>
+  abook: MaybeRef<AbookViewModel | null>
 }) {
   const current = computed(() => unref(abook))
 

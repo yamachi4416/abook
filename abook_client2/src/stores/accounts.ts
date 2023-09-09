@@ -1,9 +1,9 @@
-import { Models } from "#imports"
+import { AccountEditModel, AccountViewModel } from '~~/libs/models'
 
 export const useAccountsStore = defineStore('accounts', () => {
   const api = useApiRequest()
 
-  function newAccount(): Models.AccountEditModel {
+  function newAccount(): AccountEditModel {
     return {
       name: '',
       useFee: false,
@@ -15,19 +15,19 @@ export const useAccountsStore = defineStore('accounts', () => {
   }
 
   async function getAccount(id: string) {
-    return await api.$get<Models.AccountViewModel>(`/accounts/${id}`)
+    return await api.$get<AccountViewModel>(`/accounts/${id}`)
   }
 
   async function getAllAccounts() {
-    return await api.$get<Models.AccountViewModel[]>('/accounts/')
+    return await api.$get<AccountViewModel[]>('/accounts/')
   }
 
-  async function createAccount(account: Models.AccountEditModel) {
+  async function createAccount(account: AccountEditModel) {
     return await api.$post<{ id: string }>('/accounts', account)
   }
 
-  async function updateAccount(account: Models.AccountEditModel) {
-    return await api.$patch<Models.AccountViewModel>(
+  async function updateAccount(account: AccountEditModel) {
+    return await api.$patch<AccountViewModel>(
       `/accounts/${account.id}`,
       account,
     )

@@ -27,5 +27,5 @@
 <script setup lang="ts">
 const { getAllAccounts } = useAccountsStore()
 
-const accounts = shallowRef(await getAllAccounts())
+const accounts = await getAllAccounts()
 </script>

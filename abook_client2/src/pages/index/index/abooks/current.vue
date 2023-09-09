@@ -40,12 +40,12 @@
 </template>
 
 <script setup lang="ts">
-import { Models } from '#imports'
+import { AbookEditModel } from '~~/libs/models'
 
 const { fetchCurrent, newAbook, saveAbook } = useAbooksStore()
 
 const original = (await fetchCurrent()) || newAbook()
-const { cloned: abook } = useCloned<Models.AbookEditModel>(original)
+const { cloned: abook } = useCloned<AbookEditModel>(original)
 
 const startOfMonthDateOptions = computed(() => {
   const { t } = useI18n()

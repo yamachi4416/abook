@@ -45,20 +45,20 @@
 </template>
 
 <script setup lang="ts">
-import { Models } from '#imports'
+import { AccountEditModel, FinanceDiv } from '~~/libs/models'
 
 const route = useRoute()
 const { getAccount, newAccount } = useAccountsStore()
 
 const id = String(route.params.id)
 const original = id === 'new' ? newAccount() : await getAccount(id)
-const { cloned: account } = useCloned<Models.AccountEditModel>(original)
+const { cloned: account } = useCloned<AccountEditModel>(original)
 
 const showUseFee = computed(() => account.value.financeDiv === 2)
 
 const showUsuallyUsedForPayment = computed(
   () =>
-    account.value.financeDiv === Models.FinanceDiv.Assets ||
-    account.value.financeDiv === Models.FinanceDiv.Liabilities,
+    account.value.financeDiv === FinanceDiv.Assets ||
+    account.value.financeDiv === FinanceDiv.Liabilities,
 )
 </script>

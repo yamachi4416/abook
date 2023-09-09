@@ -1,11 +1,11 @@
-import { Models } from '#imports'
+import { AbookEditModel, AbookViewModel } from '~~/libs/models'
 
 export const useAbooksStore = defineStore('abooks', () => {
   const api = useApiRequest()
 
-  const current = ref<Models.AbookViewModel | null>(null)
+  const current = ref<AbookViewModel | null>(null)
 
-  function newAbook(): Models.AbookEditModel {
+  function newAbook(): AbookEditModel {
     return {
       name: '',
       startOfMonthIsPrev: false,
@@ -14,7 +14,7 @@ export const useAbooksStore = defineStore('abooks', () => {
   }
 
   async function getCurrent() {
-    return await api.$get<Models.AbookViewModel>('/abooks/current')
+    return await api.$get<AbookViewModel>('/abooks/current')
   }
 
   async function fetchCurrent() {
@@ -24,9 +24,9 @@ export const useAbooksStore = defineStore('abooks', () => {
     return abook
   }
 
-  async function saveAbook(abook: Models.AbookEditModel) {
+  async function saveAbook(abook: AbookEditModel) {
     const action = abook.abookId ? api.$patch : api.$post
-    const saved = await action<Models.AbookViewModel>('/abooks', abook)
+    const saved = await action<AbookViewModel>('/abooks', abook)
     current.value = saved
     api.currentAbookId.value = saved.abookId
   }

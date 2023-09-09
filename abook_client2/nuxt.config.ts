@@ -18,13 +18,7 @@ export default defineNuxtConfig({
 
   imports: {
     dirs: ['stores'],
-    presets: [
-      'pinia',
-      {
-        from: '~~/libs/models',
-        imports: ['Models'],
-      },
-    ],
+    presets: ['pinia'],
   },
 
   i18n: {
