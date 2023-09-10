@@ -23,12 +23,12 @@ export function useTopMenuItem(params: TopMenuItemInput) {
           {
             name: 'timeline',
             icon: 'query_builder',
-            to: `/journals/timeline/${currentMonth}`,
+            to: `/journals/${currentMonth}/timeline`,
           },
           {
             name: 'calendar',
             icon: 'calendar_today',
-            to: `/journals/calendar/${currentMonth}`,
+            to: `/journals/${currentMonth}/calendar`,
           },
           {
             name: 'new',
