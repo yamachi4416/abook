@@ -13,9 +13,13 @@ export function useApiValidationError<T = {}>(obj?: string) {
     return `${obj}.${String(key)}`
   }
 
-  function hasErrors(key: Keys | RegExp) {
+  function hasErrors(key?: Keys | RegExp) {
     if (!errors.value) {
       return false
+    }
+
+    if (key === undefined) {
+      return !!errors.value
     }
 
     if (key instanceof RegExp) {

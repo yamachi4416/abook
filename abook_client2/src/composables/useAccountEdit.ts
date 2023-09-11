@@ -1,23 +1,18 @@
-import { AccountEditModel, FinanceDiv } from '~~/libs/models'
+import { AccountEditModel } from '~~/libs/models'
+import { accountEditor } from '~~/libs/models/editors/acconut'
 
 export async function useAccountEdit({ id }: { id: string }) {
   const { getAccount, newAccount, createAccount, updateAccount } =
     useAccountsStore()
 
+  const original = id === 'new' ? newAccount() : await getAccount(id)
+
   const { hasErrors, getErrors, clearErrors, setErrors } =
     useApiValidationError<AccountEditModel>('account')
 
-  const account = ref(id === 'new' ? newAccount() : await getAccount(id))
+  const { cloned: account } = useCloned<AccountEditModel>(original)
 
-  const isEnableUseFee = computed(
-    () => account.value.financeDiv === FinanceDiv.Expense,
-  )
-
-  const isEnableUsuallyUsedForPayment = computed(
-    () =>
-      account.value.financeDiv === FinanceDiv.Assets ||
-      account.value.financeDiv === FinanceDiv.Liabilities,
-  )
+  const editor = accountEditor({ account })
 
   async function saveAccount() {
     clearErrors()
@@ -37,9 +32,7 @@ export async function useAccountEdit({ id }: { id: string }) {
   }
 
   return {
-    account,
-    isEnableUseFee,
-    isEnableUsuallyUsedForPayment,
+    account: reactive(editor),
     saveAccount,
     errors: {
       hasErrors,

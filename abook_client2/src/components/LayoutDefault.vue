@@ -1,7 +1,10 @@
 <template>
   <div>
     <header>
-      <slot name="title" />
+      <h2>
+        <slot name="title" />
+      </h2>
+      <a href="#" @click.prevent="$router.back">Back</a>
     </header>
     <main>
       <slot />

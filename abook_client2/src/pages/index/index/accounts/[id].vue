@@ -33,12 +33,12 @@
         <input v-model="account.name" type="text" />
         <ValidationErrorMessages :errors="errors" name="name" />
       </li>
-      <li v-if="isEnableUseFee">
+      <li v-if="account.isEnableUseFee">
         <label>{{ $t('form.useFee') }}</label>
         <input v-model="account.useFee" type="checkbox" />
         <ValidationErrorMessages :errors="errors" name="useFee" />
       </li>
-      <li v-if="isEnableUsuallyUsedForPayment">
+      <li v-if="account.isEnableUsuallyUsedForPayment">
         <label>{{ $t('form.usuallyUsedForPayment') }}</label>
         <input v-model="account.usuallyUsedForPayment" type="checkbox" />
         <ValidationErrorMessages
@@ -62,18 +62,14 @@
 </template>
 
 <script setup lang="ts">
-const {
-  account,
-  isEnableUseFee,
-  isEnableUsuallyUsedForPayment,
-  saveAccount,
-  errors,
-} = await useAccountEdit({
+const { account, saveAccount, errors } = await useAccountEdit({
   id: String(useRoute().params.id),
 })
 
 async function save() {
   await saveAccount()
-  useRouter().push('/accounts')
+  if (!errors.hasErrors()) {
+    useRouter().push('/accounts')
+  }
 }
 </script>

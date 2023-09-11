@@ -76,6 +76,7 @@ export interface JournalViewModel {
 }
 
 export interface JournalEditModel {
+  id?: string
   accrualDate?: string
   journalDiv?: JournalDiv
   amount?: number

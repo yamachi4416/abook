@@ -7,6 +7,7 @@ import {
 
 export function useMonthlyJournals() {
   const monthly = ref('')
+  const { current: abook } = storeToRefs(useAbooksStore())
   const journals = useState<JournalViewModel[]>(() => [])
 
   const fromDate = useParseDate(monthly, 'YYYYMM')
@@ -33,18 +34,16 @@ export function useMonthlyJournals() {
   const nextMonthly = useDateFormat(fromDateNext, 'YYYYMM')
 
   const accrualDateStart = computed(() => {
-    const abook = useAbooksStore().current
     const date = fromDate.value
-    if (abook && date) {
-      return toStartOfMonthDate({ date, abook })
+    if (abook.value && date) {
+      return toStartOfMonthDate({ date, abook: abook.value })
     }
   })
 
   const accrualDateEnd = computed(() => {
-    const abook = useAbooksStore().current
     const date = fromDate.value
-    if (abook && date) {
-      return toEndOfMonthDate({ date, abook })
+    if (abook.value && date) {
+      return toEndOfMonthDate({ date, abook: abook.value })
     }
   })
 

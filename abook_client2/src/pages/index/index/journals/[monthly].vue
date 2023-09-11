@@ -4,6 +4,8 @@
     :monthly="monthly"
     :prev-monthly="prevMonthly"
     :next-monthly="nextMonthly"
+    :accrual-date-start="accrualDateStart"
+    :accrual-date-end="accrualDateEnd"
   />
 </template>
 
@@ -14,7 +16,15 @@ definePageMeta({
   },
 })
 
-const { journals, monthly, prevMonthly, nextMonthly, setMonthly } =
-  useMonthlyJournals()
+const {
+  journals,
+  monthly,
+  prevMonthly,
+  nextMonthly,
+  accrualDateStart,
+  accrualDateEnd,
+  setMonthly,
+} = useMonthlyJournals()
+
 await setMonthly(String(useRoute().params.monthly))
 </script>

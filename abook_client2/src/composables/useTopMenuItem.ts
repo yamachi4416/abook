@@ -33,7 +33,7 @@ export function useTopMenuItem(params: TopMenuItemInput) {
           {
             name: 'new',
             icon: 'note_add',
-            to: '/journals',
+            to: '/journals/new',
           },
         ],
       },

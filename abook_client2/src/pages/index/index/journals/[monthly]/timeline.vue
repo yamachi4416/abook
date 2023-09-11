@@ -3,20 +3,24 @@
     <template #title>{{ monthly }}</template>
     <dl>
       <template v-for="[date, items] in groups" :key="date">
-        <dt>{{ date }}</dt>
+        <dt>
+          <DateFormat :value="date" format="YYYY/MM/DD (ddd)" />
+        </dt>
         <dd>
           <ul>
             <li v-for="item in items" :key="item.id">
-              <span>{{
-                $t(`select.journalDiv.${item.journalDiv}.label`)
-              }}</span>
-              <span>{{ item.debitAccount.name }}</span>
-              <span>{{ item.creditAccount.name }}</span>
-              <span>{{ item.amount - (item.fee?.amount ?? 0) }}</span>
-              <span v-if="item.memo" v-text="item.memo"></span>
-              <span v-if="item.fee">{{ item.fee.account.name }}</span>
-              <span v-if="item.fee">{{ item.creditAccount.name }}</span>
-              <span v-if="item.fee">{{ item.fee.amount }}</span>
+              <NuxtLink :to="`/journals/${item.id}`">
+                <span>
+                  {{ $t(`select.journalDiv.${item.journalDiv}.label`) }}
+                </span>
+                <span>{{ item.debitAccount.name }}</span>
+                <span>{{ item.creditAccount.name }}</span>
+                <span>{{ item.amount - (item.fee?.amount ?? 0) }}</span>
+                <span v-if="item.memo" v-text="item.memo"></span>
+                <span v-if="item.fee">{{ item.fee.account.name }}</span>
+                <span v-if="item.fee">{{ item.creditAccount.name }}</span>
+                <span v-if="item.fee">{{ item.fee.amount }}</span>
+              </NuxtLink>
             </li>
           </ul>
         </dd>
@@ -25,6 +29,9 @@
     <template #footer>
       <NuxtLink :to="{ params: { monthly: prevMonthly } }" :replace="true">
         {{ $t('actions.prev_month') }}
+      </NuxtLink>
+      <NuxtLink to="/journals/new">
+        {{ $t('actions.add') }}
       </NuxtLink>
       <NuxtLink :to="{ params: { monthly: nextMonthly } }" :replace="true">
         {{ $t('actions.next_month') }}
@@ -35,12 +42,13 @@
 
 <script setup lang="ts">
 import { JournalViewModel } from '~~/libs/models'
+import { parseDate } from '~~/libs/models/utils/date'
 
 const props = defineProps<{
   journals: JournalViewModel[]
-  monthly?: string
-  prevMonthly?: string
-  nextMonthly?: string
+  monthly: string
+  prevMonthly: string
+  nextMonthly: string
 }>()
 
 const groups = computed(() => {
@@ -56,6 +64,9 @@ const groups = computed(() => {
     }
   }
 
-  return map
+  return [...map.entries()].map<[Date, typeof journals]>(([date, items]) => [
+    parseDate(date, 'YYYY-MM-DD'),
+    items,
+  ])
 })
 </script>
