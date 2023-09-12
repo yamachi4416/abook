@@ -192,6 +192,13 @@ export function journalEdtitor({
       })
     },
 
+    get memo() {
+      return journal.value.memo
+    },
+    set memo(value) {
+      journal.value.memo = value
+    },
+
     get amount() {
       return journal.value.amount
     },

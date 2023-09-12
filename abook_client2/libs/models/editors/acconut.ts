@@ -16,6 +16,10 @@ export function accountEditor({
   account: { value: AccountEditModel }
 }) {
   return {
+    get id() {
+      return account.value.id
+    },
+
     get name() {
       return account.value.name
     },
@@ -27,7 +31,7 @@ export function accountEditor({
       return account.value.financeDiv
     },
     set financeDiv(value) {
-      if (isValidFinanceDiv(value)) {
+      if (!isValidFinanceDiv(value)) {
         return
       }
       account.value.financeDiv = value

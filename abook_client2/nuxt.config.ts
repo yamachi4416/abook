@@ -5,6 +5,14 @@ export default defineNuxtConfig({
 
   app: {
     baseURL: process.env.NUXT_APP_BASE_URL ?? '',
+    head: {
+      link: [
+        {
+          rel: 'stylesheet',
+          href: 'https://unpkg.com/sakura.css/css/sakura.css',
+        },
+      ],
+    },
   },
 
   runtimeConfig: {

@@ -1,6 +1,6 @@
 <template>
   <LayoutDefault>
-    <template #title>{{ monthly }}</template>
+    <template #title>{{ period.to }}</template>
     <dl>
       <template v-for="[date, items] in groups" :key="date">
         <dt>
@@ -15,11 +15,11 @@
                 </span>
                 <span>{{ item.debitAccount.name }}</span>
                 <span>{{ item.creditAccount.name }}</span>
-                <span>{{ item.amount - (item.fee?.amount ?? 0) }}</span>
-                <span v-if="item.memo" v-text="item.memo"></span>
+                <span>{{ $n(item.amount - (item.fee?.amount ?? 0)) }}</span>
                 <span v-if="item.fee">{{ item.fee.account.name }}</span>
                 <span v-if="item.fee">{{ item.creditAccount.name }}</span>
-                <span v-if="item.fee">{{ item.fee.amount }}</span>
+                <span v-if="item.fee">{{ $n(item.fee.amount ?? 0) }}</span>
+                <span v-if="item.memo" v-text="item.memo"></span>
               </NuxtLink>
             </li>
           </ul>
@@ -27,13 +27,13 @@
       </template>
     </dl>
     <template #footer>
-      <NuxtLink :to="{ params: { monthly: prevMonthly } }" :replace="true">
+      <NuxtLink :to="{ params: { period: prevPeriod.period } }" :replace="true">
         {{ $t('actions.prev_month') }}
       </NuxtLink>
       <NuxtLink to="/journals/new">
         {{ $t('actions.add') }}
       </NuxtLink>
-      <NuxtLink :to="{ params: { monthly: nextMonthly } }" :replace="true">
+      <NuxtLink :to="{ params: { period: nextPeriod.period } }" :replace="true">
         {{ $t('actions.next_month') }}
       </NuxtLink>
     </template>
@@ -41,19 +41,13 @@
 </template>
 
 <script setup lang="ts">
-import { JournalViewModel } from '~~/libs/models'
 import { parseDate } from '~~/libs/models/utils/date'
 
-const props = defineProps<{
-  journals: JournalViewModel[]
-  monthly: string
-  prevMonthly: string
-  nextMonthly: string
-}>()
+const { journals, period, prevPeriod, nextPeriod } = toReactive(
+  useMonthlyJournals(),
+)
 
 const groups = computed(() => {
-  const journals = props.journals
-
   const map = new Map<string, typeof journals>()
 
   for (const journal of journals) {

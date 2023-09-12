@@ -1,15 +1,15 @@
 <template>
   <LayoutDefault>
     <ValidationErrorMessages :errors="errors" name="*" />
-    <ul>
-      <li>
+    <form @submit.prevent>
+      <p>
         <label>{{ $t('form.accrualDate') }}</label>
         <input v-model="journal.accrualDate" type="date" />
         <ValidationErrorMessages :errors="errors" name="accrualDate" />
-      </li>
-      <li>
+      </p>
+      <p>
         <label>{{ $t('form.journalDiv') }}</label>
-        <select v-model="journal.journalDiv">
+        <select v-model.number="journal.journalDiv">
           <option
             v-for="{ value, label } of $tm('select.journalDiv')"
             :key="value ?? 0"
@@ -18,8 +18,8 @@
           />
         </select>
         <ValidationErrorMessages :errors="errors" name="journalDiv" />
-      </li>
-      <li>
+      </p>
+      <p>
         <label>{{ $t(`form.debitAccount_${journal.journalDiv ?? ''}`) }}</label>
         <select v-model="journal.debitAccountId">
           <option></option>
@@ -31,8 +31,8 @@
           />
         </select>
         <ValidationErrorMessages :errors="errors" name="debitAccount" />
-      </li>
-      <li>
+      </p>
+      <p>
         <label>{{
           $t(`form.creditAccount_${journal.journalDiv ?? ''}`)
         }}</label>
@@ -46,8 +46,8 @@
           />
         </select>
         <ValidationErrorMessages :errors="errors" name="creditAccount" />
-      </li>
-      <li v-if="journal.useFee && feeAccounts.length">
+      </p>
+      <p v-if="journal.useFee && feeAccounts.length">
         <label>{{ $t('form.fee.account') }}</label>
         <select v-model="journal.feeAccountId">
           <option></option>
@@ -59,25 +59,30 @@
           />
         </select>
         <ValidationErrorMessages :errors="errors" :name="/fee\.acconut/" />
-      </li>
-      <li v-if="journal.feeAccountId">
+      </p>
+      <p v-if="journal.feeAccountId">
         <label>{{ $t('form.fee.feeAmount') }}</label>
         <input v-model.number.lazy="journal.feeUseAmount" type="number" />
         <ValidationErrorMessages :errors="errors" :name="/fee\.amount/" />
-      </li>
-      <li>
+      </p>
+      <p>
         <label>
           {{ $t(`form.amount${journal.feeAccountId ? '_3f' : ''}`) }}
         </label>
         <input v-model.number.lazy="journal.amount" type="number" />
         <ValidationErrorMessages :errors="errors" name="amount" />
-      </li>
-      <li v-if="journal.feeAccountId">
+      </p>
+      <p v-if="journal.feeAccountId">
         <label>{{ $t('form.fee.amount') }}</label>
         <input v-model.number.lazy="journal.feeAmount" type="number" />
         <ValidationErrorMessages :errors="errors" :name="/fee\.amount/" />
-      </li>
-    </ul>
+      </p>
+      <p>
+        <label>{{ $t('form.memo') }}</label>
+        <textarea v-model="journal.memo" />
+        <ValidationErrorMessages :errors="errors" name="memo" />
+      </p>
+    </form>
     <template #footer>
       <button @click="save">{{ $t('actions.save') }}</button>
     </template>
