@@ -23,7 +23,8 @@
         "copy": "Copy",
         "search": "Search",
         "yes": "Yes",
-        "no": "No"
+        "no": "No",
+        "back": "Back"
     },
     "calc": {
         "roundUp": "round\nup",

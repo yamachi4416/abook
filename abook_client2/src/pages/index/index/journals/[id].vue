@@ -1,5 +1,8 @@
 <template>
   <LayoutDefault>
+    <template #title>
+      {{ $t(`pages.journals.${journal.id ? 'edit' : 'new'}.title`) }}
+    </template>
     <ValidationErrorMessages :errors="errors" name="*" />
     <form @submit.prevent>
       <p>

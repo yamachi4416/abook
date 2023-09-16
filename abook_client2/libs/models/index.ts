@@ -30,7 +30,7 @@ export interface AbookEditModel {
 export interface AccountViewModel {
   readonly id: string
   readonly name: string
-  readonly financeDiv?: FinanceDiv
+  readonly financeDiv: FinanceDiv
   readonly useFee: boolean
   readonly avaliable: boolean
   readonly color: string
@@ -52,7 +52,7 @@ export interface AccountEditModel {
 
 export interface FeeViewModel {
   readonly account: AccountViewModel
-  readonly amount?: number
+  readonly amount: number
 }
 
 export interface JounalEditAccountModel {

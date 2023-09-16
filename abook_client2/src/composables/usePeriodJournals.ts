@@ -1,5 +1,5 @@
 import { formatDate } from '@vueuse/core'
-import { JournalViewModel } from '~~/libs/models'
+import { AccountViewModel, JournalViewModel } from '~~/libs/models'
 import {
   toEndOfMonthDate,
   toStartOfMonthDate,
@@ -25,6 +25,8 @@ export function useMonthlyJournals() {
   }))
 
   const { current: abook } = storeToRefs(useAbooksStore())
+
+  const allAccounts = useState<AccountViewModel[]>(() => [])
 
   const calJournals = useState<JournalViewModel[]>(() => [])
 
@@ -102,16 +104,23 @@ export function useMonthlyJournals() {
       period.value = toPeriod(value)
       if (accrualDateStart.value && accrualDateEnd.value) {
         const { searchJournals } = useJournalsStore()
-        calJournals.value = await searchJournals({
-          accrualDateStart: formatDate(
-            toCalendarStartDate({ date: accrualDateStart.value }),
-            'YYYY-MM-DD',
-          ),
-          accrualDateEnd: formatDate(
-            toCalendarEndDate({ date: accrualDateEnd.value }),
-            'YYYY-MM-DD',
-          ),
-        })
+        const { getAllAccounts } = useAccountsStore()
+        const [journalsResult, allAccountsResult] = await Promise.all([
+          searchJournals({
+            accrualDateStart: formatDate(
+              toCalendarStartDate({ date: accrualDateStart.value }),
+              'YYYY-MM-DD',
+            ),
+            accrualDateEnd: formatDate(
+              toCalendarEndDate({ date: accrualDateEnd.value }),
+              'YYYY-MM-DD',
+            ),
+          }),
+          getAllAccounts(),
+        ])
+
+        calJournals.value = journalsResult
+        allAccounts.value = allAccountsResult
       } else {
         calJournals.value = []
       }
@@ -119,14 +128,16 @@ export function useMonthlyJournals() {
   }
 
   function clearPeriod() {
-    period.value = { from: '', to: '' }
+    period.value = { from: '', to: '', period: '' }
     calJournals.value = []
+    allAccounts.value = []
   }
 
   return {
     period: computed(() => ({ ...period.value })),
     journals,
-    calJournals: computed(() => calJournals.value),
+    allAccounts: computed(() => [...allAccounts.value]),
+    calJournals: computed(() => [...calJournals.value]),
     accrualDateStart,
     accrualDateEnd,
     prevPeriod,

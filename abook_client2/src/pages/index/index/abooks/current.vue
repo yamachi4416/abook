@@ -2,13 +2,13 @@
   <LayoutDefault>
     <template #title>{{ $t('pages.abooks.current.title') }}</template>
     <ValidationErrorMessages :errors="errors" name="*" />
-    <ul>
-      <li>
+    <form @submit.prevent>
+      <p>
         <label>{{ $t('form.name') }}</label>
         <input v-model="abook.name" />
         <ValidationErrorMessages :errors="errors" name="name" />
-      </li>
-      <li>
+      </p>
+      <p>
         <label>{{ $t('form.startOfMonthIsPrev') }}</label>
         <select v-model="abook.startOfMonthIsPrev">
           <option
@@ -19,8 +19,8 @@
           />
         </select>
         <ValidationErrorMessages :errors="errors" name="startOfMonthIsPrev" />
-      </li>
-      <li>
+      </p>
+      <p>
         <label>{{ $t('form.startOfMonthDate') }}</label>
         <select v-model="abook.startOfMonthDate">
           <option
@@ -32,13 +32,13 @@
           <option :value="30">{{ $t('label.startOfMonthDateLast') }}</option>
         </select>
         <ValidationErrorMessages :errors="errors" name="startOfMonthDate" />
-      </li>
-      <li>
+      </p>
+      <p>
         <label>{{ $t('form.memo') }}</label>
         <textarea v-model="abook.memo" />
         <ValidationErrorMessages :errors="errors" name="memo" />
-      </li>
-    </ul>
+      </p>
+    </form>
     <template #footer>
       <button @click="save">{{ $t('actions.save') }}</button>
     </template>

@@ -23,7 +23,8 @@
         "copy": "复制",
         "search": "搜索",
         "yes": "是",
-        "no": "没有"
+        "no": "没有",
+        "back": "返回"
     },
     "calc": {
         "roundUp": "round\nup",

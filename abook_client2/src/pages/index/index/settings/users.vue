@@ -1,7 +1,7 @@
 <template>
   <LayoutDefault>
     <template #title>{{ $t('pages.settings.users.title') }}</template>
-    <section>
+    <form @submit.prevent>
       <fieldset>
         <legend>{{ $t('pages.settings.users.section-users') }}</legend>
         <img :src="user?.photoURL ?? undefined" />
@@ -50,7 +50,7 @@
           </dd>
         </dl>
       </fieldset>
-    </section>
+    </form>
   </LayoutDefault>
 </template>
 

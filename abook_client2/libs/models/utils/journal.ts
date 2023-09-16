@@ -1,4 +1,25 @@
-import { AccountViewModel, FinanceDiv, JournalDiv, JournalEditModel } from '..'
+import {
+  AccountViewModel,
+  FinanceDiv,
+  JournalDiv,
+  JournalEditModel,
+  JournalViewModel,
+} from '..'
+
+type AccountSummary = AccountViewModel & {
+  debitAmount: number
+  creditAmount: number
+  amount: number
+  journals: JournalViewModel[]
+}
+
+type FinanceSummary = {
+  financeDiv: FinanceDiv
+  debitAmount: number
+  creditAmount: number
+  amount: number
+  accounts: AccountSummary[]
+}
 
 export function getAllDebitAccounts({
   journal,
@@ -136,4 +157,148 @@ export function getFeeAccounts({
     .filter(
       ({ id, avaliable, useFee }) => (avaliable && useFee) || id === a1?.id,
     )
+}
+
+function summaryOfAccount({
+  journals,
+  accounts,
+}: {
+  journals: JournalViewModel[]
+  accounts: AccountViewModel[]
+}) {
+  const idMap = new Map<string, AccountSummary>()
+
+  function mergeAccountSummary({
+    account,
+    debitAmount,
+    creditAmount,
+    journal,
+  }: {
+    account: AccountViewModel
+    debitAmount?: number
+    creditAmount?: number
+    journal?: JournalViewModel
+  }) {
+    const value = idMap.get(account.id) ?? {
+      ...account,
+      debitAmount: 0,
+      creditAmount: 0,
+      amount: 0,
+      journals: [],
+    }
+
+    if (!idMap.has(account.id)) {
+      idMap.set(account.id, value)
+    }
+
+    value.debitAmount += debitAmount ?? 0
+    value.creditAmount += creditAmount ?? 0
+
+    if (
+      value.financeDiv === FinanceDiv.Income ||
+      value.financeDiv === FinanceDiv.Liabilities
+    ) {
+      value.amount = value.creditAmount - value.debitAmount
+    } else {
+      value.amount = value.debitAmount - value.creditAmount
+    }
+
+    if (journal) {
+      value.journals.push(journal)
+    }
+  }
+
+  for (const account of accounts) {
+    mergeAccountSummary({ account })
+  }
+
+  for (const journal of journals) {
+    mergeAccountSummary({
+      journal,
+      account: journal.creditAccount,
+      creditAmount: journal.amount - (journal.fee?.amount ?? 0),
+    })
+
+    mergeAccountSummary({
+      journal,
+      account: journal.debitAccount,
+      debitAmount: journal.amount,
+    })
+
+    if (journal.fee) {
+      mergeAccountSummary({
+        journal,
+        account: journal.fee.account,
+        debitAmount: journal.fee.amount,
+      })
+    }
+  }
+
+  return idMap
+}
+
+export function toSummaryOfAccount({
+  journals,
+  accounts,
+}: {
+  journals: JournalViewModel[]
+  accounts: AccountViewModel[]
+}) {
+  return [...summaryOfAccount({ journals, accounts }).values()].toSorted(
+    (a, b) => {
+      if (a.financeDiv === b.financeDiv) {
+        return a.dispOrder - b.dispOrder
+      }
+      return a.financeDiv - b.financeDiv
+    },
+  )
+}
+
+function summaryOfFinance({
+  journals,
+  accounts,
+}: {
+  journals: JournalViewModel[]
+  accounts: AccountViewModel[]
+}) {
+  const financeMap = new Map<FinanceDiv, FinanceSummary>()
+
+  for (const account of summaryOfAccount({ journals, accounts }).values()) {
+    const value: FinanceSummary = financeMap.get(account.financeDiv) ?? {
+      financeDiv: account.financeDiv,
+      creditAmount: 0,
+      debitAmount: 0,
+      amount: 0,
+      accounts: [],
+    }
+
+    if (!financeMap.get(account.financeDiv)) {
+      financeMap.set(account.financeDiv, value)
+    }
+
+    value.creditAmount += account.creditAmount
+    value.debitAmount += account.debitAmount
+    value.amount += account.amount
+    value.accounts.push(account)
+  }
+
+  return financeMap
+}
+
+export function toSummaryOfFinance({
+  journals,
+  accounts,
+}: {
+  journals: JournalViewModel[]
+  accounts: AccountViewModel[]
+}) {
+  const values = [...summaryOfFinance({ journals, accounts }).values()]
+
+  for (const account of values) {
+    account.accounts = account.accounts.toSorted(
+      (a, b) => a.dispOrder - b.dispOrder,
+    )
+  }
+
+  return values.toSorted((a, b) => a.financeDiv - b.financeDiv)
 }

@@ -48,7 +48,7 @@ export function useTopMenuItem(params: TopMenuItemInput) {
           {
             name: 'piechart',
             icon: 'pie_chart',
-            to: `/journals/piechart/${currentMonth}`,
+            to: `/journals/${currentMonth}/piechart`,
           },
           {
             name: 'balance',

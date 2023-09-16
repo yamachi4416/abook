@@ -137,6 +137,10 @@ export function journalEdtitor({
   accounts: AccountViewModel[]
 }) {
   return {
+    get id() {
+      return journal.value.id
+    },
+
     get accrualDate() {
       return journal.value.accrualDate
     },
