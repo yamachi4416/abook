@@ -76,15 +76,23 @@ export function useMonthlyJournals() {
 
   const accrualDateStart = computed(() => {
     if (abook.value && period.value.from) {
-      const date = parseDate(period.value.from, 'YYYYMM')
-      return toStartOfMonthDate({ date, abook: abook.value })
+      if (period.value.from.length === 8) {
+        return parseDate(period.value.from, 'YYYYMMDD')
+      } else {
+        const date = parseDate(period.value.from, 'YYYYMM')
+        return toStartOfMonthDate({ date, abook: abook.value })
+      }
     }
   })
 
   const accrualDateEnd = computed(() => {
     if (abook.value && period.value.to) {
-      const date = parseDate(period.value.to, 'YYYYMM')
-      return toEndOfMonthDate({ date, abook: abook.value })
+      if (period.value.to.length === 8) {
+        return parseDate(period.value.to, 'YYYYMMDD')
+      } else {
+        const date = parseDate(period.value.to, 'YYYYMM')
+        return toEndOfMonthDate({ date, abook: abook.value })
+      }
     }
   })
 
@@ -97,33 +105,37 @@ export function useMonthlyJournals() {
     }
   }
 
+  async function fetchData() {
+    if (accrualDateStart.value && accrualDateEnd.value) {
+      const { searchJournals } = useJournalsStore()
+      const { getAllAccounts } = useAccountsStore()
+      const [journalsResult, allAccountsResult] = await Promise.all([
+        searchJournals({
+          accrualDateStart: formatDate(
+            toCalendarStartDate({ date: accrualDateStart.value }),
+            'YYYY-MM-DD',
+          ),
+          accrualDateEnd: formatDate(
+            toCalendarEndDate({ date: accrualDateEnd.value }),
+            'YYYY-MM-DD',
+          ),
+        }),
+        getAllAccounts(),
+      ])
+
+      calJournals.value = journalsResult
+      allAccounts.value = allAccountsResult
+    } else {
+      calJournals.value = []
+    }
+  }
+
   async function setPeriod(value: string | string[]) {
     if (!value) {
       clearPeriod()
     } else {
       period.value = toPeriod(value)
-      if (accrualDateStart.value && accrualDateEnd.value) {
-        const { searchJournals } = useJournalsStore()
-        const { getAllAccounts } = useAccountsStore()
-        const [journalsResult, allAccountsResult] = await Promise.all([
-          searchJournals({
-            accrualDateStart: formatDate(
-              toCalendarStartDate({ date: accrualDateStart.value }),
-              'YYYY-MM-DD',
-            ),
-            accrualDateEnd: formatDate(
-              toCalendarEndDate({ date: accrualDateEnd.value }),
-              'YYYY-MM-DD',
-            ),
-          }),
-          getAllAccounts(),
-        ])
-
-        calJournals.value = journalsResult
-        allAccounts.value = allAccountsResult
-      } else {
-        calJournals.value = []
-      }
+      await fetchData()
     }
   }
 
@@ -131,6 +143,10 @@ export function useMonthlyJournals() {
     period.value = { from: '', to: '', period: '' }
     calJournals.value = []
     allAccounts.value = []
+  }
+
+  async function refresh() {
+    await fetchData()
   }
 
   return {
@@ -144,5 +160,6 @@ export function useMonthlyJournals() {
     nextPeriod,
     setPeriod,
     clearPeriod,
+    refresh,
   }
 }

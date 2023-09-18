@@ -8,7 +8,7 @@
           <td>{{ $n(summary.income) }}</td>
           <th>{{ $t('select.journalDiv.2.label') }}</th>
           <td>{{ $n(summary.expense) }}</td>
-          <th>{{ $t('select.journalDiv.3.label') }}</th>
+          <th>{{ $t('label.balance') }}</th>
           <td>{{ $n(summary.income - summary.expense) }}</td>
         </tr>
       </tbody>

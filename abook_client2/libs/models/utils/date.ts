@@ -8,10 +8,13 @@ export function toDatePart(date: Date) {
 
 const parsers = {
   YYYYMM(value: string) {
+    return parsers.YYYYMMDD(value)
+  },
+  YYYYMMDD(value: string) {
     return new Date(
       parseInt(value.substring(0, 4)),
       parseInt(value.substring(4, 6)) - 1,
-      1,
+      parseInt(value.substring(6, 8) || '1'),
     )
   },
   'YYYY-MM-DD'(value: string) {

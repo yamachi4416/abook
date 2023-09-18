@@ -1,3 +1,5 @@
+import { formatDate, parseDate, plusDate } from '~~/libs/models/utils/date'
+
 type MenuItem = {
   hide?: boolean
   name?: string
@@ -16,6 +18,12 @@ export function useTopMenuItem(params: TopMenuItemInput) {
   const menuItems = computed<Record<string, MenuItem>>(() => {
     const hasAbook = unref(params.hasAbook)
     const currentMonth = unref(params.currentMonth)
+    const currentMonthDate = parseDate(currentMonth, 'YYYYMM')
+    const halfYearPeriodEndMonth = formatDate(
+      plusDate(currentMonthDate, { month: 5 }),
+      'YYYYMM',
+    )
+    const halfYearPeriod = `${currentMonth}-${halfYearPeriodEndMonth}`
     return {
       journals_daily: {
         hide: !hasAbook,
@@ -23,12 +31,12 @@ export function useTopMenuItem(params: TopMenuItemInput) {
           {
             name: 'timeline',
             icon: 'query_builder',
-            to: `/journals/${currentMonth}/timeline`,
+            to: `/journals/search/${currentMonth}/timeline`,
           },
           {
             name: 'calendar',
             icon: 'calendar_today',
-            to: `/journals/${currentMonth}/calendar`,
+            to: `/journals/search/${currentMonth}/calendar`,
           },
           {
             name: 'new',
@@ -48,12 +56,12 @@ export function useTopMenuItem(params: TopMenuItemInput) {
           {
             name: 'piechart',
             icon: 'pie_chart',
-            to: `/journals/${currentMonth}/piechart`,
+            to: `/journals/search/${currentMonth}/piechart`,
           },
           {
             name: 'balance',
             icon: 'assignment',
-            to: '/journals/balance',
+            to: `/journals/search/${halfYearPeriod}/balance`,
           },
         ],
       },

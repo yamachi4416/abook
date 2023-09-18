@@ -1,6 +1,10 @@
 <template>
   <LayoutDefault>
-    <template #title>{{ period.to }}</template>
+    <template #title>
+      {{ period.to }}
+      <NuxtLink to="calendar">Calendar</NuxtLink>
+      <NuxtLink to="piechart">Piechart</NuxtLink>
+    </template>
     <dl>
       <template v-for="[date, items] in groups" :key="date">
         <dt>
