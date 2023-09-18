@@ -17,7 +17,7 @@ type Period = {
   period: string
 }
 
-export function useMonthlyJournals() {
+export function usePeriodJournals() {
   const period = useState<Period>(() => ({
     from: '',
     to: '',
@@ -150,6 +150,7 @@ export function useMonthlyJournals() {
   }
 
   return {
+    abook: computed(() => abook.value),
     period: computed(() => ({ ...period.value })),
     journals,
     allAccounts: computed(() => [...allAccounts.value]),

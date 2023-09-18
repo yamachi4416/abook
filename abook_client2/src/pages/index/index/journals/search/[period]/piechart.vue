@@ -40,7 +40,7 @@ const selectedFinanceDiv = useState<FinanceDiv>(() => FinanceDiv.Income)
 const selectedAccountId = useState<string | undefined>()
 
 const { period, prevPeriod, nextPeriod, journals, allAccounts } = toReactive(
-  useMonthlyJournals(),
+  usePeriodJournals(),
 )
 
 const summary = computed(() =>

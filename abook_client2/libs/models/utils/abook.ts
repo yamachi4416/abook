@@ -1,5 +1,5 @@
 import { AbookViewModel } from '..'
-import { toDatePart } from './date'
+import { formatDate, plusDate, toDatePart } from './date'
 
 export function toStartOfMonthDate({
   date,
@@ -57,4 +57,42 @@ export function toCurrentMonthDate({
   }
 
   return new Date(year, month, 1)
+}
+
+export function toCurrentMonthPeriod({
+  date,
+  abook,
+}: {
+  date: Date
+  abook: Pick<AbookViewModel, 'startOfMonthDate' | 'startOfMonthIsPrev'>
+}) {
+  return {
+    month: formatDate(date, 'YYYYMM'),
+    fromDate: toStartOfMonthDate({ date, abook }),
+    toDate: toEndOfMonthDate({ date, abook }),
+  }
+}
+
+export function toAbookMonthPeriods({
+  date,
+  months,
+  abook,
+}: {
+  date: Date
+  months: number
+  abook: Pick<AbookViewModel, 'startOfMonthDate' | 'startOfMonthIsPrev'>
+}) {
+  function* enumerate() {
+    let period = toCurrentMonthPeriod({ date, abook })
+    yield period
+    for (let i = 1; i < months; i++) {
+      period = toCurrentMonthPeriod({
+        date: plusDate(period.toDate, { days: 1 }),
+        abook,
+      })
+      yield period
+    }
+  }
+
+  return [...enumerate()]
 }

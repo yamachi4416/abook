@@ -1,10 +1,13 @@
 import {
+  AbookViewModel,
   AccountViewModel,
   FinanceDiv,
   JournalDiv,
   JournalEditModel,
   JournalViewModel,
 } from '..'
+import { toAbookMonthPeriods } from './abook'
+import { diffOfMonths, formatDate, parseDate } from './date'
 
 type AccountSummary = AccountViewModel & {
   debitAmount: number
@@ -19,6 +22,23 @@ type FinanceSummary = {
   creditAmount: number
   amount: number
   accounts: AccountSummary[]
+}
+
+type FinancePeriodSummary = {
+  financeDiv: FinanceDiv
+  summaries: {
+    month: string
+    amount: number
+  }[]
+  accounts: {
+    id: string
+    name: string
+    color: string
+    summaries: {
+      month: string
+      amount: number
+    }[]
+  }[]
 }
 
 export function getAllDebitAccounts({
@@ -301,4 +321,99 @@ export function toSummaryOfFinance({
   }
 
   return values.toSorted((a, b) => a.financeDiv - b.financeDiv)
+}
+
+export function toMonthlySummaryOfFinance({
+  journals,
+  accounts,
+  abook,
+  fromMonth,
+  toMonth,
+}: {
+  journals: JournalViewModel[]
+  accounts: AccountViewModel[]
+  abook: Pick<AbookViewModel, 'startOfMonthDate' | 'startOfMonthIsPrev'>
+  fromMonth: string
+  toMonth: string
+}) {
+  const allAccountMap = new Map<FinanceDiv, Map<string, AccountViewModel>>()
+  const financeSummaries = new Map<string, { month: string; amount: number }>()
+  const accountSummaries = new Map<string, { month: string; amount: number }>()
+
+  const periods = toAbookMonthPeriods({
+    date: parseDate(fromMonth, 'YYYYMMDD'),
+    months:
+      diffOfMonths({
+        from: parseDate(fromMonth, 'YYYYMMDD'),
+        to: parseDate(toMonth, 'YYYYMMDD'),
+      }) + 1,
+    abook,
+  }).reverse()
+
+  for (const { month, fromDate, toDate } of periods.map(
+    ({ month, fromDate, toDate }) => ({
+      month,
+      fromDate: formatDate(fromDate, 'YYYY-MM-DD'),
+      toDate: formatDate(toDate, 'YYYY-MM-DD'),
+    }),
+  )) {
+    const financeSummary = toSummaryOfFinance({
+      journals: journals.filter(
+        ({ accrualDate }) => fromDate <= accrualDate && accrualDate <= toDate,
+      ),
+      accounts,
+    })
+
+    for (const { financeDiv, accounts, ...finance } of financeSummary) {
+      financeSummaries.set(`${financeDiv}-${month}`, {
+        month,
+        amount: finance.amount,
+      })
+
+      const financeAccounts = new Map()
+      for (const account of accounts) {
+        const { id } = account
+        accountSummaries.set(`${id}-${month}`, {
+          month,
+          amount: account.amount,
+        })
+        financeAccounts.set(id, account)
+      }
+      allAccountMap.set(financeDiv, financeAccounts)
+    }
+  }
+
+  const summaries: FinancePeriodSummary[] = []
+
+  for (const [financeDiv, accounts] of allAccountMap.entries()) {
+    summaries.push({
+      financeDiv,
+      summaries: periods.map(
+        ({ month }) =>
+          financeSummaries.get(`${financeDiv}-${month}`) ?? {
+            month,
+            amount: 0,
+          },
+      ),
+      accounts: [...accounts.values()]
+        .toSorted((a, b) => a.dispOrder - b.dispOrder)
+        .map(({ id, name, color }) => ({
+          id,
+          name,
+          color,
+          summaries: periods.map(
+            ({ month }) =>
+              accountSummaries.get(`${id}-${month}`) ?? {
+                month,
+                amount: 0,
+              },
+          ),
+        })),
+    })
+  }
+
+  return {
+    months: periods.map(({ month }) => month),
+    summaries,
+  }
 }

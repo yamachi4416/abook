@@ -20,10 +20,10 @@ export function useTopMenuItem(params: TopMenuItemInput) {
     const currentMonth = unref(params.currentMonth)
     const currentMonthDate = parseDate(currentMonth, 'YYYYMM')
     const halfYearPeriodEndMonth = formatDate(
-      plusDate(currentMonthDate, { month: 5 }),
+      plusDate(currentMonthDate, { month: -5 }),
       'YYYYMM',
     )
-    const halfYearPeriod = `${currentMonth}-${halfYearPeriodEndMonth}`
+    const halfYearPeriod = `${halfYearPeriodEndMonth}-${currentMonth}`
     return {
       journals_daily: {
         hide: !hasAbook,

@@ -11,5 +11,7 @@ definePageMeta({
   },
 })
 
-await useMonthlyJournals().setPeriod(String(useRoute().params.period))
+const { setPeriod } = usePeriodJournals()
+
+await setPeriod(String(useRoute().params.period))
 </script>

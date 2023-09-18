@@ -58,7 +58,7 @@ const {
   nextPeriod,
   accrualDateStart,
   accrualDateEnd,
-} = toReactive(useMonthlyJournals())
+} = toReactive(usePeriodJournals())
 
 type Sums = {
   income: number

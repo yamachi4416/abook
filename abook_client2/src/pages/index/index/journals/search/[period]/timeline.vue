@@ -48,7 +48,7 @@
 import { parseDate } from '~~/libs/models/utils/date'
 
 const { journals, period, prevPeriod, nextPeriod } = toReactive(
-  useMonthlyJournals(),
+  usePeriodJournals(),
 )
 
 const groups = computed(() => {

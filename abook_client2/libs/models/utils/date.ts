@@ -43,6 +43,12 @@ export function plusDate(
   )
 }
 
+export function diffOfMonths({ from, to }: { from: Date; to: Date }) {
+  const fromMonths = from.getFullYear() * 12 + from.getMonth()
+  const toMonths = to.getFullYear() * 12 + to.getMonth()
+  return toMonths - fromMonths
+}
+
 export function toCalendarStartDate({
   date,
   weekStartDay,
