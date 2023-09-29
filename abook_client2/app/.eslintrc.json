@@ -1,0 +1,26 @@
+{
+  "ignorePatterns": [
+    "dist",
+    "data",
+    "node_modules",
+    "schema",
+    "**/*.tmpl.*",
+    "sw.js"
+  ],
+  "extends": [
+    "@nuxtjs/eslint-config-typescript",
+    "plugin:import/typescript",
+    "prettier"
+  ],
+  "plugins": [],
+  "rules": {
+    "sort-imports": [
+      "error",
+      {
+        "ignoreDeclarationSort": true
+      }
+    ],
+    "no-console": "off",
+    "vue/multi-word-component-names": "off"
+  }
+}

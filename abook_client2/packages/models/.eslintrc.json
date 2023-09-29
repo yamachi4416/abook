@@ -1,0 +1,16 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "ignorePatterns": ["dist", "node_modules"],
+  "extends": ["plugin:import/typescript", "prettier"],
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "sort-imports": [
+      "error",
+      {
+        "ignoreDeclarationSort": true
+      }
+    ],
+    "no-console": "off"
+  }
+}

@@ -1,0 +1,253 @@
+{
+  "head": {
+    "description": "家庭账簿"
+  },
+  "confirm": {
+    "remove": {
+      "message": "您真的要删除此内容吗？"
+    }
+  },
+  "actions": {
+    "prev_month": "上一个",
+    "next_month": "下一个",
+    "prev_day": "前一天",
+    "next_day": "明天",
+    "add": "加",
+    "filter": "缩小",
+    "summary": "概要",
+    "done": "完成了",
+    "condition_period": "期",
+    "sort": "分类",
+    "save": "救",
+    "remove": "删除",
+    "copy": "复制",
+    "search": "搜索",
+    "yes": "是",
+    "no": "没有",
+    "back": "返回"
+  },
+  "calc": {
+    "roundUp": "round\nup",
+    "roundDown": "round\ndown",
+    "round": "round\noff"
+  },
+  "form": {
+    "accrualDate": "日期",
+    "journalDiv": "分类",
+    "amount": "金额",
+    "memo": "备忘录",
+    "account": "帐户名称",
+    "periodType": "日期（指定）",
+    "accrualDateStart": "日期（从）",
+    "accrualDateEnd": "日期（至）",
+    "debitAccount_": "项目1",
+    "debitAccount_1": "接收方式",
+    "debitAccount_2": "支出名称",
+    "debitAccount_3": "转移目的",
+    "creditAccount_": "项目2",
+    "creditAccount_1": "收入名称",
+    "creditAccount_2": "付款方法",
+    "creditAccount_3": "转移源",
+    "amount_3f": "金额（转移源）",
+    "code": "码",
+    "financeName": "分类",
+    "name": "名称",
+    "avaliable": "有空",
+    "useFee": "使用费",
+    "total": "总",
+    "color": "颜色",
+    "usuallyUsedForPayment": "常用付款方式",
+    "usuallyUsedForReceipt": "常用收据方式",
+    "fee": {
+      "account": "使用费",
+      "amount": "使用费金额",
+      "feeAmount": "金额（转移目的）"
+    },
+    "aggMonthType": "（期）",
+    "aggMonthFrom": "（从）",
+    "aggMonthTo": "（至）",
+    "startOfMonthIsPrev": "月初（参考）",
+    "startOfMonthDate": "月初（日期）",
+    "locale": "语言",
+    "displayName": "显示名称",
+    "email": "邮件地址",
+    "tax1": "税率1（%）",
+    "tax2": "税率2（%）"
+  },
+  "pages": {
+    "menu": {
+      "title1": "{abook} {dev}",
+      "title2": "家庭账簿 {dev}",
+      "items": {
+        "settings": {
+          "title": "各种设定",
+          "items": {
+            "accounts": "帐户管理",
+            "abooks": "家庭账簿设置",
+            "users": "您的设定"
+          }
+        },
+        "journals_daily": {
+          "title": "日志记录",
+          "items": {
+            "timeline": "时间线",
+            "calendar": "日历",
+            "new": "注册"
+          }
+        },
+        "journals_analytics": {
+          "title": "日志预算",
+          "items": {
+            "search": "搜索",
+            "piechart": "余额图表",
+            "balance": "余额表"
+          }
+        },
+        "others": {
+          "title": "其他",
+          "items": {
+            "logout": "登出"
+          }
+        }
+      }
+    },
+    "accounts": {
+      "index": {
+        "title": "帐户管理"
+      },
+      "new": {
+        "title": "帐户注册"
+      },
+      "edit": {
+        "title": "帐户编辑"
+      }
+    },
+    "journals": {
+      "new": {
+        "title": "日志注册"
+      },
+      "edit": {
+        "title": "日志编辑"
+      },
+      "timeline": {
+        "title": "{year}/{month}"
+      },
+      "piechart": {
+        "title1": "{year}/{month}",
+        "title2": "{year1}/{month1} ~ {year2}/{month2}"
+      },
+      "balance": {
+        "title": "余额表"
+      },
+      "calendar": {
+        "title": "{year}/{month}"
+      },
+      "search": {
+        "input": {
+          "title": "日志搜索"
+        },
+        "index": {
+          "title": {
+            "normal": "日志搜索结果",
+            "monthly": "{0} {1}",
+            "period": "{0} ~ {1} {2}"
+          }
+        }
+      }
+    },
+    "abooks": {
+      "current": {
+        "title": "家庭账簿设置"
+      }
+    },
+    "settings": {
+      "users": {
+        "title": "您的设定",
+        "section-users": "基本信息",
+        "section-terminal": "终端设定"
+      }
+    },
+    "others": {
+      "login": {
+        "title": "登录"
+      }
+    }
+  },
+  "errors": {
+    "statusCode": {
+      "default": {
+        "title": "错误({statusCode})",
+        "message": "错误({statusCode})"
+      },
+      "401": {
+        "title": "请登录",
+        "message": "会话已过期\n请再次登录"
+      },
+      "403": {
+        "title": "非授权",
+        "message": "您无权查看请求的页面"
+      },
+      "404": {
+        "title": "找不到页面",
+        "message": "找不到您要查找的页面"
+      },
+      "405": {
+        "title": "找不到页面",
+        "message": "找不到您要查找的页面"
+      },
+      "502": {
+        "title": "正在维护中",
+        "message": "正在维护中\n请稍后再访问"
+      },
+      "offline": {
+        "title": "网络错误",
+        "message": "互联网断了。\n检查网络状态。"
+      }
+    }
+  },
+  "label": {
+    "none": "空白",
+    "dev": "（开発版）",
+    "startOfMonthDate": "{0}天起",
+    "startOfMonthDateLast": "最后一天",
+    "balance": "余额"
+  },
+  "select": {
+    "orders": [
+      { "value": 0, "label": "昇序" },
+      { "value": 1, "label": "降序" }
+    ],
+    "financeDiv": [
+      { "value": null, "label": "" },
+      { "value": 1, "label": "收入" },
+      { "value": 2, "label": "开支" },
+      { "value": 3, "label": "资产" },
+      { "value": 4, "label": "负债" }
+    ],
+    "financeInOutDiv": [
+      { "value": 1, "label": "收入" },
+      { "value": 2, "label": "开支" }
+    ],
+    "journalDiv": [
+      { "value": null, "label": "" },
+      { "value": 1, "label": "收入" },
+      { "value": 2, "label": "开支" },
+      { "value": 3, "label": "转移" }
+    ],
+    "periodTypes": [
+      { "value": null, "label": "" },
+      { "value": "thisWeek", "label": "本星期" },
+      { "value": "thisMonth", "label": "这个月" }
+    ],
+    "aggMonthTypes": [
+      { "value": 1, "label": "1个月" },
+      { "value": 3, "label": "3个月" },
+      { "value": 6, "label": "6个月" },
+      { "value": 12, "label": "12个月" }
+    ],
+    "startOfMonthIs": [
+      { "value": 1, "label": "上个月的" },
+      { "value": 0, "label": "该月的" }
+    ]
+  }
+}
