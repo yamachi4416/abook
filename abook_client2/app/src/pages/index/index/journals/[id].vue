@@ -122,7 +122,7 @@ async function setup() {
     })
 
   const id = String(useRoute().params.id)
-  await readJournal(id === 'new' ? undefined : id)
+  await readJournal({ id: id === 'new' ? undefined : id })
 
   if (!state.editor) {
     throw createError({ statusCode: 404 })

@@ -10,11 +10,13 @@ export function journalsMonthlyComponent<State extends MonthlyJournalsState>({
   journalsService: JournalsService
   state: State
 }) {
-  async function searchJournals(month: string) {
-    if (state.loadings.get(month)) {
-      return
-    }
-
+  async function searchJournals({
+    month,
+    signal,
+  }: {
+    month: string
+    signal?: AbortSignal
+  }) {
     const date = parseDate(month, 'YYYYMM')
     const dateStart = toStartOfMonthDate({ date, abook: state.abook })
     const dateEnd = toEndOfMonthDate({ date, abook: state.abook })
@@ -22,12 +24,22 @@ export function journalsMonthlyComponent<State extends MonthlyJournalsState>({
     const accrualDateStart = formatDate(dateStart, 'YYYY-MM-DD')
     const accrualDateEnd = formatDate(dateEnd, 'YYYY-MM-DD')
 
-    state.loadings.set(month, true)
+    const handle = {} as const
+    state.loadings.set(month, handle)
 
-    const journals = await journalsService.searchJournals({
-      accrualDateStart,
-      accrualDateEnd,
-    })
+    const journals = await journalsService
+      .searchJournals({
+        query: {
+          accrualDateStart,
+          accrualDateEnd,
+        },
+        signal,
+      })
+      .finally(() => {
+        if (state.loadings.get(month) === handle) {
+          state.loadings.delete(month)
+        }
+      })
 
     state.monthlyJournals.set(month, {
       month,

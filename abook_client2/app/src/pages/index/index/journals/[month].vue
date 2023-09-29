@@ -11,22 +11,40 @@ definePageMeta({
   },
 })
 
-const { state, searchJournals } = journalsMonthlyComponent({
-  journalsService: journalsService({
-    api: useApiRequest(),
-  }),
-  state: useMonthlyJournalsState({
-    abook: useCurrentAbookState().current,
-  }),
-})
+const { state } = setup()
 
-const currentMonth = String(useRoute().params.month)
+function setup() {
+  const { state, searchJournals } = journalsMonthlyComponent({
+    journalsService: journalsService({
+      api: useApiRequest(),
+    }),
+    state: useMonthlyJournalsState({
+      abook: useCurrentAbookState().current,
+    }),
+  })
 
-state.month = currentMonth
+  const abort = new AbortController()
 
-Promise.all([
-  searchJournals(currentMonth),
-  searchJournals(state.prevMonth.to.params.month),
-  searchJournals(state.nextMonth.to.params.month),
-])
+  onBeforeRouteUpdate(() => {
+    abort.abort()
+  })
+
+  state.month = String(useRoute().params.month)
+
+  Promise.all([
+    searchJournals({ month: state.month, signal: abort.signal }),
+    searchJournals({
+      month: state.prevMonth.to.params.month,
+      signal: abort.signal,
+    }),
+    searchJournals({
+      month: state.nextMonth.to.params.month,
+      signal: abort.signal,
+    }),
+  ])
+
+  return {
+    state,
+  }
+}
 </script>

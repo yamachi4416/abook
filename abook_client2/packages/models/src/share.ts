@@ -99,6 +99,13 @@ export interface JournalSearchModel {
   accrualDateEnd?: string
 }
 
+export interface JournalBalanceModel {
+  readonly key: string
+  readonly accountId: string
+  readonly debitAmount: number
+  readonly creditAmount: number
+}
+
 export interface ApiValidationErrors {
   readonly [key: string]: {
     readonly key: string

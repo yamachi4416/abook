@@ -15,9 +15,9 @@ export function accountEditComponent<State extends AccountEditState>({
     obj: 'account',
   })
 
-  async function readAccount(id?: string) {
+  async function readAccount({ id }: { id?: string }) {
     const account = id
-      ? await accountsService.getAccount(id)
+      ? await accountsService.getAccount({ id })
       : accountsService.newAccount()
     state.original = account
     state.acconut = JSON.parse(JSON.stringify(account))
@@ -31,9 +31,9 @@ export function accountEditComponent<State extends AccountEditState>({
     try {
       const account = state.acconut!
       if (account.id) {
-        return await accountsService.updateAccount(account)
+        return await accountsService.updateAccount({ account })
       } else {
-        return await accountsService.createAccount(account)
+        return await accountsService.createAccount({ account })
       }
     } catch (e: unknown) {
       if (e instanceof ApiValidationError) {

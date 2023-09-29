@@ -27,7 +27,7 @@ export function abookEditComponent<State extends AbookEditState>({
     errors.clearErrors()
     try {
       const abook = state.abook!
-      await abookService.saveAbook(abook)
+      await abookService.saveAbook({ abook })
     } catch (e: unknown) {
       if (e instanceof ApiValidationError) {
         errors.setErrors(e.errors)

@@ -4,17 +4,22 @@ import {
   AccountEditModel,
   AccountViewModel,
   ApiValidationErrors,
+  JournalBalanceModel,
   JournalEditModel,
   JournalSearchModel,
   JournalViewModel,
 } from '../share'
 
 export interface ApiRequestService {
-  $get<R>(path: string, query?: any): Promise<R>
-  $post<R, P = {}>(path: string, body?: P): Promise<R>
-  $put<R, P = {}>(path: string, body?: P): Promise<R>
-  $patch<R, P = {}>(path: string, body?: P): Promise<R>
-  $delete<R>(path: string): Promise<R>
+  $get<R>(params: {
+    path: string
+    query?: any
+    signal?: AbortSignal
+  }): Promise<R>
+  $post<R, P = {}>(params: { path: string; body?: P }): Promise<R>
+  $put<R, P = {}>(params: { path: string; body?: P }): Promise<R>
+  $patch<R, P = {}>(params: { path: string; body?: P }): Promise<R>
+  $delete<R>(params: { path: string }): Promise<R>
   setCurrentAbookId(id: string): void
 }
 
@@ -28,26 +33,39 @@ export interface ApiValidationErrorService<T> {
 export interface AbooksService {
   newAbook(): AbookEditModel
   fetchCurrent(): Promise<AbookViewModel>
-  saveAbook(abook: AbookEditModel): Promise<void>
+  saveAbook(args: { abook: AbookEditModel }): Promise<void>
 }
 
 export interface AccountsService {
   newAccount(): AccountEditModel
-  getAccount(id: string): Promise<AccountViewModel>
-  getAllAccounts(): Promise<AccountViewModel[]>
-  createAccount(account: AccountEditModel): Promise<{ id: string }>
-  updateAccount(account: AccountEditModel): Promise<AccountViewModel>
-  deleteAccount(id: String): Promise<void>
-  updateAccountDispOrders(ids: string[]): Promise<void>
+  getAccount(args: {
+    id: string
+    signal?: AbortSignal
+  }): Promise<AccountViewModel>
+  getAllAccounts(args?: { signal?: AbortSignal }): Promise<AccountViewModel[]>
+  createAccount(args: { account: AccountEditModel }): Promise<{ id: string }>
+  updateAccount(args: { account: AccountEditModel }): Promise<AccountViewModel>
+  deleteAccount(args: { id: String }): Promise<void>
+  updateAccountDispOrders(args: { ids: string[] }): Promise<void>
 }
 
 export interface JournalsService {
   newJournal(params?: JournalEditModel | undefined): JournalEditModel
-  getJournal(id: string): Promise<JournalViewModel>
-  createJournal(journal: JournalEditModel): Promise<{ id: string }>
-  updateJournal(journal: JournalEditModel): Promise<JournalViewModel>
-  deleteJournal(id: string): Promise<void>
-  searchJournals(query: JournalSearchModel): Promise<JournalViewModel[]>
+  getJournal(args: {
+    id: string
+    signal?: AbortSignal
+  }): Promise<JournalViewModel>
+  createJournal(args: { journal: JournalEditModel }): Promise<{ id: string }>
+  updateJournal(args: { journal: JournalEditModel }): Promise<JournalViewModel>
+  deleteJournal(args: { id: string }): Promise<void>
+  searchJournals(args: {
+    query: JournalSearchModel
+    signal?: AbortSignal
+  }): Promise<JournalViewModel[]>
+  searchBalances(args: {
+    query: { periods: string[] }
+    signal?: AbortSignal
+  }): Promise<JournalBalanceModel[]>
 }
 
 export interface UsersService {

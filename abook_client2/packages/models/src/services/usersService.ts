@@ -1,15 +1,13 @@
-import { ApiRequestService, UsersService } from '..'
+import { ApiRequestService, UsersService } from './interfaces'
 
 export function usersService({
   api,
 }: {
   api: ApiRequestService
 }): UsersService {
-  async function syncUser() {
-    return await api.$put<void>('/users')
-  }
-
   return {
-    syncUser,
+    async syncUser() {
+      await api.$put({ path: '/users' })
+    },
   }
 }

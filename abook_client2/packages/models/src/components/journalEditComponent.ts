@@ -26,10 +26,12 @@ export function journalEditComponent<State extends JournalEditState>({
     obj: 'journal',
   })
 
-  async function readJournal(id?: string) {
+  async function readJournal({ id }: { id?: string }) {
     const [accounts, original] = await Promise.all([
       accountsService.getAllAccounts(),
-      id ? await journalsService.getJournal(id) : journalsService.newJournal(),
+      id
+        ? await journalsService.getJournal({ id })
+        : journalsService.newJournal(),
     ])
 
     state.accounts = accounts
@@ -47,9 +49,9 @@ export function journalEditComponent<State extends JournalEditState>({
     try {
       const journal = state.journal!
       if (journal.id) {
-        return await journalsService.updateJournal(journal)
+        return await journalsService.updateJournal({ journal })
       } else {
-        return await journalsService.createJournal(journal)
+        return await journalsService.createJournal({ journal })
       }
     } catch (e: unknown) {
       if (e instanceof ApiValidationError) {

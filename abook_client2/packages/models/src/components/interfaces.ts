@@ -42,7 +42,13 @@ export interface MonthlyJournalsState {
       journals: JournalViewModel[]
     }
   >
-  loadings: Map<string, boolean>
+  loadings: Map<string, {}>
+}
+
+export interface JournalsBalanceState {
+  month: string | undefined
+  abook: AbookViewModel
+  accounts: AccountViewModel[]
 }
 
 export interface JournalsTimeline {

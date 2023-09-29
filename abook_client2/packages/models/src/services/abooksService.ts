@@ -1,13 +1,5 @@
-import { AbookEditModel, AbookViewModel } from '../share'
+import { AbookViewModel } from '../share'
 import { AbooksService, ApiRequestService } from './interfaces'
-
-function newAbook(): AbookEditModel {
-  return {
-    name: '',
-    startOfMonthIsPrev: false,
-    startOfMonthDate: 1,
-  }
-}
 
 export function abooksService({
   api,
@@ -19,26 +11,31 @@ export function abooksService({
   }
 }): AbooksService {
   async function getCurrent() {
-    return await api.$get<AbookViewModel>('/abooks/current')
-  }
-
-  async function fetchCurrent() {
-    const abook = (await getCurrent()) ?? {}
-    state.setCurrent(abook)
-    api.setCurrentAbookId(abook.abookId)
-    return JSON.parse(JSON.stringify(abook))
-  }
-
-  async function saveAbook(abook: AbookEditModel) {
-    const action = abook.abookId ? api.$patch : api.$post
-    const saved = await action<AbookViewModel>('/abooks', abook)
-    state.setCurrent(saved)
-    api.setCurrentAbookId(saved.abookId)
+    return await api.$get<AbookViewModel>({ path: '/abooks/current' })
   }
 
   return {
-    newAbook,
-    fetchCurrent,
-    saveAbook,
+    newAbook() {
+      return {
+        name: '',
+        startOfMonthIsPrev: false,
+        startOfMonthDate: 1,
+      }
+    },
+    async fetchCurrent() {
+      const abook = (await getCurrent()) ?? {}
+      state.setCurrent(abook)
+      api.setCurrentAbookId(abook.abookId)
+      return JSON.parse(JSON.stringify(abook))
+    },
+    async saveAbook({ abook }) {
+      const action = abook.abookId ? api.$patch : api.$post
+      const saved = await action<AbookViewModel>({
+        path: '/abooks',
+        body: abook,
+      })
+      state.setCurrent(saved)
+      api.setCurrentAbookId(saved.abookId)
+    },
   }
 }
