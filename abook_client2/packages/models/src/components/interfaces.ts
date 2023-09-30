@@ -6,6 +6,7 @@ import type {
   AccountViewModel,
   ApiValidationErrors,
   FinanceDiv,
+  JournalBalanceModel,
   JournalEditModel,
   JournalViewModel,
 } from '../share'
@@ -31,7 +32,7 @@ export interface JournalEditState {
 }
 
 export interface MonthlyJournalsState {
-  month: string | undefined
+  month: string
   abook: AbookViewModel
   monthlyJournals: Map<
     string,
@@ -45,10 +46,29 @@ export interface MonthlyJournalsState {
   loadings: Map<string, {}>
 }
 
+export interface JournalsBalancePeriod {
+  month: string
+  key: string
+  fromDate: Date
+  fromDateYmd: string
+  toDate: Date
+  toDateYmd: string
+}
+
+export interface JournalsFinanceBalances {
+  financeDiv: FinanceDiv
+  amount: number
+  accounts: Map<string, number>
+}
+
 export interface JournalsBalanceState {
-  month: string | undefined
+  month: string
+  months: number
   abook: AbookViewModel
   accounts: AccountViewModel[]
+  periods: JournalsBalancePeriod[]
+  balances: Map<string, Map<FinanceDiv, JournalsFinanceBalances>>
+  loadings: Map<string, {}>
 }
 
 export interface JournalsTimeline {

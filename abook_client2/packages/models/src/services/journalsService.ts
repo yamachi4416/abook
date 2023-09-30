@@ -31,8 +31,19 @@ export function journalsService({
     async searchJournals({ query, signal }) {
       return await api.$get({ path: '/journals/search', query, signal })
     },
-    async searchBalances({ query, signal }) {
-      return await api.$get({ path: '/journals/balance', query })
+    async searchBalances({
+      accrualDateStart,
+      accrualDateEnd,
+      periods,
+      signal,
+    }) {
+      const from = formatDate(accrualDateStart, 'YYYYMMDD')
+      const to = formatDate(accrualDateEnd, 'YYYYMMDD')
+      return await api.$get({
+        path: `/journals/balance/${from}/${to}`,
+        query: { periods },
+        signal,
+      })
     },
   }
 }

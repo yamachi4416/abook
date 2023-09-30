@@ -48,21 +48,26 @@
 </template>
 
 <script setup lang="ts">
-import { abookEditComponent, abooksService } from '@abook/models'
+import {
+  AbookEditState,
+  abookEditComponent,
+  abooksService,
+} from '@abook/models'
 
 const { abook, errors, save } = await setup()
 
 async function setup() {
-  const { state, errors, readAbook, saveAbook } = abookEditComponent({
-    abookService: abooksService({
-      api: useApiRequest(),
-      state: useCurrentAbookState(),
-    }),
-    state: toReactive({
-      abook: ref(),
-      errors: ref(),
-    }),
-  })
+  const { state, errors, readAbook, saveAbook } =
+    abookEditComponent<AbookEditState>({
+      abookService: abooksService({
+        api: useApiRequest(),
+        state: useCurrentAbookState(),
+      }),
+      state: toReactive({
+        abook: ref(),
+        errors: ref(),
+      }),
+    })
 
   await readAbook()
 

@@ -19,24 +19,27 @@ function toMonthLink(month: string, plus: number) {
 }
 
 export function useMonthlyJournalsState({
+  month,
   abook,
 }: {
+  month: MaybeRef<string>
   abook: MaybeRef<AbookViewModel>
 }): UseMonthlyJournalsState {
-  const month = useState<string>()
   const monthlyJournals = useState<UseMonthlyJournalsState['monthlyJournals']>(
     () => new Map(),
   )
-  const loadings = useState(() => new Map<string, boolean>())
+  const loadings = useState<UseMonthlyJournalsState['loadings']>(
+    () => new Map(),
+  )
 
   return toReactive({
-    month,
-    abook: ref(abook),
+    month: computed(() => unref(month)),
+    abook: computed(() => unref(abook)),
     monthlyJournals,
+    journals: computed(() => monthlyJournals.value.get(unref(month))),
     loadings,
-    journals: computed(() => monthlyJournals.value.get(month.value)),
-    loading: computed(() => !!loadings.value.get(month.value)),
-    prevMonth: computed(() => toMonthLink(month.value, -1)),
-    nextMonth: computed(() => toMonthLink(month.value, 1)),
+    loading: computed(() => !!loadings.value.get(unref(month))),
+    prevMonth: computed(() => toMonthLink(unref(month), -1)),
+    nextMonth: computed(() => toMonthLink(unref(month), 1)),
   })
 }

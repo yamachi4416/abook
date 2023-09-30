@@ -64,23 +64,36 @@
 </template>
 
 <script setup lang="ts">
-import { accountEditComponent, accountsService } from '@abook/models'
+import {
+  AccountEditState,
+  ValidateUtils,
+  accountEditComponent,
+  accountsService,
+} from '@abook/models'
+
+definePageMeta({
+  validate(route) {
+    const id = String(route.params.id)
+    return id === 'new' || ValidateUtils.validateId(id)
+  },
+})
 
 const { account, errors, save } = await setup()
 
 async function setup() {
-  const { state, errors, readAccount, saveAccount } = accountEditComponent({
-    accountsService: accountsService({ api: useApiRequest() }),
-    state: toReactive({
-      original: ref(),
-      acconut: ref(),
-      editor: ref(),
-      errors: ref(),
-    }),
-  })
+  const { state, errors, readAccount, saveAccount } =
+    accountEditComponent<AccountEditState>({
+      accountsService: accountsService({ api: useApiRequest() }),
+      state: toReactive({
+        original: ref(),
+        acconut: ref(),
+        editor: ref(),
+        errors: ref(),
+      }),
+    })
 
   const id = String(useRoute().params.id)
-  await readAccount(id === 'new' ? undefined : id)
+  await readAccount({ id: id === 'new' ? undefined : id })
 
   if (!state.editor) {
     throw createError({ statusCode: 404 })

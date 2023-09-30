@@ -3,11 +3,15 @@
 </template>
 
 <script setup lang="ts">
-import { journalsMonthlyComponent, journalsService } from '@abook/models'
+import {
+  ValidateUtils,
+  journalsMonthlyComponent,
+  journalsService,
+} from '@abook/models'
 
 definePageMeta({
   validate(route) {
-    return /2[0-9]{3}1[0-2]|0[1-9]/.test(String(route.params.month))
+    return ValidateUtils.validateMonth(String(route.params.month))
   },
 })
 
@@ -19,6 +23,7 @@ function setup() {
       api: useApiRequest(),
     }),
     state: useMonthlyJournalsState({
+      month: computed(() => String(useRoute().params.month)),
       abook: useCurrentAbookState().current,
     }),
   })
@@ -28,8 +33,6 @@ function setup() {
   onBeforeRouteUpdate(() => {
     abort.abort()
   })
-
-  state.month = String(useRoute().params.month)
 
   Promise.all([
     searchJournals({ month: state.month, signal: abort.signal }),

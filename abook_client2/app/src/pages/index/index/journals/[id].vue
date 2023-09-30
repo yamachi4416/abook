@@ -98,10 +98,19 @@
 
 <script setup lang="ts">
 import {
+  JournalEditState,
+  ValidateUtils,
   accountsService,
   journalEditComponent,
   journalsService,
 } from '@abook/models'
+
+definePageMeta({
+  validate(route) {
+    const id = String(route.params.id)
+    return id === 'new' || ValidateUtils.validateId(id)
+  },
+})
 
 const { journal, errors, options, save } = await setup()
 
@@ -109,7 +118,7 @@ async function setup() {
   const api = useApiRequest()
 
   const { state, errors, options, readJournal, saveJournal } =
-    journalEditComponent({
+    journalEditComponent<JournalEditState>({
       accountsService: accountsService({ api }),
       journalsService: journalsService({ api }),
       state: toReactive({

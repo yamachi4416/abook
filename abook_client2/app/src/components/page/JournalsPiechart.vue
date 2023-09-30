@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import { FinanceDiv, FinanceDivs, JournalUtils } from '@abook/models'
-import { UseMonthlyJournalsState } from '~/composables/useMonthlyJournalsState'
+import { type UseMonthlyJournalsState } from '~/composables/useMonthlyJournalsState'
 
 const props = defineProps<UseMonthlyJournalsState>()
 

@@ -4,14 +4,15 @@
   </ul>
 </template>
 
-<script setup lang="ts" generic="T">
+<script setup lang="ts" generic="O, T extends ApiValidationErrorService<O>">
 import { ApiValidationErrorService } from '@abook/models'
 
-type Errors = Pick<ApiValidationErrorService<T>, 'hasErrors' | 'getErrors'>
+type Errors = Pick<T, 'hasErrors' | 'getErrors'>
+type Names = Parameters<Errors['getErrors']>[0]
 
 const props = defineProps<{
   errors: Errors
-  name: Parameters<Errors['getErrors']>[0]
+  name: Names
 }>()
 
 const has = computed(() => props.errors.hasErrors(props.name))

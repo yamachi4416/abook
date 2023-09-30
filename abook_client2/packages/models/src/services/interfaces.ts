@@ -63,7 +63,9 @@ export interface JournalsService {
     signal?: AbortSignal
   }): Promise<JournalViewModel[]>
   searchBalances(args: {
-    query: { periods: string[] }
+    accrualDateStart: Date
+    accrualDateEnd: Date
+    periods: string[]
     signal?: AbortSignal
   }): Promise<JournalBalanceModel[]>
 }

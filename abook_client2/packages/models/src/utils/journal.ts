@@ -6,6 +6,8 @@ import {
   JournalDivs,
   JournalEditModel,
   JournalViewModel,
+  JournalsBalancePeriod,
+  JournalsFinanceBalances,
   JournalsTimeline,
   MonthlyJournalsState,
 } from '..'
@@ -331,4 +333,47 @@ export function toSummaryOfFinance({
   }
 
   return finances
+}
+
+export function toJournalsBalanceTable({
+  accounts,
+  periods,
+  balances,
+}: {
+  accounts: AccountViewModel[]
+  periods: JournalsBalancePeriod[]
+  balances: Map<string, Map<FinanceDiv, JournalsFinanceBalances>>
+}) {
+  const accountMap = new Map<string, AccountViewModel>()
+  const financeAccountMap = new Map<FinanceDiv, AccountViewModel[]>([
+    [FinanceDivs.Income, []],
+    [FinanceDivs.Expense, []],
+    [FinanceDivs.Assets, []],
+    [FinanceDivs.Liabilities, []],
+  ])
+
+  for (const account of accounts) {
+    accountMap.set(account.id, account)
+    financeAccountMap.get(account.financeDiv)?.push(account)
+  }
+
+  return [...financeAccountMap.entries()]
+    .filter(([, accounts]) => accounts.length > 0)
+    .map(([financeDiv, accounts]) => ({
+      financeDiv,
+      amounts: periods.map(({ month, key }) => ({
+        month,
+        amount: balances.get(key)?.get(financeDiv)?.amount ?? 0,
+      })),
+      accounts: accounts
+        .toSorted((a, b) => a.dispOrder - b.dispOrder)
+        .map((account) => ({
+          account,
+          amounts: periods.map(({ month, key }) => ({
+            month,
+            amount:
+              balances.get(key)?.get(financeDiv)?.accounts.get(account.id) ?? 0,
+          })),
+        })),
+    }))
 }

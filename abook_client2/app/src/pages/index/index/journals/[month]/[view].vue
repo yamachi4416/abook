@@ -16,12 +16,14 @@
 </template>
 
 <script setup lang="ts">
-import { UseMonthlyJournalsState } from '~/composables/useMonthlyJournalsState'
+import { ValidateUtils } from '@abook/models'
+import { type UseMonthlyJournalsState } from '~/composables/useMonthlyJournalsState'
 
 definePageMeta({
   validate(route) {
-    return ['timeline', 'calendar', 'piechart'].includes(
-      String(route.params.view),
+    return (
+      ValidateUtils.validateMonth(String(route.params.month)) &&
+      ['timeline', 'calendar', 'piechart'].includes(String(route.params.view))
     )
   },
 })
