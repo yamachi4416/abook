@@ -4,8 +4,8 @@
   </ul>
 </template>
 
-<script setup lang="ts" generic="O, T extends ApiValidationErrorService<O>">
-import { ApiValidationErrorService } from '@abook/models'
+<script setup lang="ts" generic="O, T extends ValidationErrors<O>">
+import { ValidationErrors } from '@abook/models'
 
 type Errors = Pick<T, 'hasErrors' | 'getErrors'>
 type Names = Parameters<Errors['getErrors']>[0]

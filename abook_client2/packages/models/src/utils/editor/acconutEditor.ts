@@ -1,4 +1,4 @@
-import { AccountEditModel, FinanceDivs } from '..'
+import { AccountEditModel, AccountModelEditor, FinanceDivs } from '../deps'
 
 function isValidFinanceDiv(value?: any): boolean {
   return (
@@ -10,7 +10,11 @@ function isValidFinanceDiv(value?: any): boolean {
   )
 }
 
-export function accountEditor({ account }: { account: AccountEditModel }) {
+export function accountEditor({
+  account,
+}: {
+  account: AccountEditModel
+}): AccountModelEditor {
   return {
     get id() {
       return account.id

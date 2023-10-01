@@ -1,5 +1,4 @@
-import { ApiValidationError } from '../share'
-import { ApiRequestService } from './interfaces'
+import { ApiRequestService, ApiValidationError } from './deps'
 
 type FetchParams = {
   path: string

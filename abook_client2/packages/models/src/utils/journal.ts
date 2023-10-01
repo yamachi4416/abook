@@ -9,8 +9,8 @@ import {
   JournalsBalancePeriod,
   JournalsFinanceBalances,
   JournalsTimeline,
-  MonthlyJournalsState,
-} from '..'
+  MonthlyJournal,
+} from './deps'
 import { formatDate, parseDate, plusFormatedDate, toCalendar } from './date'
 
 export function getAllDebitAccounts({
@@ -185,7 +185,7 @@ export function toJournalsCalendar({
   weekStartDay,
 }: {
   month: string
-  monthlyJournals: MonthlyJournalsState['monthlyJournals']
+  monthlyJournals: Map<string, MonthlyJournal>
   weekStartDay?: number | undefined
 }) {
   const thisMonthJournals = monthlyJournals.get(month)
@@ -204,13 +204,7 @@ export function toJournalsCalendar({
     plusFormatedDate(month, { month: -1 }, 'YYYYMM'),
   )
 
-  const sums = new Map<
-    string,
-    {
-      income: number
-      expense: number
-    }
-  >()
+  const sums = new Map<string, { income: number; expense: number }>()
 
   const journals = [
     ...(prevMonthJournals?.journals ?? []),
@@ -219,9 +213,10 @@ export function toJournalsCalendar({
   ]
 
   for (const { accrualDate, journalDiv, amount, fee } of journals) {
-    const sum = sums.get(accrualDate) ?? {
-      income: 0,
-      expense: 0,
+    let sum = sums.get(accrualDate)
+    if (!sum) {
+      sum = { income: 0, expense: 0 }
+      sums.set(accrualDate, sum)
     }
 
     if (journalDiv === JournalDivs.Income) {
@@ -230,10 +225,6 @@ export function toJournalsCalendar({
       sum.expense += amount
     } else if (journalDiv === JournalDivs.Transfer) {
       sum.expense += fee?.amount ?? 0
-    }
-
-    if (!sums.has(accrualDate)) {
-      sums.set(accrualDate, sum)
     }
   }
 
@@ -244,23 +235,21 @@ export function toJournalsCalendar({
   }).map((week) =>
     week.map((date) => ({
       ...date,
-      sum: sums.get(formatDate(date.date, 'YYYY-MM-DD')),
+      sum: sums.get(formatDate(date.date, 'YYYY-MM-DD')) ?? {
+        income: 0,
+        expense: 0,
+      },
     })),
   )
 
   const summary = weeks
     .flatMap((week) => week)
     .filter(({ between }) => between)
-    .reduce(
-      ({ income, expense }, { sum }) => ({
-        income: income + (sum?.income ?? 0),
-        expense: expense + (sum?.expense ?? 0),
-      }),
-      {
-        income: 0,
-        expense: 0,
-      },
-    )
+    .map(({ sum }) => sum)
+    .reduce((a, b) => ({
+      income: a.income + b.income,
+      expense: a.expense + b.expense,
+    }))
 
   return {
     weeks,
@@ -315,17 +304,21 @@ export function toSummaryOfFinance({
   }
 
   for (const [financeDiv, allAccounts] of financeAccounts) {
+    let financeAmount = 0
     const summaries = new Map<string, (typeof allAccounts)[number]>()
 
     for (const account of allAccounts) {
       const summary = summaries.get(account.id) ?? { ...account, amount: 0 }
-      summary.amount += account.amount
-      summaries.set(account.id, summary)
+      summaries.set(account.id, {
+        ...summary,
+        amount: summary.amount + account.amount,
+      })
+      financeAmount += account.amount
     }
 
     finances.set(financeDiv, {
       financeDiv,
-      amount: [...summaries.values()].reduce((a, { amount }) => a + amount, 0),
+      amount: financeAmount,
       accounts: [...summaries.values()].toSorted(
         (a, b) => a.dispOrder - b.dispOrder,
       ),
@@ -344,7 +337,6 @@ export function toJournalsBalanceTable({
   periods: JournalsBalancePeriod[]
   balances: Map<string, Map<FinanceDiv, JournalsFinanceBalances>>
 }) {
-  const accountMap = new Map<string, AccountViewModel>()
   const financeAccountMap = new Map<FinanceDiv, AccountViewModel[]>([
     [FinanceDivs.Income, []],
     [FinanceDivs.Expense, []],
@@ -353,7 +345,6 @@ export function toJournalsBalanceTable({
   ])
 
   for (const account of accounts) {
-    accountMap.set(account.id, account)
     financeAccountMap.get(account.financeDiv)?.push(account)
   }
 

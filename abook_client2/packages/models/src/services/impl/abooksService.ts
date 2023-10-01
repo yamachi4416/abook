@@ -1,5 +1,4 @@
-import { AbookViewModel } from '../share'
-import { AbooksService, ApiRequestService } from './interfaces'
+import { AbookViewModel, AbooksService, ApiRequestService } from './deps'
 
 export function abooksService({
   api,

@@ -4,8 +4,9 @@ import {
   JournalDiv,
   JournalDivs,
   JournalEditModel,
-} from '..'
-import { getAllCreditAccounts, getAllDebitAccounts } from '../utils/journal'
+  JournalModelEditor,
+} from '../deps'
+import { getAllCreditAccounts, getAllDebitAccounts } from '../journal'
 
 function isValidJournalDiv(value?: any): value is JournalDiv | undefined {
   return (
@@ -90,7 +91,10 @@ function onChangeJournalDiv({
 }) {
   if (journal.debitAccount) {
     const debitAccount = journal.debitAccount
-    const debitAccounts = getAllDebitAccounts({ journal, accounts })
+    const debitAccounts = getAllDebitAccounts({
+      journal,
+      accounts,
+    })
     if (!debitAccounts.some(({ id }) => id === debitAccount.id)) {
       journal.debitAccount = undefined
     }
@@ -98,7 +102,10 @@ function onChangeJournalDiv({
 
   if (journal.creditAccount) {
     const creditAccount = journal.creditAccount
-    const creditAccounts = getAllCreditAccounts({ journal, accounts })
+    const creditAccounts = getAllCreditAccounts({
+      journal,
+      accounts,
+    })
     if (!creditAccounts.some(({ id }) => id === creditAccount.id)) {
       journal.creditAccount = undefined
     }
@@ -141,7 +148,7 @@ export function journalEdtitor({
 }: {
   journal: JournalEditModel
   accounts: AccountViewModel[]
-}) {
+}): JournalModelEditor {
   return {
     get id() {
       return journal.id

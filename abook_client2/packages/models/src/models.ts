@@ -54,6 +54,19 @@ export interface AccountEditModel {
   usuallyUsedForReceipt: boolean
 }
 
+export interface AccountModelEditor {
+  readonly id: string | undefined
+  name: string
+  financeDiv: FinanceDiv | undefined
+  useFee: boolean
+  avaliable: boolean
+  color: string
+  usuallyUsedForPayment: boolean
+  usuallyUsedForReceipt: boolean
+  readonly isEnableUseFee: boolean
+  readonly isEnableUsuallyUsedForPayment: boolean
+}
+
 export interface FeeViewModel {
   readonly account: AccountViewModel
   readonly amount: number
@@ -90,6 +103,20 @@ export interface JournalEditModel {
   fee?: FeeEditModel
 }
 
+export interface JournalModelEditor {
+  readonly id: string | undefined
+  accrualDate: string | undefined
+  journalDiv: JournalDiv | undefined
+  debitAccountId: string | undefined
+  creditAccountId: string | undefined
+  memo: string | undefined
+  amount: number | undefined
+  readonly useFee: boolean
+  feeAccountId: string | undefined
+  feeUseAmount: number | undefined
+  feeAmount: number | undefined
+}
+
 export interface JournalSearchModel {
   accountId?: string
   journalDiv?: JournalDiv
@@ -106,11 +133,58 @@ export interface JournalBalanceModel {
   readonly creditAmount: number
 }
 
+export interface JournalsTimeline {
+  readonly date: Date
+  readonly accrualDate: string
+  readonly journals: JournalViewModel[]
+}
+
+export interface FinanceSummary {
+  readonly financeDiv: FinanceDiv
+  readonly amount: number
+  readonly accounts: Readonly<{
+    id: string
+    name: string
+    color: string
+    amount: number
+    dispOrder: number
+  }>[]
+}
+
+export interface MonthlyJournal {
+  readonly month: string
+  readonly dateStart: Date
+  readonly dateEnd: Date
+  readonly journals: JournalViewModel[]
+}
+
+export interface JournalsBalancePeriod {
+  readonly month: string
+  readonly key: string
+  readonly fromDate: Date
+  readonly fromDateYmd: string
+  readonly toDate: Date
+  readonly toDateYmd: string
+}
+
+export interface JournalsFinanceBalances {
+  readonly financeDiv: FinanceDiv
+  readonly amount: number
+  readonly accounts: Map<string, number>
+}
+
 export interface ApiValidationErrors {
-  readonly [key: string]: {
-    readonly key: string
-    readonly error: string
-  }[]
+  readonly [key: string]: Readonly<{
+    key: string
+    error: string
+  }>[]
+}
+
+export interface ValidationErrors<T> {
+  clearErrors(): void
+  hasErrors(key?: RegExp | keyof T | '*'): boolean
+  getErrors(key: RegExp | keyof T | '*'): string[]
+  setErrors(err: ApiValidationErrors): void
 }
 
 export class ApiValidationError extends Error {

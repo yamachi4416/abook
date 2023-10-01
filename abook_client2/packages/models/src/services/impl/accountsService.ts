@@ -1,4 +1,4 @@
-import { AccountsService, ApiRequestService } from './interfaces'
+import { AccountsService, ApiRequestService } from './deps'
 
 export function accountsService({
   api,

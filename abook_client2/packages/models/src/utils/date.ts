@@ -74,12 +74,6 @@ export function plusFormatedDate(
   return formatDate(plusDate(parseDate(date, format), plus), format)
 }
 
-export function diffOfMonths({ from, to }: { from: Date; to: Date }) {
-  const fromMonths = from.getFullYear() * 12 + from.getMonth()
-  const toMonths = to.getFullYear() * 12 + to.getMonth()
-  return toMonths - fromMonths
-}
-
 export function toCalendarStartDate({
   date,
   weekStartDay,
@@ -119,27 +113,27 @@ export function toCalendar({
   endDate: Date
   weekStartDay?: number
 }) {
+  type Week = {
+    date: Date
+    between: boolean
+  }
+
   function* generateWeeks() {
     const start = toCalendarStartDate({ date: beginDate, weekStartDay })
     const end = toCalendarEndDate({ date: endDate, weekStartDay })
 
     let cur = start
     while (cur <= end) {
-      const week: {
-        date: Date
-        day: number
-        weekDay: number
-        between: boolean
-      }[] = []
+      const week: Week[] = []
+
       for (let i = 0; i < 7; i++) {
         week.push({
           date: cur,
-          day: cur.getDate(),
-          weekDay: cur.getDay(),
           between: !(cur < beginDate || endDate < cur),
         })
-        cur = new Date(cur.getFullYear(), cur.getMonth(), cur.getDate() + 1)
+        cur = plusDate(cur, { days: 1 })
       }
+
       yield week
     }
   }

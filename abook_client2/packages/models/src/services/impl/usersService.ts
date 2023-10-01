@@ -1,4 +1,4 @@
-import { ApiRequestService, UsersService } from './interfaces'
+import { ApiRequestService, UsersService } from './deps'
 
 export function usersService({
   api,

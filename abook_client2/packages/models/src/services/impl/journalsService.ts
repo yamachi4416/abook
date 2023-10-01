@@ -1,5 +1,4 @@
-import { formatDate } from '../utils/date'
-import { ApiRequestService, JournalsService } from './interfaces'
+import { ApiRequestService, DateUtils, JournalsService } from './deps'
 
 export function journalsService({
   api,
@@ -9,7 +8,7 @@ export function journalsService({
   return {
     newJournal(params) {
       return {
-        accrualDate: formatDate(new Date(), 'YYYY-MM-DD'),
+        accrualDate: DateUtils.formatDate(new Date(), 'YYYY-MM-DD'),
         ...params,
       }
     },
@@ -37,8 +36,8 @@ export function journalsService({
       periods,
       signal,
     }) {
-      const from = formatDate(accrualDateStart, 'YYYYMMDD')
-      const to = formatDate(accrualDateEnd, 'YYYYMMDD')
+      const from = DateUtils.formatDate(accrualDateStart, 'YYYYMMDD')
+      const to = DateUtils.formatDate(accrualDateEnd, 'YYYYMMDD')
       return await api.$get({
         path: `/journals/balance/${from}/${to}`,
         query: { periods },

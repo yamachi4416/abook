@@ -27,12 +27,15 @@
           </thead>
           <tbody>
             <tr v-for="(week, w) in calendar.weeks" :key="w">
-              <td v-for="({ date, day, sum }, d) in week" :key="d">
+              <td v-for="({ date, sum }, d) in week" :key="d">
                 <div>
-                  <DateFormat :value="date" :format="day == 1 ? 'M/D' : 'D'" />
+                  <DateFormat
+                    :value="date"
+                    :format="date.getDate() == 1 ? 'M/D' : 'D'"
+                  />
                 </div>
-                <div>{{ $n(sum?.income ?? 0) }}</div>
-                <div>{{ $n(sum?.expense ?? 0) }}</div>
+                <div>{{ sum.income === 0 ? '' : $n(sum.income) }}</div>
+                <div>{{ sum.expense === 0 ? '' : $n(sum.expense) }}</div>
               </td>
             </tr>
           </tbody>

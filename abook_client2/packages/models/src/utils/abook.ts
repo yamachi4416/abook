@@ -1,4 +1,4 @@
-import { AbookViewModel } from '../share'
+import { AbookViewModel } from './deps'
 import { formatDate, plusDate, toDatePart } from './date'
 
 export function toStartOfMonthDate({
@@ -83,13 +83,24 @@ export function toAbookMonthPeriods({
   abook: Pick<AbookViewModel, 'startOfMonthDate' | 'startOfMonthIsPrev'>
 }) {
   function* enumerate() {
+    const last = Math.abs(months)
+
+    if (last === 0) {
+      return
+    }
+
     let period = toCurrentMonthPeriod({ date, abook })
     yield period
-    for (let i = 1; i < months; i++) {
+
+    for (let i = 1; i < last; i++) {
       period = toCurrentMonthPeriod({
-        date: plusDate(period.toDate, { days: 1 }),
+        date:
+          months < 0
+            ? plusDate(period.fromDate, { days: -1 })
+            : plusDate(period.toDate, { days: 1 }),
         abook,
       })
+
       yield period
     }
   }
