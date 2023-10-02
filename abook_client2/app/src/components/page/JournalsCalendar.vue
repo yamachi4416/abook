@@ -65,6 +65,7 @@ const calendar = computed(() =>
   JournalUtils.toJournalsCalendar({
     month: props.month ?? '',
     monthlyJournals: props.monthlyJournals,
+    weekStartDay: 'Sun',
   }),
 )
 </script>

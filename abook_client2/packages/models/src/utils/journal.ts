@@ -11,7 +11,7 @@ import {
   JournalsTimeline,
   MonthlyJournal,
 } from './deps'
-import { formatDate, parseDate, plusFormatedDate, toCalendar } from './date'
+import { WeekDay, formatDate, parseDate, plusFormatedDate, toCalendarWeeks } from './date'
 
 export function getAllDebitAccounts({
   journal,
@@ -186,7 +186,7 @@ export function toJournalsCalendar({
 }: {
   month: string
   monthlyJournals: Map<string, MonthlyJournal>
-  weekStartDay?: number | undefined
+  weekStartDay?: WeekDay
 }) {
   const thisMonthJournals = monthlyJournals.get(month)
 
@@ -228,7 +228,7 @@ export function toJournalsCalendar({
     }
   }
 
-  const weeks = toCalendar({
+  const weeks = toCalendarWeeks({
     beginDate: thisMonthJournals.dateStart,
     endDate: thisMonthJournals.dateEnd,
     weekStartDay,

@@ -47,6 +47,18 @@ const formats = {
 export type ParseFormats = keyof typeof parsers
 export type FormatFormats = keyof typeof formats
 
+const WeekDays = {
+  Sun: 0,
+  Mon: 1,
+  Tue: 2,
+  Wed: 3,
+  Thu: 4,
+  Fri: 5,
+  Sat: 6,
+} as const
+
+export type WeekDay = keyof typeof WeekDays
+
 export function parseDate(value: string, format: ParseFormats) {
   return parsers[format](value)
 }
@@ -74,44 +86,36 @@ export function plusFormatedDate(
   return formatDate(plusDate(parseDate(date, format), plus), format)
 }
 
-export function toCalendarStartDate({
+export function toWeekStartDate({
   date,
   weekStartDay,
 }: {
   date: Date
-  weekStartDay?: number
+  weekStartDay?: WeekDay
 }) {
-  const n = date.getDay() - (weekStartDay ?? 0)
-  const d = 7
-  const diff = n - d * Math.trunc(n / d)
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate() - diff)
+  const d = WeekDays[weekStartDay ?? 'Sun'] - date.getDay()
+  return plusDate(date, { days: d > 0 ? d - 7 : d })
 }
 
-export function toCalendarEndDate({
+export function toWeekEndDate({
   date,
   weekStartDay,
 }: {
   date: Date
-  weekStartDay?: number
+  weekStartDay?: WeekDay
 }) {
-  const n = date.getDay() - (weekStartDay ?? 0)
-  const d = 7
-  const diff = n - d * Math.trunc(n / d)
-  return new Date(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate() + (6 - diff),
-  )
+  const d = WeekDays[weekStartDay ?? 'Sun'] - date.getDay()
+  return plusDate(date, { days: d > 0 ? d - 1 : d + 6 })
 }
 
-export function toCalendar({
+export function toCalendarWeeks({
   beginDate,
   endDate,
   weekStartDay,
 }: {
   beginDate: Date
   endDate: Date
-  weekStartDay?: number
+  weekStartDay?: WeekDay
 }) {
   type Week = {
     date: Date
@@ -119,8 +123,8 @@ export function toCalendar({
   }
 
   function* generateWeeks() {
-    const start = toCalendarStartDate({ date: beginDate, weekStartDay })
-    const end = toCalendarEndDate({ date: endDate, weekStartDay })
+    const start = toWeekStartDate({ date: beginDate, weekStartDay })
+    const end = toWeekEndDate({ date: endDate, weekStartDay })
 
     let cur = start
     while (cur <= end) {
