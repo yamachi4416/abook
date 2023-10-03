@@ -22,13 +22,7 @@ export function abookViewComponent<State extends AbookViewState>({
           date: state.today,
           abook: state.abook,
         })
-      },
-      get currentMonthDate() {
-        return AbookUtils.toCurrentMonthDate({
-          date: state.today,
-          abook: state.abook,
-        })
-      },
+      }
     },
   }
 }

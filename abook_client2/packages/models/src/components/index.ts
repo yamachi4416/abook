@@ -25,7 +25,6 @@ export interface AbookViewComponent<State extends AbookViewState> {
     readonly isRegisted: boolean
     readonly startOfMonthDate: Date
     readonly endOfMonthDate: Date
-    readonly currentMonthDate: Date
   }
 }
 

@@ -8,55 +8,51 @@ export function toStartOfMonthDate({
   date: Date
   abook: Pick<AbookViewModel, 'startOfMonthDate' | 'startOfMonthIsPrev'>
 }) {
-  const { year, month } = toDatePart(date)
-  if (startOfMonthIsPrev) {
-    if (startOfMonthDate === 30) {
-      return new Date(year, month, 0)
-    } else {
-      return new Date(year, month - 1, startOfMonthDate)
+  if (startOfMonthDate === 30) {
+    const p = toDatePart(date)
+    const eom = new Date(p.year, p.month + 1, 0)
+    if (startOfMonthIsPrev) {
+      return p.date === eom.getDate()
+        ? new Date(p.year, p.month, 0)
+        : new Date(p.year, p.month - 1, 0)
     }
-  } else if (startOfMonthDate === 30) {
-    return new Date(year, month + 1, 0)
+    return p.date === eom.getDate() ? eom : new Date(p.year, p.month, 0)
   } else {
-    return new Date(year, month, startOfMonthDate)
+    const base = startOfMonthIsPrev ? plusDate(date, { month: -1 }) : date
+    const p = toDatePart(base)
+    const start = new Date(p.year, p.month, startOfMonthDate)
+    return base < start
+      ? new Date(p.year, p.month - 1, startOfMonthDate)
+      : start
   }
 }
 
 export function toEndOfMonthDate({
   date,
-  abook,
+  abook: { startOfMonthDate, startOfMonthIsPrev },
 }: {
   date: Date
   abook: Pick<AbookViewModel, 'startOfMonthDate' | 'startOfMonthIsPrev'>
 }) {
-  const {
-    year,
-    month,
-    date: days,
-  } = toDatePart(toStartOfMonthDate({ date, abook }))
-  return new Date(year, month + 1, days - 1)
-}
-
-export function toCurrentMonthDate({
-  date,
-  abook,
-}: {
-  date: Date
-  abook: Pick<AbookViewModel, 'startOfMonthDate' | 'startOfMonthIsPrev'>
-}) {
-  const { year, month } = toDatePart(date)
-  const startDate = toStartOfMonthDate({ date, abook })
-  const endDate = toEndOfMonthDate({ date, abook })
-
-  if (date < startDate) {
-    return new Date(year, month - 1, 1)
+  if (startOfMonthDate === 30) {
+    const p = toDatePart(date)
+    const eom = new Date(p.year, p.month + 1, 0)
+    if (startOfMonthIsPrev) {
+      return p.date === eom.getDate()
+        ? new Date(p.year, p.month + 1, -1)
+        : new Date(p.year, p.month, -1)
+    }
+    return p.date === eom.getDate()
+      ? new Date(p.year, p.month + 2, -1)
+      : new Date(p.year, p.month + 1, -1)
+  } else {
+    const base = startOfMonthIsPrev ? plusDate(date, { month: -1 }) : date
+    const p = toDatePart(base)
+    const end = new Date(p.year, p.month, startOfMonthDate - 1)
+    return end < base
+      ? new Date(p.year, p.month + 1, startOfMonthDate - 1)
+      : end
   }
-
-  if (date > endDate) {
-    return new Date(year, month + 1, 1)
-  }
-
-  return new Date(year, month, 1)
 }
 
 export function toCurrentMonthPeriod({
