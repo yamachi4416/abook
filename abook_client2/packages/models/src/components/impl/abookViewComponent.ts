@@ -22,7 +22,7 @@ export function abookViewComponent<State extends AbookViewState>({
           date: state.today,
           abook: state.abook,
         })
-      }
+      },
     },
   }
 }

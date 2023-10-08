@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import {
-  WeekDay,
+import { DateUtils } from '../../src'
+
+const {
   formatDate,
   parseDate,
   plusDate,
@@ -9,7 +10,9 @@ import {
   toDatePart,
   toWeekEndDate,
   toWeekStartDate,
-} from '../../src/utils/date'
+} = DateUtils
+
+type WeekDay = Parameters<typeof toWeekEndDate>[0]['weekStartDay']
 
 describe('DateUtils', () => {
   it('toDatePart', () => {
