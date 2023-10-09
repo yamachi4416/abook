@@ -175,7 +175,7 @@ export interface JournalsFinanceBalances {
 
 export interface ApiValidationErrors {
   readonly [key: string]: Readonly<{
-    key: string
+    key?: string
     error: string
   }>[]
 }

@@ -39,7 +39,7 @@ export function apiValidationErrors<T = {}>({
       }
 
       if (key === undefined) {
-        return !!state.errors
+        return Object.keys(state.errors).length > 0
       }
 
       if (key instanceof RegExp) {
