@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts" generic="O, T extends ValidationErrors<O>">
-import { ValidationErrors } from '@abook/models'
+import type { ValidationErrors } from '@abook/models'
 
 type Errors = Pick<T, 'hasErrors' | 'getErrors'>
 type Names = Parameters<Errors['getErrors']>[0]

@@ -1,4 +1,5 @@
-import { AbookViewModel, DateUtils, JournalsBalanceState } from '@abook/models'
+import type { AbookViewModel, JournalsBalanceState } from '@abook/models'
+import { DateUtils } from '@abook/models'
 
 export interface UseJournalsBalanceState extends JournalsBalanceState {
   loading: boolean

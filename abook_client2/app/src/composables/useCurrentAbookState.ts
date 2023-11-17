@@ -1,4 +1,4 @@
-import { AbookViewModel } from '@abook/models'
+import type { AbookViewModel } from '@abook/models'
 
 export function useCurrentAbookState() {
   const current = useState<AbookViewModel>()

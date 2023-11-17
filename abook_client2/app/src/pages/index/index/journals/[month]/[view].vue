@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import { ValidateUtils } from '@abook/models'
-import { type UseMonthlyJournalsState } from '~/composables/useMonthlyJournalsState'
+import type { UseMonthlyJournalsState } from '~/composables/useMonthlyJournalsState'
 
 definePageMeta({
   validate(route) {

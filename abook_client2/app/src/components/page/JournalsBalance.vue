@@ -41,7 +41,7 @@
 
 <script setup lang="ts">
 import { JournalUtils } from '@abook/models'
-import { type UseJournalsBalanceState } from '~/composables/useJournalsBalanceState'
+import type { UseJournalsBalanceState } from '~/composables/useJournalsBalanceState'
 
 const props = defineProps<UseJournalsBalanceState>()
 const finances = computed(() =>

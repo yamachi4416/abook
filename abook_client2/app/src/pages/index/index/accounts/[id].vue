@@ -14,13 +14,8 @@
         <p>
           <label>{{ $t('form.financeName') }}</label>
           <select v-model.number="account.financeDiv">
-            <option
-              v-for="{ value, label } of $tm('select.financeDiv')"
-              :key="value"
-              :value="value"
-              :disabled="!!account.id"
-              v-text="$rt(label)"
-            />
+            <option v-for="{ value, label } of $tm('select.financeDiv')" :key="value" :value="value"
+              :disabled="!!account.id" v-text="$rt(label)" />
           </select>
           <ValidationErrorMessages :errors="errors" name="financeDiv" />
         </p>
@@ -42,18 +37,12 @@
         <p v-if="account.isEnableUsuallyUsedForPayment">
           <label>{{ $t('form.usuallyUsedForPayment') }}</label>
           <input v-model="account.usuallyUsedForPayment" type="checkbox" />
-          <ValidationErrorMessages
-            :errors="errors"
-            name="usuallyUsedForPayment"
-          />
+          <ValidationErrorMessages :errors="errors" name="usuallyUsedForPayment" />
         </p>
         <p>
           <label>{{ $t('form.usuallyUsedForReceipt') }}</label>
           <input v-model="account.usuallyUsedForReceipt" type="checkbox" />
-          <ValidationErrorMessages
-            :errors="errors"
-            name="usuallyUsedForReceipt"
-          />
+          <ValidationErrorMessages :errors="errors" name="usuallyUsedForReceipt" />
         </p>
       </form>
       <template #footer>
@@ -64,8 +53,8 @@
 </template>
 
 <script setup lang="ts">
+import type { AccountEditState } from '@abook/models'
 import {
-  AccountEditState,
   ValidateUtils,
   accountEditComponent,
   accountsService,

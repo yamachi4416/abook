@@ -97,8 +97,8 @@
 </template>
 
 <script setup lang="ts">
+import type { JournalEditState } from '@abook/models'
 import {
-  JournalEditState,
   ValidateUtils,
   accountsService,
   journalEditComponent,

@@ -58,7 +58,7 @@
 
 <script setup lang="ts">
 import { JournalUtils } from '@abook/models'
-import { type UseMonthlyJournalsState } from '~/composables/useMonthlyJournalsState'
+import type { UseMonthlyJournalsState } from '~/composables/useMonthlyJournalsState'
 
 const props = defineProps<UseMonthlyJournalsState>()
 const calendar = computed(() =>

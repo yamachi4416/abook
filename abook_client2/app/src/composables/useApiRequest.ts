@@ -1,4 +1,5 @@
-import { ApiRequestService, apiRequestService } from '@abook/models'
+import type { ApiRequestService } from '@abook/models'
+import { apiRequestService } from '@abook/models'
 
 export function useApiRequest(): ApiRequestService {
   const currentAbookId = useState<string | null>(() => null)

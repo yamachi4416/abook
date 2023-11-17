@@ -1,4 +1,5 @@
-import { AbookViewModel, DateUtils, MonthlyJournalsState } from '@abook/models'
+import type { AbookViewModel, MonthlyJournalsState } from '@abook/models'
+import { DateUtils } from '@abook/models'
 
 export interface UseMonthlyJournalsState extends MonthlyJournalsState {
   journals: ReturnType<MonthlyJournalsState['monthlyJournals']['get']>
