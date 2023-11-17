@@ -46,9 +46,7 @@ const { state, views } = abookViewComponent({
 })
 
 const { menuItems } = useTopMenuItem({
-  currentMonth: computed(() =>
-    DateUtils.formatDate(state.today, 'YYYYMM'),
-  ),
+  currentMonth: computed(() => DateUtils.formatDate(state.today, 'YYYYMM')),
   hasAbook: computed(() => views.isRegisted),
 })
 
